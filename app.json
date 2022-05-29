@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "be-social",
+    "slug": "be-social",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "be-social"
+}
