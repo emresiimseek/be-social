@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 
 class ApiBase {
-  cancelTokenSource = null;
+  cancelTokenSource: CancelTokenSource | null = null;
   baseUrl = 'http://localhost:1337/api/';
   // baseUrl = "http://localhost:52264/api/";
 
@@ -12,8 +12,8 @@ class ApiBase {
     },
   });
 
-  async postRequest(url, value, cancelToken) {
-    let result = {};
+  async postRequest(url: string, value: any, cancelToken?: any) {
+    let result = { errors: null, data: null };
 
     if (this.cancelTokenSource != null && cancelToken) this.cancelTokenSource.cancel('request canceled');
 
@@ -37,8 +37,8 @@ class ApiBase {
     return result;
   }
 
-  async getRequest(url, cancelToken) {
-    let result = {};
+  async getRequest(url: string, cancelToken?: any) {
+    let result = { errors: null, data: null };
     if (this.cancelTokenSource != null && cancelToken) this.cancelTokenSource.cancel('request canceled');
 
     this.cancelTokenSource = axios.CancelToken.source();
