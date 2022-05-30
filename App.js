@@ -4,12 +4,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomePage from './app/screens/WelcomePage';
 import { MyTabs } from './app/screens/MyTabs';
+import LoginPage from './app/screens/LoginPage';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={MyTabs}>
+      <Stack.Navigator initialRouteName={WelcomePage}>
+        <Stack.Screen name="Welcome" component={WelcomePage} />
+        <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen
           name="MyTabs"
           component={MyTabs}
@@ -20,8 +23,6 @@ export default function App() {
             title: 'Be Social',
           }}
         />
-
-        <Stack.Screen name="Welcome" component={WelcomePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
