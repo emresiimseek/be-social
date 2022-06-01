@@ -1,14 +1,22 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Card from '../../components/common/Card';
+import * as React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import { Props } from '../../types/common/props';
 
-const Tab = createBottomTabNavigator();
+export interface HomePageProps extends Props {}
 
-export function HomePage() {
-  return (
-    <View>
-      <Card />
-    </View>
-  );
+export interface HomePageState {}
+
+export default class HomePage extends React.Component<HomePageProps, HomePageState> {
+  constructor(props: HomePageProps) {
+    super(props);
+    this.state = {};
+  }
+
+  public render() {
+    return (
+      <View>
+        <Text>HomePage Component</Text>
+      </View>
+    );
+  }
 }

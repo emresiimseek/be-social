@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomePage } from './Home/HomePage';
+import HomePage from './Home/HomePage';
 import { Icon } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,11 +20,8 @@ export function MyTabs() {
             return <Icon name="create-outline" type="ionicon" size={32} color={focused ? 'black' : 'gray'} />;
         },
 
-        headerStatusBarHeight: 10,
-        headerTitleStyle: { color: 'black' },
         headerTitleAlign: 'center',
         title: 'Akış',
-        headerShown: false,
         tabBarShowLabel: false,
       })}
     >

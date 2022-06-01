@@ -1,15 +1,17 @@
 import axios, { CancelTokenSource } from 'axios';
 import { AxiosResponse } from '../types/common/axios-response';
 import { Error2, StrapiError } from '../types/strapi/strapi-error';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class ApiBase {
   cancelTokenSource: CancelTokenSource | null = null;
-  baseUrl = 'http://localhost:1337/api/';
+  baseUrl = 'https://limitless-castle-76642.herokuapp.com/api/';
 
   conduitApi = axios.create({
     baseURL: this.baseUrl,
     headers: {
       'Content-Type': 'application/json',
+      // Authorization: 'Bearer ' + AsyncStorage.getItem('token'),
     },
   });
 

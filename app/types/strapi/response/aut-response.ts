@@ -1,6 +1,7 @@
-import { User } from './strapi-user';
+import { User } from '../strapi-user';
 
 export interface AutResponse {
   jwt: string;
   user: User;
+  loading: boolean;
 }

@@ -1,16 +1,14 @@
 import { Button } from '@rneui/base';
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { Props } from '../types/common/props';
 
-class WelcomePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: {
-        uri: 'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1976&q=80',
-      },
-    };
-  }
+class WelcomePage extends Component<Props> {
+  state = {
+    image: {
+      uri: 'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1976&q=80',
+    },
+  };
 
   render() {
     return (

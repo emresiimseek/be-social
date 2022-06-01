@@ -1,19 +1,28 @@
 import { Button } from '@rneui/base';
 import { Input } from '@rneui/themed';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { login } from '../logic/login';
-import { LoginState } from '../types/states/login-state';
+import { Props } from '../types/common/props';
+import HomePageComponent from './Home/HomePage';
+import BaseComponent from '../components/common/BaseComponent';
+import { AutResponse } from '../types/strapi/response/aut-response';
+import { BaseState } from '../types/states/base-state';
 
-class LoginPage extends Component {
-  state: LoginState = { identifier: '', password: '', validations: [] };
+export interface LoginState extends BaseState {
+  identifier: string;
+  password: string;
+}
+
+class LoginPage extends BaseComponent<Props> {
+  state: LoginState = { identifier: '', password: '', ...this.baseState };
 
   login = async () => {
-    const value = await login(this.state.identifier, this.state.password);
+    const result = await this.handleRequest<AutResponse>(() =>
+      login(this.state.identifier, this.state.password)
+    );
 
-    if (value.data?.jwt) this.props.navigation.navigate('MyTabs');
-
-    this.setState({ ...this.state, validations: value.validations });
+    if (result?.data?.jwt) this.props.navigation.navigate('MyTabs');
   };
 
   render() {
@@ -23,23 +32,26 @@ class LoginPage extends Component {
           value={this.state.identifier}
           onChangeText={identifier => this.setState({ ...this.state, identifier })}
           placeholder="E-Posta"
-          errorMessage={this.state?.validations?.find(x => x.path.find(p => p === 'identifier'))?.message}
+          errorMessage={this.getErrorMessage(this.state.validations, 'identifier')}
           rightIcon={{ type: 'meterial', name: 'alternate-email' }}
+          containerStyle={styles.input}
         />
         <Input
           onChangeText={password => this.setState({ ...this.state, password })}
           placeholder="Parola"
           rightIcon={{ type: 'meterial', name: 'lock' }}
-          errorMessage={this.state?.validations?.find(x => x.path.find(p => p === 'password'))?.message}
+          errorMessage={this.getErrorMessage(this.state.validations, 'password')}
+          containerStyle={styles.input}
+          secureTextEntry={true}
         />
-        <Button onPress={() => this.login()} title="Giriş" size="lg" style={styles.button} />
+        <Button onPress={() => this.login()} title="Giriş" size="lg" />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 20 },
-  button: { marginTop: 10 },
+  input: { marginBottom: 5 },
 });
 
 export default LoginPage;

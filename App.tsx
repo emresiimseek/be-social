@@ -6,15 +6,26 @@ import WelcomePage from './app/screens/WelcomePage';
 import { MyTabs } from './app/screens/MyTabs';
 import LoginPage from './app/screens/LoginPage';
 import Toast from 'react-native-toast-message';
+import RegisterPageComponent from './app/screens/RegisterPage';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={WelcomePage} />
-          <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomePage}
+            options={{
+              headerStyle: { backgroundColor: '#000000c0' },
+              headerTitleStyle: { color: 'white' },
+              headerTitleAlign: 'center',
+              title: 'Be Social',
+            }}
+          />
+          <Stack.Screen name="Login" component={LoginPage} options={{ title: 'Giriş' }} />
+          <Stack.Screen name="Register" component={RegisterPageComponent} options={{ title: 'Kayıt Ol' }} />
           <Stack.Screen
             name="MyTabs"
             component={MyTabs}
@@ -23,6 +34,7 @@ export default function App() {
               headerTitleStyle: { color: 'white' },
               headerTitleAlign: 'center',
               title: 'Be Social',
+              headerShown: false,
             }}
           />
         </Stack.Navigator>

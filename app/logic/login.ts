@@ -1,4 +1,4 @@
-import { AutResponse } from '../types/strapi/aut-response';
+import { AutResponse } from '../types/strapi/response/aut-response';
 import { apiBase } from './api-base';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
