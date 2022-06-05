@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Props } from '../../types/common/props';
 
-export interface HomePageProps extends Props {}
+export interface HomePageProps {}
 
 export interface HomePageState {}
 

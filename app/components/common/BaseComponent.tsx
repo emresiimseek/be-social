@@ -17,8 +17,6 @@ export default class BaseComponent<P> extends React.Component<P> {
     this.setState({ loading: true });
     const result = await request();
 
-    console.log(result);
-
     if (result.error && !result.validations?.length) {
       Toast.show({
         type: 'error',

@@ -1,10 +1,10 @@
 import { Button } from '@rneui/base';
-import { Input } from '@rneui/themed';
+import { Icon, Input } from '@rneui/themed';
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { login } from '../logic/login';
 import { Props } from '../types/common/props';
-import HomePageComponent from './Home/HomePage';
+import HomePageComponent from './MyTabs/HomePage';
 import BaseComponent from '../components/common/BaseComponent';
 import { AutResponse } from '../types/strapi/response/aut-response';
 import { BaseState } from '../types/states/base-state';
@@ -33,25 +33,42 @@ class LoginPage extends BaseComponent<Props> {
           onChangeText={identifier => this.setState({ ...this.state, identifier })}
           placeholder="E-Posta"
           errorMessage={this.getErrorMessage(this.state.validations, 'identifier')}
-          rightIcon={{ type: 'meterial', name: 'alternate-email' }}
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#FF4C29' }}
           containerStyle={styles.input}
+          inputStyle={{ color: 'white' }}
+          placeholderTextColor="white"
+          errorStyle={{ color: '#FF4C29' }}
+          inputContainerStyle={{ borderBottomColor: 'white' }}
         />
         <Input
           onChangeText={password => this.setState({ ...this.state, password })}
           placeholder="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock' }}
+          rightIcon={{ type: 'meterial', name: 'lock', color: '#FF4C29' }}
           errorMessage={this.getErrorMessage(this.state.validations, 'password')}
           containerStyle={styles.input}
           secureTextEntry={true}
+          inputStyle={{ color: 'white' }}
+          placeholderTextColor="white"
+          inputContainerStyle={{ borderBottomColor: 'white' }}
+          errorStyle={{ color: '#FF4C29' }}
         />
-        <Button onPress={() => this.login()} title="Giriş" size="lg" />
+        <Button
+          onPress={() => this.login()}
+          title="Giriş"
+          loading={this.state.loading}
+          buttonStyle={styles.button}
+          titleStyle={{ color: 'black' }}
+          size="lg"
+          color="#FF4C29"
+        />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20 },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#334756' },
   input: { marginBottom: 5 },
+  button: { marginHorizontal: 10 },
 });
 
 export default LoginPage;

@@ -6,7 +6,6 @@ import Toast from 'react-native-toast-message';
 
 export const register = async (user: User | null) => {
   const body = { ...user };
-  console.log(body);
 
   const res = await apiBase.postRequest<User>('users', body);
 

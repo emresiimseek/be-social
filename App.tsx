@@ -7,34 +7,57 @@ import { MyTabs } from './app/screens/MyTabs';
 import LoginPage from './app/screens/LoginPage';
 import Toast from 'react-native-toast-message';
 import RegisterPageComponent from './app/screens/RegisterPage';
+import CommentsComponent from './app/screens/Comments';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="MyTabs">
           <Stack.Screen
             name="Welcome"
             component={WelcomePage}
             options={{
-              headerStyle: { backgroundColor: '#000000c0' },
-              headerTitleStyle: { color: 'white' },
-              headerTitleAlign: 'center',
+              headerTintColor: 'white',
               title: 'Be Social',
+              headerStyle: { backgroundColor: '#33475699' },
             }}
           />
-          <Stack.Screen name="Login" component={LoginPage} options={{ title: 'Giriş' }} />
-          <Stack.Screen name="Register" component={RegisterPageComponent} options={{ title: 'Kayıt Ol' }} />
+          <Stack.Screen
+            name="Login"
+            component={LoginPage}
+            options={{
+              headerTintColor: 'white',
+              title: 'Giriş',
+              headerStyle: { backgroundColor: '#33475699' },
+            }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterPageComponent}
+            options={{
+              title: 'Kayıt Ol',
+              headerTintColor: 'white',
+              headerStyle: { backgroundColor: '#33475699' },
+            }}
+          />
           <Stack.Screen
             name="MyTabs"
             component={MyTabs}
             options={{
-              headerStyle: { backgroundColor: '#00000050' },
-              headerTitleStyle: { color: 'white' },
-              headerTitleAlign: 'center',
-              title: 'Be Social',
+              headerTintColor: 'white',
+              headerStyle: { backgroundColor: '#33475699' },
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Comments"
+            component={CommentsComponent}
+            options={{
+              headerTintColor: 'white',
+              title: 'Yorumlar',
+              headerStyle: { backgroundColor: '#33475699' },
             }}
           />
         </Stack.Navigator>

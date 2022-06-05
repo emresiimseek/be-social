@@ -1,3 +1,5 @@
+import { Event } from './strapi-event';
+
 export interface User {
   id: number;
   username: string;
@@ -10,4 +12,5 @@ export interface User {
   firstname: string;
   lastname: string;
   password: string;
+  events: Event[];
 }

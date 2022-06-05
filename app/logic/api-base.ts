@@ -5,13 +5,15 @@ import { Error2, StrapiError } from '../types/strapi/strapi-error';
 
 class ApiBase {
   cancelTokenSource: CancelTokenSource | null = null;
-  baseUrl = 'https://limitless-castle-76642.herokuapp.com/api/';
+  baseUrl = 'https://quiet-retreat-10533.herokuapp.com/api/';
+  apiToken =
+    '24d633612d6d4ee6e9eeb1ad6b98db3311cb435be52f552d98714a4e0fcf20929c7e4d7765b5f932b67bd956d83dd70ba37cb4b229863606665fe923c0da2a7bb21f645867c8dd270860e66281bd1e59f4ed6fe44543d3302e5018c46cb30b1551730649f89de87f811f483a90059da6e2448a251380d59be9376f773cc50a7e';
 
   conduitApi = axios.create({
     baseURL: this.baseUrl,
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: 'Bearer ' + AsyncStorage.getItem('token'),
+      Authorization: 'Bearer ' + this.apiToken,
     },
   });
 
@@ -40,14 +42,17 @@ class ApiBase {
     return result;
   }
 
-  async getRequest<T>(url: string, cancelToken?: any): Promise<Awaited<AxiosResponse<T>>> {
+  async getRequest<T>(url: string, populate?: string, cancelToken?: any): Promise<Awaited<AxiosResponse<T>>> {
     let result: AxiosResponse<T> = { validations: [], data: null };
     if (this.cancelTokenSource != null && cancelToken) this.cancelTokenSource.cancel('request canceled');
 
     this.cancelTokenSource = axios.CancelToken.source();
 
     await this.conduitApi
-      .get(url, { cancelToken: this.cancelTokenSource.token })
+      .get(url, {
+        cancelToken: this.cancelTokenSource.token,
+        params: { populate: populate ? populate : '*' },
+      })
       .then(response => {
         result.data = response.data;
       })
