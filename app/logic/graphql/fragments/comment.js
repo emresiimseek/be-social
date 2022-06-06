@@ -1,5 +1,5 @@
-export const CommentsFragment = `
-    comments {
+export const CommentsFragment = eventId => `
+    comments(filters: {event: {id: {eq: ${eventId}}}}) {
       data {
         id
         attributes {

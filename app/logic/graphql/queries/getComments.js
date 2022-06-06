@@ -1,7 +1,7 @@
 import { CommentsFragment } from '../fragments/comment';
 
-export const getCommentsQueries = `
+export const getCommentsQueries = eventId => `
 query GetComments {
-    ${CommentsFragment}
+    ${CommentsFragment(eventId)}
   }
 `;

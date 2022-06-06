@@ -2,9 +2,9 @@ import axios, { CancelTokenSource } from 'axios';
 
 class ApiGraphQlBase {
   cancelTokenSource: CancelTokenSource | null = null;
-  baseUrl = 'http://localhost:1337/';
+  baseUrl = 'https://quiet-retreat-10533.herokuapp.com/';
   apiToken =
-    '6e923043ed30160575606485a6a21f217f50b3e1680cb1de74cac40062be4ba5fbd67cacc0535de0db6a2688cbd97589358963ec7ebb5dc73daea44074084a0d21184ec33f736bc6d1de4cfcb78fe0b45c7a95507630c3aebe37074a89bb148cf0533819e7c036b0918f3a09cd8681bc86e6b7c7f8cc26f7e6a4935b5f0d36ea';
+    '24d633612d6d4ee6e9eeb1ad6b98db3311cb435be52f552d98714a4e0fcf20929c7e4d7765b5f932b67bd956d83dd70ba37cb4b229863606665fe923c0da2a7bb21f645867c8dd270860e66281bd1e59f4ed6fe44543d3302e5018c46cb30b1551730649f89de87f811f483a90059da6e2448a251380d59be9376f773cc50a7e';
 
   conduitApi = axios.create({
     baseURL: this.baseUrl,

@@ -52,7 +52,7 @@ export default class ProfileHeaderComponent extends React.Component<ProfileHeade
 }
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    margin: 15,
     minHeight: 150,
     borderRadius: 5,
     padding: 20,

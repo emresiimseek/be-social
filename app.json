@@ -8,6 +8,9 @@
     ],
     "ios": {
       "bundleIdentifier": "y"
+    },
+    "android": {
+      "package": "com.BeSocial.besocial"
     }
   },
   "name": "be-social"

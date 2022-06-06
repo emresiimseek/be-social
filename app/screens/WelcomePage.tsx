@@ -1,5 +1,5 @@
 import { Button } from '@rneui/base';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Props } from '../types/common/props';
 import BaseComponent from '../components/common/BaseComponent';
@@ -7,64 +7,71 @@ import { getWelcomePage } from '../logic/welcome-page';
 import { WelcomePage as StrapiWelcomePage } from '../types/strapi/strapi-welcome-page';
 import { StrapiObject } from '../types/strapi/base/strapi-object';
 import { BgImageObject } from '../types/strapi/base/strapi-image';
+import { gql, useQuery } from '@apollo/client';
 
-interface WelcomePageState {
-  model: StrapiWelcomePage | null;
-  image: any;
-}
+const welcome = gql`
+  query GetWelcomePage {
+    welcomePage {
+      data {
+        attributes {
+          title
+          description
+          bg_image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
-class WelcomePage extends BaseComponent<Props> {
-  componentDidMount = () => {
-    this.get();
-  };
-  state: WelcomePageState = {
-    image: {
-      uri: 'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1976&q=80',
-    },
-    model: null,
-  };
+function WelcomePage(props: Props) {
+  const { loading, error, data } = useQuery<any>(welcome);
 
-  get = async () => {
-    const result = await this.handleRequest<StrapiObject<StrapiWelcomePage>>(() => getWelcomePage());
-
-    this.setState({ model: result?.data?.data.attributes });
-  };
-
-  getImage = (image?: BgImageObject) => image?.data[0].attributes.url;
-
-  render() {
+  if (loading)
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={{ uri: this.getImage(this.state.model?.bg_image) }}
-          resizeMode="cover"
-          style={styles.image}
-        >
-          <View style={styles.body}>
-            <Text style={[styles.text, styles.title]}>{this.state.model?.title}</Text>
-            <Text style={styles.text}>{this.state.model?.description}</Text>
-          </View>
-          <View style={styles.bottom}>
-            <Button
-              onPress={() => this.props.navigation.navigate('Login')}
-              buttonStyle={styles.bottomButton}
-              size="lg"
-              title="Login"
-              color="#FF4C29"
-            />
-            <Button
-              onPress={() => this.props.navigation.navigate('Register')}
-              buttonStyle={styles.bottomButton}
-              size="lg"
-              title="Register"
-              color="#FF4C29"
-            />
-          </View>
-        </ImageBackground>
+      <View>
+        <Text>Loading...</Text>
       </View>
     );
-  }
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={{ uri: data.welcomePage.data.attributes.bg_image.data[0].attributes.url }}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={styles.body}>
+          <Text style={[styles.text, styles.title]}>{data?.welcomePage.data.attributes.title}</Text>
+          <Text style={styles.text}>{data?.welcomePage.data.attributes.description}</Text>
+        </View>
+        <View style={styles.bottom}>
+          <Button
+            onPress={() => props.navigation.navigate('Login')}
+            buttonStyle={styles.bottomButton}
+            size="lg"
+            title="Login"
+            color="#FF4C29"
+          />
+          <Button
+            onPress={() => props.navigation.navigate('Register')}
+            buttonStyle={styles.bottomButton}
+            size="lg"
+            title="Register"
+            color="#FF4C29"
+          />
+        </View>
+      </ImageBackground>
+    </View>
+  );
 }
+
+export default WelcomePage;
 
 const styles = StyleSheet.create({
   container: {
@@ -96,5 +103,3 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
-
-export default WelcomePage;

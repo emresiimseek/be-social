@@ -1,21 +1,22 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { getEvents } from '../../logic/graphql/event';
+import { useQuery, gql } from '@apollo/client';
+import { EventFragment } from '../../logic/graphql/fragments/event';
+import { EventsData } from '../../types/graphql/events';
 
-export interface HomePageProps {}
+const EVENTS = gql`
+query GetEvents {
+  ${EventFragment}
+}
+`;
 
-export interface HomePageState {}
+export default function HomePage() {
+  const { loading, error, data } = useQuery<EventsData>(EVENTS);
 
-export default class HomePage extends React.Component<HomePageProps, HomePageState> {
-  constructor(props: HomePageProps) {
-    super(props);
-    this.state = {};
-  }
-
-  public render() {
-    return (
-      <View>
-        <Text>HomePage Component</Text>
-      </View>
-    );
-  }
+  return (
+    <View>
+      <Text></Text>
+    </View>
+  );
 }
