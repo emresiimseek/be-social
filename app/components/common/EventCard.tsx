@@ -3,16 +3,17 @@ import { Button, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import BaseComponent from './BaseComponent';
 import { CardItem } from '../../types/common/card-item';
-import { Event } from '../../types/strapi/strapi-event';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { Props } from '../../types/common/props';
+import { EventsAttributes } from '../../types/graphql/events';
+import { Attributes } from '../../types/strapi/strapi-event';
 
 interface CardProps extends Props {
-  item: Event;
+  item: Attributes;
 }
 
-class Card extends BaseComponent<CardProps> {
+class EventCard extends BaseComponent<CardProps> {
   state = {
     item: {
       userName: 'emresimsek',
@@ -29,21 +30,21 @@ class Card extends BaseComponent<CardProps> {
         <View style={styles.header}>
           <View style={styles.headerContainer}>
             <Avatar
-              size={30}
+              size={40}
               rounded
               source={this.state.item.userAvatar ? { uri: this.state.item.userAvatar } : {}}
             />
-            <Text style={{ marginLeft: 5 }}>{this.props.item.users[0].username}</Text>
+            <Text style={{ marginLeft: 5 }}>{this.props.item?.users?.data[0]?.attributes.username}</Text>
           </View>
 
-          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={18} />
+          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
         </View>
         {/* Body */}
 
         <View style={styles.body}>
           <ImageBackground
             style={{ width: '100%', height: '100%' }}
-            source={{ uri: this.props.item.images[0].url }}
+            source={{ uri: this.props.item.images.data[0].attributes.url }}
           />
         </View>
         {/* Footer */}
@@ -74,15 +75,14 @@ class Card extends BaseComponent<CardProps> {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon name="groups" type="metarial" size={25} />
               <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                {this.props.item.users.length} Kişi Katılıyor
+                {this.props.item.users.data.length} Kişi Katılıyor
               </Text>
             </View>
           </View>
           <View
             style={{
-              flex: 1,
               flexDirection: 'row',
-              marginTop: 5,
+              marginTop: 10,
             }}
           >
             <View style={{ flex: 1 }}>
@@ -128,15 +128,13 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 1,
-    marginLeft: 10,
+    marginHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
   body: {
-    marginTop: 5,
     flex: 3,
     borderTopColor: '#D3D3D3',
-    borderTopWidth: 1,
   },
   footer: {
     flexDirection: 'column',
@@ -146,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card;
+export default EventCard;

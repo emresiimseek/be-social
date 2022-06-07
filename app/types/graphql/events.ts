@@ -10,6 +10,7 @@ export interface EventsAttributes {
   comments: BaseData<Comment>;
   images: BaseData<BgImage>;
   users: BaseData<User>;
+  id: string;
 }
 
 export interface Events {

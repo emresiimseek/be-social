@@ -4,11 +4,11 @@ import ProfileHeaderComponent from '../../components/profile/ProfileHeader';
 import BaseComponent from '../../components/common/BaseComponent';
 import { getMe } from '../../logic/getMe';
 import { User } from '../../types/strapi/strapi-user';
-import { Event } from '../../types/strapi/strapi-event';
 import { StrapiObject } from '../../types/strapi/base/strapi-object';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Card from '../../components/common/Card';
+import Card from '../../components/common/EventCard';
 import { Props } from '../../types/common/props';
+import EventListComponent from '../../components/common/EventList';
 
 export interface ProfilePageProps extends Props {}
 
@@ -33,11 +33,7 @@ export default class ProfilePage extends BaseComponent<ProfilePageProps> {
     return (
       <View>
         <ProfileHeaderComponent user={this.state.user} />
-        <ScrollView style={{ marginBottom: 50 }}>
-          {this.state.events.map((prop, key) => {
-            return <Card navigation={this.props.navigation} key={key} item={prop}></Card>;
-          })}
-        </ScrollView>
+        <EventListComponent navigation={this.props.navigation} />
       </View>
     );
   }
