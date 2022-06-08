@@ -8,7 +8,7 @@ import { StrapiObject } from '../../types/strapi/base/strapi-object';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Card from '../../components/common/EventCard';
 import { Props } from '../../types/common/props';
-import EventListComponent from '../../components/common/EventList';
+import EventList from '../../components/common/EventList';
 
 export interface ProfilePageProps extends Props {}
 
@@ -32,8 +32,8 @@ export default class ProfilePage extends BaseComponent<ProfilePageProps> {
   public render() {
     return (
       <View>
-        <ProfileHeaderComponent user={this.state.user} />
-        <EventListComponent navigation={this.props.navigation} />
+        <ProfileHeaderComponent navigation={this.props.navigation} />
+        <EventList isMine navigation={this.props.navigation} />
       </View>
     );
   }

@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from './MyTabs/HomePage';
 import { Icon } from '@rneui/themed';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfilePage from './MyTabs/ProfilePage';
 import { Props } from '../types/common/props';
 

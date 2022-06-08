@@ -11,6 +11,7 @@ import { Attributes } from '../../types/strapi/strapi-event';
 
 interface CardProps extends Props {
   item: Attributes;
+  eventId: string;
 }
 
 class EventCard extends BaseComponent<CardProps> {
@@ -59,7 +60,7 @@ class EventCard extends BaseComponent<CardProps> {
                   onPress={() =>
                     this.props.navigation.navigate({
                       name: 'Comments',
-                      params: { eventId: this.props.item.id },
+                      params: { eventId: this.props.eventId },
                       merge: true,
                     })
                   }
@@ -101,7 +102,7 @@ class EventCard extends BaseComponent<CardProps> {
               </View>
 
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text>Cat</Text>
+                <Text>{this.props.item.categories.data.map(c => c.attributes.title)}</Text>
                 <Icon name="tagso" type="ant-design" />
               </View>
             </View>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     minHeight: 420,
   },
   header: {
-    flex: 0.3,
+    flex: 0.2,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

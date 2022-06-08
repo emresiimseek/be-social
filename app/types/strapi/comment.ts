@@ -15,5 +15,5 @@ export interface UsersPermissionsUser {
 
 export interface Comment {
   description: string;
-  users_permissions_user: UsersPermissionsUser;
+  user_comments: UsersPermissionsUser;
 }

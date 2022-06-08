@@ -31,9 +31,7 @@ export default class CommentsComponent extends BaseComponent<CommentsProps> {
           <ListItem key={i} bottomDivider>
             <Avatar source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }} rounded size={70} />
             <ListItem.Content>
-              <ListItem.Title>
-                {comment.attributes.users_permissions_user.data.attributes.username}
-              </ListItem.Title>
+              <ListItem.Title>{comment.attributes.user_comments.data.attributes.username}</ListItem.Title>
               <ListItem.Subtitle>{comment.attributes.description}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>

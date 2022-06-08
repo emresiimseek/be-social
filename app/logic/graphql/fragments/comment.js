@@ -4,7 +4,7 @@ export const CommentsFragment = eventId => `
         id
         attributes {
           description
-          users_permissions_user {
+          user_comments {
             data {
               id
               attributes {

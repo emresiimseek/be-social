@@ -9,6 +9,7 @@ export const login = async (identifier: string, password: string) => {
 
   if (res.data?.user) {
     AsyncStorage.setItem('token', JSON.stringify(res.data.jwt));
+    AsyncStorage.setItem('userId', JSON.stringify(res.data.user.id));
 
     Toast.show({
       type: 'success',
