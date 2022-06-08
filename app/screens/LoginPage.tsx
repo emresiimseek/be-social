@@ -1,13 +1,12 @@
 import { Button } from '@rneui/base';
-import { Icon, Input } from '@rneui/themed';
-import React, { Component, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Input } from '@rneui/themed';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { login } from '../logic/login';
 import { Props } from '../types/common/props';
-import HomePageComponent from './MyTabs/HomePage';
 import BaseComponent from '../components/common/BaseComponent';
-import { AutResponse } from '../types/strapi/response/aut-response';
 import { BaseState } from '../types/states/base-state';
+import { AutResponse } from '../types/strapi/models/aut-response';
 
 export interface LoginState extends BaseState {
   identifier: string;

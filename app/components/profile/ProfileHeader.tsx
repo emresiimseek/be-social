@@ -4,14 +4,15 @@ import { Card } from '@rneui/themed';
 import * as React from 'react';
 import { View, StyleSheet, Text, RefreshControl, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { User } from '../../types/strapi/strapi-user';
 import { Avatar } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
-import { UserData } from '../../types/graphql/user';
 import { Props } from '../../types/common/props';
+import { User } from '../../types/strapi/models/user';
+import { Items } from '../../types/strapi/base/base';
+import { UserEvents, UsersPermissionsUser } from '../../types/strapi/models/user-events';
 
 interface Variables {
   id: number;
@@ -71,7 +72,7 @@ export default class ProfileHeaderComponent extends React.Component<Props> {
       }
     `;
     return (
-      <Query<UserData, Variables>
+      <Query<UsersPermissionsUser, Variables>
         query={USER_QUERY}
         variables={{ id: this.state.userId ? this.state.userId : 0 }}
       >

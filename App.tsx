@@ -26,7 +26,7 @@ export default function App() {
     <>
       <NavigationContainer>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}

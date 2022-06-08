@@ -4,10 +4,9 @@ import * as React from 'react';
 import { View, StyleSheet, Text, ScrollView, RefreshControl } from 'react-native';
 import EventCard from './EventCard';
 import { Props } from '../../types/common/props';
-import { EventData } from '../../types/strapi/strapi-event';
-import { UserEvents } from '../../types/strapi/user-events';
 import { USER_EVENTS, FRIENDS_EVENTS } from '../../logic/graphql/queries/getMyEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserEvents } from '../../types/strapi/models/user-events';
 
 export interface Variables {
   id: number;

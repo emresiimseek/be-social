@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
-import { Button, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import BaseComponent from './BaseComponent';
-import { CardItem } from '../../types/common/card-item';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { Props } from '../../types/common/props';
-import { EventsAttributes } from '../../types/graphql/events';
-import { Attributes } from '../../types/strapi/strapi-event';
+import { Event } from '../../types/strapi/models/event';
 
 interface CardProps extends Props {
-  item: Attributes;
+  item: Event;
   eventId: string;
 }
 

@@ -1,13 +1,9 @@
 import { Button } from '@rneui/base';
-import React, { Component, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Props } from '../types/common/props';
-import BaseComponent from '../components/common/BaseComponent';
-import { getWelcomePage } from '../logic/welcome-page';
-import { WelcomePage as StrapiWelcomePage } from '../types/strapi/strapi-welcome-page';
-import { StrapiObject } from '../types/strapi/base/strapi-object';
-import { BgImageObject } from '../types/strapi/base/strapi-image';
 import { gql, useQuery } from '@apollo/client';
+import { WelcomePageModel } from '../types/strapi/models/welcome-page';
 
 const welcome = gql`
   query GetWelcomePage {
@@ -30,7 +26,7 @@ const welcome = gql`
 `;
 
 function WelcomePage(props: Props) {
-  const { loading, error, data } = useQuery<any>(welcome);
+  const { loading, error, data } = useQuery<WelcomePageModel>(welcome);
 
   if (loading)
     return (
@@ -42,7 +38,7 @@ function WelcomePage(props: Props) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{ uri: data.welcomePage.data.attributes.bg_image.data[0].attributes.url }}
+        source={{ uri: data?.welcomePage.data.attributes.bg_image.data[0].attributes.url }}
         resizeMode="cover"
         style={styles.image}
       >

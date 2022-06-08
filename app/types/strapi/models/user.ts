@@ -1,4 +1,4 @@
-import { Event } from './strapi-event';
+import { Event } from './event';
 
 export interface User {
   id: number;

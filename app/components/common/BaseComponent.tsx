@@ -2,10 +2,9 @@ import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Props } from '../../types/common/props';
-import { Error2 } from '../../types/strapi/strapi-error';
 import { BaseState } from '../../types/states/base-state';
 import { AxiosResponse } from '../../types/common/axios-response';
-import { AutResponse } from '../../types/strapi/response/aut-response';
+import { StrapiError } from '../../types/strapi/base/error';
 
 export default class BaseComponent<P> extends React.Component<P> {
   constructor(props: P) {
@@ -50,7 +49,7 @@ export default class BaseComponent<P> extends React.Component<P> {
     return result?.data ? result : null;
   }
 
-  getErrorMessage = (validations: Error2[], key: string) => {
+  getErrorMessage = (validations: StrapiError[], key: string) => {
     const value = validations?.find(x => x.path.find(p => p === key));
 
     return value?.message ?? '';

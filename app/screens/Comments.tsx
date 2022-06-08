@@ -3,16 +3,15 @@ import * as React from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
 import { getComments } from '../logic/graphql/comment';
-import { StrapiArray } from '../types/strapi/base/strapi-array';
-import { Comment } from '../types/strapi/comment';
-import { StrapiAttributes } from '../types/strapi/base/strapi-object';
+import { Data, Item } from '../types/strapi/base/base';
+import { Comment } from '../types/strapi/models/comment';
 
 export interface CommentsProps {
   route: any;
 }
 
 export interface CommentsState {
-  comments: StrapiAttributes<Comment>[];
+  comments: Data<Comment>[];
 }
 
 export default class CommentsComponent extends BaseComponent<CommentsProps> {

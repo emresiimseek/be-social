@@ -6,8 +6,8 @@ import BaseComponent from '../components/common/BaseComponent';
 import { register } from '../logic/register';
 import { Props } from '../types/common/props';
 import { BaseState } from '../types/states/base-state';
-import { User } from '../types/strapi/strapi-user';
 import Toast from 'react-native-toast-message';
+import { User } from '../types/strapi/models/user';
 
 export interface RegisterPageStates extends BaseState {
   user: User | null;
