@@ -1,7 +1,5 @@
 import axios, { CancelTokenSource } from 'axios';
 import { AxiosResponse } from '../types/common/axios-response';
-import { Error2, StrapiError } from '../types/strapi/strapi-error';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class ApiBase {
   cancelTokenSource: CancelTokenSource | null = null;
@@ -32,7 +30,7 @@ class ApiBase {
       .catch(error => {
         if (axios.isCancel(error)) console.log('request canceled', error);
         else {
-          const data: StrapiError = error.response.data;
+          const data = error.response.data;
           result = { validations: data.error.details.errors, error: data.error.message, data: null };
         }
       });
@@ -59,7 +57,7 @@ class ApiBase {
       .catch(error => {
         if (axios.isCancel(error)) console.log('request canceled', error);
         else {
-          const data: StrapiError = error.response.data;
+          const data = error.response.data;
           result = { validations: data.error.details.errors, error: data.error.message, data: null };
         }
       });
