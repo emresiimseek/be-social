@@ -14,3 +14,8 @@ export interface Item<T> {
 export interface Image {
   url: string;
 }
+
+export interface Variables {
+  filters?: any;
+  id?: number;
+}

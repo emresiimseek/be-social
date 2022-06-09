@@ -7,10 +7,7 @@ import { Props } from '../../types/common/props';
 import { USER_EVENTS, FRIENDS_EVENTS } from '../../logic/graphql/queries/getMyEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserEvents } from '../../types/strapi/models/user-events';
-
-export interface Variables {
-  id: number;
-}
+import { Variables } from '../../types/strapi/base/base';
 
 export interface EventProps extends Props {
   isMine: boolean;

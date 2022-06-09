@@ -1,6 +1,5 @@
 import { Icon, Image } from '@rneui/themed';
 import { Card } from '@rneui/themed';
-
 import * as React from 'react';
 import { View, StyleSheet, Text, RefreshControl, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,12 +10,8 @@ import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import { Props } from '../../types/common/props';
 import { User } from '../../types/strapi/models/user';
-import { Items } from '../../types/strapi/base/base';
+import { Items, Variables } from '../../types/strapi/base/base';
 import { UserEvents, UsersPermissionsUser } from '../../types/strapi/models/user-events';
-
-interface Variables {
-  id: number;
-}
 
 export default class ProfileHeaderComponent extends React.Component<Props> {
   userId = () => AsyncStorage.getItem('userId');
