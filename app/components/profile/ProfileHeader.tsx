@@ -1,18 +1,14 @@
-import { Icon, Image } from '@rneui/themed';
-import { Card } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import * as React from 'react';
 import { View, StyleSheet, Text, RefreshControl, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import { Props } from '../../types/common/props';
-import { User } from '../../types/strapi/models/user';
-import { Items, Variables } from '../../types/strapi/base/base';
-import { UserEvents, UsersPermissionsUser } from '../../types/strapi/models/user-events';
-import { USERS_QUERY } from '../../graphql/queries/getUser';
+import { Variables } from '../../types/strapi/base/base';
+import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
+import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 
 export default class ProfileHeaderComponent extends React.Component<Props> {
   userId = () => AsyncStorage.getItem('userId');

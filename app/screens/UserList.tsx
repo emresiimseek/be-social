@@ -2,13 +2,12 @@
 import { Query } from '@apollo/client/react/components';
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import { gql } from '@apollo/client';
 import { Variables } from '../types/strapi/base/base';
 import { Props } from '../types/common/props';
 import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
-import { USERS_QUERY } from '../graphql/queries/getUser';
+import { USERS_QUERY } from '../logic/graphql/queries/getUser';
 
 // create a component
 class UserList extends Component<Props> {
