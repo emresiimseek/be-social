@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import { ListItem, Avatar } from '@rneui/themed';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
 import { Variables } from '../types/strapi/base/base';
 import { EventComments } from '../types/strapi/models/event-comments';
@@ -38,8 +38,10 @@ export default class CommentsComponent extends BaseComponent<Props> {
         query={this.EVENT_COMMENTS}
         variables={{ filters: { event: { id: { eq: this.props.route.params.eventId } } } }}
       >
-        {({ loading, data }) => {
-          return (
+        {({ loading, data, error }) => {
+          return error?.message ? (
+            <Text>{error.message}</Text>
+          ) : (
             <ScrollView>
               {data?.comments.data.flatMap((comment, i) => (
                 <ListItem key={i} bottomDivider>

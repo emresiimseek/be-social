@@ -10,6 +10,7 @@ import RegisterPageComponent from './app/screens/RegisterPage';
 import CommentsComponent from './app/screens/Comments';
 import { ApolloClient, ApolloProvider, gql, InMemoryCache, useApolloClient } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
+import UserList from './app/screens/UserList';
 
 const books = [
   {
@@ -56,7 +57,7 @@ export default function App() {
     <>
       <NavigationContainer>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Navigator initialRouteName="MyTabs">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}
@@ -99,6 +100,15 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Yorumlar',
+                headerStyle: { backgroundColor: '#33475699' },
+              }}
+            />
+            <Stack.Screen
+              name="Follow"
+              component={UserList}
+              options={{
+                headerTintColor: 'white',
+                title: 'Takip Listesi',
                 headerStyle: { backgroundColor: '#33475699' },
               }}
             />

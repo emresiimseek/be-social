@@ -12,6 +12,7 @@ import { Props } from '../../types/common/props';
 import { User } from '../../types/strapi/models/user';
 import { Items, Variables } from '../../types/strapi/base/base';
 import { UserEvents, UsersPermissionsUser } from '../../types/strapi/models/user-events';
+import { USERS_QUERY } from '../../graphql/queries/getUser';
 
 export default class ProfileHeaderComponent extends React.Component<Props> {
   userId = () => AsyncStorage.getItem('userId');
@@ -24,51 +25,9 @@ export default class ProfileHeaderComponent extends React.Component<Props> {
   };
 
   public render() {
-    const USER_QUERY = gql`
-      query getUser($id: ID!) {
-        usersPermissionsUser(id: $id) {
-          data {
-            id
-            attributes {
-              firstname
-              lastname
-              email
-              username
-              users_follow {
-                data {
-                  id
-                  attributes {
-                    username
-                    email
-                    firstname
-                    lastname
-                  }
-                }
-              }
-              users_follow_me {
-                data {
-                  id
-                  attributes {
-                    username
-                    lastname
-                    firstname
-                    lastname
-                  }
-                }
-              }
-              events {
-                data {
-                  id
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
     return (
       <Query<UsersPermissionsUser, Variables>
-        query={USER_QUERY}
+        query={USERS_QUERY}
         variables={{ id: this.state.userId ? this.state.userId : 0 }}
       >
         {({ loading, data }) => {
@@ -90,8 +49,30 @@ export default class ProfileHeaderComponent extends React.Component<Props> {
                   </View>
                   <View style={styles.count}>
                     <Text style={styles.countText}>{user?.events.data.length} Etkinlik</Text>
-                    <Text style={styles.countText}>{user?.users_follow.data.length} Takip</Text>
-                    <Text style={styles.countText}>{user?.users_follow_me.data.length} Takipçi</Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate({
+                          name: 'Follow',
+                          params: { userId: this.state.userId, follow: true },
+                          merge: true,
+                        })
+                      }
+                      style={styles.countText}
+                    >
+                      {user?.users_follow.data.length} Takip
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate({
+                          name: 'Follow',
+                          params: { userId: this.state.userId },
+                          merge: true,
+                        })
+                      }
+                      style={styles.countText}
+                    >
+                      {user?.users_follow_me.data.length} Takipçi
+                    </Text>
                   </View>
                   <View style={styles.bottom}>
                     <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
