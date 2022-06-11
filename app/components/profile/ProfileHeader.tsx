@@ -18,7 +18,15 @@ export default class ProfileHeaderComponent extends React.Component<ProfileHeade
         {user && (
           <View style={styles.container}>
             <View style={styles.info}>
-              <Avatar source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }} rounded size={70} />
+              <Avatar
+                source={{
+                  uri: user?.profile_photo?.data?.attributes?.url
+                    ? user?.profile_photo?.data?.attributes?.url
+                    : 'https://www.29mayis.edu.tr/public/images/default-profile.png',
+                }}
+                rounded
+                size={70}
+              />
               <Text style={{ textTransform: 'capitalize', marginVertical: 5 }}>
                 {user?.firstname} {user?.lastname}
               </Text>

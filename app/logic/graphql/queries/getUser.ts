@@ -7,6 +7,13 @@ export const USERS_QUERY = gql`
         id
         attributes {
           firstname
+          profile_photo {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
           lastname
           email
           username
@@ -79,6 +86,13 @@ export const USERS_QUERY = gql`
                   data {
                     attributes {
                       username
+                      profile_photo {
+                        data {
+                          attributes {
+                            url
+                          }
+                        }
+                      }
                     }
                   }
                 }

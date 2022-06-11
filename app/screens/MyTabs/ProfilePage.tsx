@@ -16,7 +16,7 @@ export const ProfilePage = (props: Props) => {
   }, [props.route?.params?.userId]);
 
   const { loading, error, data, refetch } = useQuery<UsersPermissionsUser, Variables>(USERS_QUERY, {
-    variables: { id: 4 },
+    variables: { id: 3 },
   });
 
   return data ? (

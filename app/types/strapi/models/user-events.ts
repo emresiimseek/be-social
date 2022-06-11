@@ -1,4 +1,4 @@
-import { Item } from '../base/base';
+import { Image, Item } from '../base/base';
 import { Items } from '../base/base';
 import { Event } from './event';
 import { User } from './user';
@@ -21,6 +21,7 @@ export interface UserAttributes {
   users_follow: Items<User>;
   users_follow_me: Items<User>;
   events: Items<Event>;
+  profile_photo: Item<Image>;
 }
 
 export interface UsersPermissionsUser {

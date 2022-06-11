@@ -13,13 +13,6 @@ interface CardProps extends Props {
 }
 
 class EventCard extends BaseComponent<CardProps> {
-  state = {
-    item: {
-      userName: 'emresimsek',
-      userAvatar: 'https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553__340.jpg',
-      participantCount: 15,
-    },
-  };
   render() {
     moment.locale('tr');
 
@@ -31,7 +24,11 @@ class EventCard extends BaseComponent<CardProps> {
             <Avatar
               size={40}
               rounded
-              source={this.state.item.userAvatar ? { uri: this.state.item.userAvatar } : {}}
+              source={{
+                uri: this.props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
+                  ? this.props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
+                  : 'https://www.29mayis.edu.tr/public/images/default-profile.png',
+              }}
             />
             <Text style={{ marginLeft: 5 }}>{this.props.item?.users?.data[0]?.attributes.username}</Text>
           </View>
