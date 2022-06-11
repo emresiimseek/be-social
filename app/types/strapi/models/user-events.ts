@@ -20,7 +20,7 @@ export interface UserAttributes {
   username: string;
   users_follow: Items<User>;
   users_follow_me: Items<User>;
-  events: Items<any>;
+  events: Items<Event>;
 }
 
 export interface UsersPermissionsUser {

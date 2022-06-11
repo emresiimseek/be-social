@@ -33,6 +33,8 @@ export default class CommentsComponent extends BaseComponent<Props> {
   `;
 
   public render() {
+    console.log(this.props.route.params.eventId);
+
     return (
       <Query<EventComments, Variables>
         query={this.EVENT_COMMENTS}

@@ -1,40 +1,30 @@
-import * as React from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, ScrollView, RefreshControl } from 'react-native';
 import ProfileHeaderComponent from '../../components/profile/ProfileHeader';
-import BaseComponent from '../../components/common/BaseComponent';
-import { getMe } from '../../logic/getMe';
-import { User } from '../../types/strapi/strapi-user';
-import { StrapiObject } from '../../types/strapi/base/strapi-object';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Card from '../../components/common/EventCard';
 import { Props } from '../../types/common/props';
 import EventList from '../../components/common/EventList';
+import { useQuery } from '@apollo/client';
+import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
+import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
+import { Variables } from '../../types/strapi/base/base';
 
-export interface ProfilePageProps extends Props {}
+export const ProfilePage = (props: Props) => {
+  useEffect(() => {
+    console.log(props.route?.params?.userId);
 
-export interface ProfilePageState {
-  user: User | null;
-  events: Event[];
-}
+    if (props.route?.params?.userId) refetch({ id: props.route?.params?.userId });
+  }, [props.route?.params?.userId]);
 
-export default class ProfilePage extends BaseComponent<ProfilePageProps> {
-  state: ProfilePageState = { user: null, events: [] };
-  componentDidMount = () => {
-    this.getMe();
-  };
+  const { loading, error, data, refetch } = useQuery<UsersPermissionsUser, Variables>(USERS_QUERY, {
+    variables: { id: 4 },
+  });
 
-  getMe = async () => {
-    const result = await this.handleRequest<User>(() => getMe());
-    this.setState({ user: result?.data });
-    this.setState({ events: result?.data?.events });
-  };
-
-  public render() {
-    return (
+  return data ? (
+    <ScrollView refreshControl={<RefreshControl refreshing={false} />}>
       <View>
-        <ProfileHeaderComponent navigation={this.props.navigation} />
-        <EventList isMine navigation={this.props.navigation} />
+        <ProfileHeaderComponent user={data} navigation={props.navigation} />
+        <EventList user={data} isMine navigation={props.navigation} />
       </View>
-    );
-  }
-}
+    </ScrollView>
+  ) : null;
+};

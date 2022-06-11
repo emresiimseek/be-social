@@ -1,9 +1,11 @@
-import { Button } from '@rneui/base';
-import React from 'react';
+import { Button, Input } from '@rneui/base';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Props } from '../types/common/props';
 import { gql, useQuery } from '@apollo/client';
 import { WelcomePageModel } from '../types/strapi/models/welcome-page';
+import Loading from '../components/common/Loading';
+import Toast from 'react-native-toast-message';
 
 const welcome = gql`
   query GetWelcomePage {
@@ -28,12 +30,16 @@ const welcome = gql`
 function WelcomePage(props: Props) {
   const { loading, error, data } = useQuery<WelcomePageModel>(welcome);
 
-  if (loading)
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+  useEffect(() => {
+    if (error?.message)
+      Toast.show({
+        type: 'error',
+        text1: error?.message,
+        position: 'bottom',
+      });
+  }, [error]);
+
+  if (loading) return <Loading />;
 
   return (
     <View style={styles.container}>
@@ -54,6 +60,7 @@ function WelcomePage(props: Props) {
             title="Login"
             color="#FF4C29"
           />
+          {/* <Input value={errorMessage} onChangeText={value => setError(value)}></Input> */}
           <Button
             onPress={() => props.navigation.navigate('Register')}
             buttonStyle={styles.bottomButton}

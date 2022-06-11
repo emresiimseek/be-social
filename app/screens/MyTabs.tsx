@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomePage from './MyTabs/HomePage';
 import { Icon } from '@rneui/themed';
-import ProfilePage from './MyTabs/ProfilePage';
 import { Props } from '../types/common/props';
+import { HomePage } from './MyTabs/HomePage';
+import { ProfilePage } from './MyTabs/ProfilePage';
 
 const Tab = createBottomTabNavigator();
 interface MyTabsProps extends Props {}
@@ -32,7 +32,7 @@ export function MyTabs(props: MyTabsProps) {
       })}
     >
       <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Profile" children={() => <ProfilePage navigation={props.navigation} />} />
+      <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
   );
 }

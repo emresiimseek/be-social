@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     minHeight: 420,
   },
   header: {
-    flex: 0.2,
+    flex: 0.3,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

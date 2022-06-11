@@ -22,7 +22,16 @@ class UserList extends Component<Props> {
             <ScrollView>
               {this.props.route.params.follow
                 ? data?.usersPermissionsUser.data.attributes.users_follow.data.map(user => (
-                    <ListItem key={user.id} bottomDivider>
+                    <ListItem
+                      key={user.id}
+                      bottomDivider
+                      onPress={() =>
+                        this.props.navigation.navigate('MyTabs', {
+                          screen: 'Profile',
+                          params: { userId: user.id },
+                        })
+                      }
+                    >
                       <Avatar
                         source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
                         rounded
@@ -37,7 +46,16 @@ class UserList extends Component<Props> {
                     </ListItem>
                   ))
                 : data?.usersPermissionsUser.data.attributes.users_follow_me.data.map(user => (
-                    <ListItem key={user.id} bottomDivider>
+                    <ListItem
+                      key={user.id}
+                      bottomDivider
+                      onPress={() =>
+                        this.props.navigation.navigate('MyTabs', {
+                          screen: 'Profile',
+                          params: { userId: user.id },
+                        })
+                      }
+                    >
                       <Avatar
                         source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
                         rounded
