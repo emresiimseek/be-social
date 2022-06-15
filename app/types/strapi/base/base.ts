@@ -19,4 +19,5 @@ export interface Variables {
   filters?: any;
   id?: number;
   userId?: number;
+  data?: any;
 }

@@ -22,12 +22,12 @@ class EventCard extends BaseComponent<CardProps> {
         <View style={styles.header}>
           <View style={styles.headerContainer}>
             <Avatar
-              size={40}
+              size={35}
               rounded
               source={{
                 uri: this.props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
                   ? this.props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
-                  : 'https://www.29mayis.edu.tr/public/images/default-profile.png',
+                  : 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
               }}
             />
             <Text style={{ marginLeft: 5 }}>{this.props.item?.users?.data[0]?.attributes.username}</Text>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     minHeight: 420,
   },
   header: {
-    flex: 0.3,
+    flex: 0.25,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

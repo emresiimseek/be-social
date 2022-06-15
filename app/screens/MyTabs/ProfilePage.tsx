@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
-import ProfileHeaderComponent from '../../components/profile/ProfileHeader';
+import { ProfileHeaderComponent } from '../../components/profile/ProfileHeader';
 import { Props } from '../../types/common/props';
 import EventList from '../../components/common/EventList';
 import { useQuery } from '@apollo/client';
