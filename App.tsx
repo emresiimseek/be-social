@@ -11,6 +11,7 @@ import CommentsComponent from './app/screens/Comments';
 import { ApolloClient, ApolloProvider, gql, InMemoryCache, useApolloClient } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import UserList from './app/screens/UserList';
+import { VisitedProfile } from './app/screens/VisitedProfile';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -80,6 +81,15 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Takip Listesi',
+                headerStyle: { backgroundColor: '#33475699' },
+              }}
+            />
+            <Stack.Screen
+              name="VisitedProfile"
+              component={VisitedProfile}
+              options={{
+                headerTintColor: 'white',
+                title: 'Profile',
                 headerStyle: { backgroundColor: '#33475699' },
               }}
             />

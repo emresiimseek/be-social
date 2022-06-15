@@ -26,9 +26,8 @@ class UserList extends Component<Props> {
                       key={user.id}
                       bottomDivider
                       onPress={() =>
-                        this.props.navigation.navigate('MyTabs', {
-                          screen: 'Profile',
-                          params: { userId: user.id },
+                        this.props.navigation.navigate('VisitedProfile', {
+                          userId: user.id,
                         })
                       }
                     >
@@ -50,9 +49,8 @@ class UserList extends Component<Props> {
                       key={user.id}
                       bottomDivider
                       onPress={() =>
-                        this.props.navigation.navigate('MyTabs', {
-                          screen: 'Profile',
-                          params: { userId: user.id },
+                        this.props.navigation.navigate('VisitedProfile', {
+                          userId: user.id,
                         })
                       }
                     >

@@ -33,8 +33,6 @@ export default class CommentsComponent extends BaseComponent<Props> {
   `;
 
   public render() {
-    console.log(this.props.route.params.eventId);
-
     return (
       <Query<EventComments, Variables>
         query={this.EVENT_COMMENTS}
@@ -46,7 +44,15 @@ export default class CommentsComponent extends BaseComponent<Props> {
           ) : (
             <ScrollView>
               {data?.comments.data.flatMap((comment, i) => (
-                <ListItem key={i} bottomDivider>
+                <ListItem
+                  key={i}
+                  bottomDivider
+                  onPress={() =>
+                    this.props.navigation.navigate('VisitedProfile', {
+                      userId: comment.attributes.user_comments.data.id,
+                    })
+                  }
+                >
                   <Avatar
                     source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
                     rounded

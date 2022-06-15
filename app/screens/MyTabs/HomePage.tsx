@@ -6,16 +6,28 @@ import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { Variables, Data } from '../../types/strapi/base/base';
 import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { View, ScrollView, RefreshControl } from 'react-native';
+import { FLOW_EVENTS } from '../../logic/graphql/queries/getEventsByUserId';
+import { FlowEventData } from '../../types/strapi/models/flow-event';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomePage = (props: Props) => {
-  const { loading, error, data, refetch } = useQuery<UsersPermissionsUser, Variables>(USERS_QUERY, {
-    variables: { id: 3 },
+  const [userId, setUserId] = useState<number | undefined>();
+  const [event, setEvent] = useState<FlowEventData | null>(null);
+
+  const { loading, error, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
+    variables: { userId: userId },
   });
 
-  const [user, setUser] = useState<UsersPermissionsUser | null>(null);
+  useEffect(() => {
+    const getUserId = async () => {
+      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
+      setUserId(+userId);
+    };
+    getUserId();
+  }, []);
 
   useEffect(() => {
-    setUser(data ? data : null);
+    setEvent(data ? data : null);
   }, [data]);
 
   return (
@@ -25,12 +37,12 @@ export const HomePage = (props: Props) => {
           refreshing={loading}
           onRefresh={async () => {
             const result = await refetch();
-            setUser(result.data);
+            setEvent(result.data);
           }}
         />
       }
     >
-      {user && <EventList navigation={props.navigation} user={user} isMine />}
+      {event && <EventList navigation={props.navigation} event={event} isMine />}
     </ScrollView>
   );
 };

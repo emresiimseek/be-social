@@ -18,4 +18,5 @@ export interface Image {
 export interface Variables {
   filters?: any;
   id?: number;
+  userId?: number;
 }

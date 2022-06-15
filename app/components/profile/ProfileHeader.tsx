@@ -8,6 +8,7 @@ import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
+  isMe: boolean;
 }
 export default class ProfileHeaderComponent extends React.Component<ProfileHeaderProps> {
   public render() {
@@ -22,7 +23,7 @@ export default class ProfileHeaderComponent extends React.Component<ProfileHeade
                 source={{
                   uri: user?.profile_photo?.data?.attributes?.url
                     ? user?.profile_photo?.data?.attributes?.url
-                    : 'https://www.29mayis.edu.tr/public/images/default-profile.png',
+                    : 'https://malatyakale.bel.tr/tema/genel/uploads/profiller/anonymous-avatar-icon-25.jpg',
                 }}
                 rounded
                 size={70}
@@ -59,22 +60,30 @@ export default class ProfileHeaderComponent extends React.Component<ProfileHeade
                 {user?.users_follow_me.data.length} Takipçi
               </Text>
             </View>
-            <View style={styles.bottom}>
-              <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
-                Takip
-                <Icon
-                  name="person-add"
-                  type="metarial"
-                  size={12}
-                  style={{ marginHorizontal: 5 }}
-                  color="#FF4C29"
-                />
-              </Button>
-              <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
-                Mesaj
-                <Icon name="send" type="metarial" size={12} style={{ marginHorizontal: 5 }} color="#FF4C29" />
-              </Button>
-            </View>
+            {!this.props.isMe && (
+              <View style={styles.bottom}>
+                <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
+                  Takip
+                  <Icon
+                    name="person-add"
+                    type="metarial"
+                    size={12}
+                    style={{ marginHorizontal: 5 }}
+                    color="#FF4C29"
+                  />
+                </Button>
+                <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
+                  Mesaj
+                  <Icon
+                    name="send"
+                    type="metarial"
+                    size={12}
+                    style={{ marginHorizontal: 5 }}
+                    color="#FF4C29"
+                  />
+                </Button>
+              </View>
+            )}
           </View>
         )}
       </View>
@@ -84,7 +93,7 @@ export default class ProfileHeaderComponent extends React.Component<ProfileHeade
 const styles = StyleSheet.create({
   container: {
     minHeight: 150,
-    marginVertical: 10,
+    marginBottom: 10,
     borderRadius: 5,
     padding: 20,
     backgroundColor: 'white',

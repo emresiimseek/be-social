@@ -1,17 +1,15 @@
 import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import * as React from 'react';
-import { View, StyleSheet, Text, ScrollView, RefreshControl } from 'react-native';
+import { View, Text } from 'react-native';
 import EventCard from './EventCard';
 import { Props } from '../../types/common/props';
-import { FRIENDS_EVENTS, USER_EVENTS } from '../../logic/graphql/queries/getMyEvents';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserEvents, UsersPermissionsUser } from '../../types/strapi/models/user-events';
-import { Variables } from '../../types/strapi/base/base';
+import { FlowEventData } from '../../types/strapi/models/flow-event';
 
 export interface EventProps extends Props {
   isMine: boolean;
-  user: UsersPermissionsUser;
+  event: FlowEventData;
 }
 
 export default class EventList extends React.Component<EventProps> {
@@ -21,12 +19,10 @@ export default class EventList extends React.Component<EventProps> {
     this.setState({ userId: userId });
   };
   public render() {
-    const events = this.props.user?.usersPermissionsUser?.data.attributes.events.data;
-
     return (
       <View>
-        {events.length ? (
-          events.map(event => (
+        {this.props.event.getEventsByUserId.data.length ? (
+          this.props.event.getEventsByUserId.data.map(event => (
             <EventCard
               key={event.id}
               item={event.attributes}

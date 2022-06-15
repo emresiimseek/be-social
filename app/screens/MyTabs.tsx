@@ -26,13 +26,15 @@ export function MyTabs(props: MyTabsProps) {
         },
 
         headerTitleAlign: 'center',
-        title: 'Akış',
         tabBarShowLabel: false,
+        headerShown: true,
         tabBarStyle: { backgroundColor: '#334756' },
+        headerStyle: { backgroundColor: '#334756' },
+        headerTitleStyle: { color: 'white' },
       })}
     >
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Profile" component={ProfilePage} />
+      <Tab.Screen name="Home" options={{ headerTitle: 'Akış' }} component={HomePage} />
+      <Tab.Screen name="Profile" component={ProfilePage} options={{ headerTitle: 'Profil' }} />
     </Tab.Navigator>
   );
 }
