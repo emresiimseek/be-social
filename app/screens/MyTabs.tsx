@@ -14,23 +14,23 @@ export function MyTabs(props: MyTabsProps) {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')
-            return <Icon name="home" size={30} type="antdesign" color={focused ? '#FF4C29' : 'gray'} />;
+            return <Icon name="home" size={30} type="antdesign" color={focused ? '#C06014' : 'gray'} />;
           else if (route.name == 'Profile')
-            return <Icon name="user" size={40} type="evilicon" color={focused ? '#FF4C29' : 'gray'} />;
+            return <Icon name="user" size={40} type="evilicon" color={focused ? '#C06014' : 'gray'} />;
           else if (route.name == 'Search')
-            return <Icon name="search1" type="antdesign" size={30} color={focused ? '#FF4C29' : 'gray'} />;
+            return <Icon name="search1" type="antdesign" size={30} color={focused ? '#C06014' : 'gray'} />;
           else if (route.name == 'NewEvent')
             return (
-              <Icon name="create-outline" type="ionicon" size={32} color={focused ? '#FF4C29' : 'gray'} />
+              <Icon name="create-outline" type="ionicon" size={32} color={focused ? '#C06014' : 'gray'} />
             );
         },
 
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: '#334756' },
-        headerStyle: { backgroundColor: '#334756' },
-        headerTitleStyle: { color: 'white' },
+        tabBarStyle: { backgroundColor: '#F3F4ED' },
+        headerStyle: { backgroundColor: '#C06014' },
+        headerTitleStyle: { color: '#F3F4ED' },
       })}
     >
       <Tab.Screen name="Home" options={{ headerTitle: 'Akış' }} component={HomePage} />

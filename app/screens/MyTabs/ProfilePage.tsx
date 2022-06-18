@@ -28,12 +28,18 @@ export const ProfilePage = (props: Props) => {
     <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
       {data && (
         <View>
-          <ProfileHeaderComponent isMe={true} user={data} navigation={props.navigation} />
+          <ProfileHeaderComponent
+            isMe={true}
+            user={data}
+            navigation={props.navigation}
+            currentUserId={userId}
+          />
           <EventList
             event={{
               getEventsByUserId: { data: [...data.usersPermissionsUser.data.attributes.events.data] },
             }}
             isMine
+            currentUserId={userId}
             navigation={props.navigation}
           />
         </View>

@@ -79,7 +79,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
               {user?.users_follow_me.data.length} Takipçi
             </Text>
           </View>
-          {!props.isMe && (
+          {props.currentUserId === +props.user.usersPermissionsUser.data.id && (
             <View style={styles.bottom}>
               <Button
                 onPress={() => {

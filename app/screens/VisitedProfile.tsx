@@ -6,7 +6,7 @@ import { Variables } from '../types/strapi/base/base';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { ProfileHeaderComponent } from '../components/profile/ProfileHeader';
-import EventList from '../components/common/EventList';
+import { EventList } from '../components/common/EventList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const VisitedProfile = (props: Props) => {

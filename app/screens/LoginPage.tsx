@@ -32,40 +32,40 @@ class LoginPage extends BaseComponent<Props> {
           onChangeText={identifier => this.setState({ ...this.state, identifier })}
           placeholder="E-Posta"
           errorMessage={this.getErrorMessage(this.state.validations, 'identifier')}
-          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#FF4C29' }}
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014' }}
           containerStyle={styles.input}
-          inputStyle={{ color: 'white' }}
-          placeholderTextColor="white"
-          errorStyle={{ color: '#FF4C29' }}
-          inputContainerStyle={{ borderBottomColor: 'white' }}
+          inputStyle={{ color: '#536162' }}
+          placeholderTextColor="#536162"
+          errorStyle={{ color: '#C06014' }}
+          inputContainerStyle={{ borderBottomColor: '#536162' }}
         />
         <Input
           onChangeText={password => this.setState({ ...this.state, password })}
           placeholder="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#FF4C29' }}
+          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014' }}
           errorMessage={this.getErrorMessage(this.state.validations, 'password')}
           containerStyle={styles.input}
           secureTextEntry={true}
-          inputStyle={{ color: 'white' }}
-          placeholderTextColor="white"
-          inputContainerStyle={{ borderBottomColor: 'white' }}
-          errorStyle={{ color: '#FF4C29' }}
+          inputStyle={{ color: '#536162' }}
+          placeholderTextColor="#536162"
+          inputContainerStyle={{ borderBottomColor: '#424642' }}
+          errorStyle={{ color: '#C06014' }}
         />
         <Button
           onPress={() => this.login()}
           title="Giriş"
           loading={this.state.loading}
           buttonStyle={styles.button}
-          titleStyle={{ color: 'black' }}
+          titleStyle={{ color: '#F3F4ED' }}
           size="lg"
-          color="#FF4C29"
+          color="#C06014"
         />
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#334756' },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#F3F4ED' },
   input: { marginBottom: 5 },
   button: { marginHorizontal: 10 },
 });

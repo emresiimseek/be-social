@@ -57,16 +57,16 @@ function WelcomePage(props: Props) {
             onPress={() => props.navigation.navigate('Login')}
             buttonStyle={styles.bottomButton}
             size="lg"
-            title="Login"
-            color="#FF4C29"
+            title="Giriş Yap"
+            color="#C06014"
           />
           {/* <Input value={errorMessage} onChangeText={value => setError(value)}></Input> */}
           <Button
             onPress={() => props.navigation.navigate('Register')}
             buttonStyle={styles.bottomButton}
             size="lg"
-            title="Register"
-            color="#FF4C29"
+            title="Kayıt Ol"
+            color="#C06014"
           />
         </View>
       </ImageBackground>
@@ -84,17 +84,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F3F4ED',
   },
   body: {
     color: 'white',
-    backgroundColor: '#33475650',
+    backgroundColor: '#53616299',
     borderRadius: 5,
-    padding: 50,
     minHeight: '33%',
+    paddingHorizontal: 15,
+    paddingVertical: 25,
+    alignItems: 'center',
     width: '90%',
   },
 
-  text: { color: 'white', textAlign: 'center' },
+  text: { textAlign: 'center', fontSize: 18, color: '#F3F4ED' },
   bottom: { bottom: 40, position: 'absolute', width: '100%' },
   bottomButton: {
     marginHorizontal: 10,
@@ -104,5 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 15,
+    color: '#F3F4ED',
   },
 });

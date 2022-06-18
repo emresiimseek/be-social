@@ -33,14 +33,14 @@ export default function App() {
     <>
       <NavigationContainer>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}
               options={{
-                headerTintColor: 'white',
+                headerTitleStyle: { color: '#F3F4ED' },
                 title: 'Be Social',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
             <Stack.Screen
@@ -49,7 +49,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Giriş',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
             <Stack.Screen
@@ -57,8 +57,8 @@ export default function App() {
               component={RegisterPageComponent}
               options={{
                 title: 'Kayıt Ol',
-                headerTintColor: 'white',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerTitleStyle: { color: '#F3F4ED' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
             <Stack.Screen
@@ -66,7 +66,7 @@ export default function App() {
               component={MyTabs}
               options={{
                 headerTintColor: 'white',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
                 headerShown: false,
               }}
             />
@@ -76,7 +76,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Yorumlar',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
             <Stack.Screen
@@ -85,7 +85,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Takip Listesi',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
             <Stack.Screen
@@ -94,7 +94,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Profile',
-                headerStyle: { backgroundColor: '#33475699' },
+                headerStyle: { backgroundColor: '#C06014' },
               }}
             />
           </Stack.Navigator>

@@ -2,11 +2,12 @@ import { gql } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import { ListItem, Avatar } from '@rneui/themed';
 import * as React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
 import { Variables } from '../types/strapi/base/base';
 import { EventComments } from '../types/strapi/models/event-comments';
 import { Props } from '../types/common/props';
+import { Input } from '@rneui/base';
 
 export default class CommentsComponent extends BaseComponent<Props> {
   EVENT_COMMENTS = gql`
@@ -42,31 +43,34 @@ export default class CommentsComponent extends BaseComponent<Props> {
           return error?.message ? (
             <Text>{error.message}</Text>
           ) : (
-            <ScrollView>
-              {data?.comments.data.flatMap((comment, i) => (
-                <ListItem
-                  key={i}
-                  bottomDivider
-                  onPress={() =>
-                    this.props.navigation.navigate('VisitedProfile', {
-                      userId: comment.attributes.user_comments.data.id,
-                    })
-                  }
-                >
-                  <Avatar
-                    source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
-                    rounded
-                    size={70}
-                  />
-                  <ListItem.Content>
-                    <ListItem.Title>
-                      {comment.attributes.user_comments.data.attributes.username}
-                    </ListItem.Title>
-                    <ListItem.Subtitle>{comment.attributes.description}</ListItem.Subtitle>
-                  </ListItem.Content>
-                </ListItem>
-              ))}
-            </ScrollView>
+            <View style={{ minHeight: '100%' }}>
+              <ScrollView>
+                {data?.comments.data.flatMap((comment, i) => (
+                  <ListItem
+                    key={i}
+                    bottomDivider
+                    onPress={() =>
+                      this.props.navigation.navigate('VisitedProfile', {
+                        userId: comment.attributes.user_comments.data.id,
+                      })
+                    }
+                  >
+                    <Avatar
+                      source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
+                      rounded
+                      size={70}
+                    />
+                    <ListItem.Content>
+                      <ListItem.Title>
+                        {comment.attributes.user_comments.data.attributes.username}
+                      </ListItem.Title>
+                      <ListItem.Subtitle>{comment.attributes.description}</ListItem.Subtitle>
+                    </ListItem.Content>
+                  </ListItem>
+                ))}
+              </ScrollView>
+              <Input style={{ position: 'absolute', top: 0 }} />
+            </View>
           );
         }}
       </Query>

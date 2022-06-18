@@ -43,6 +43,14 @@ export const USERS_QUERY = gql`
             data {
               id
               attributes {
+                event_likes {
+                  data {
+                    id
+                    attributes {
+                      username
+                    }
+                  }
+                }
                 categories {
                   data {
                     id
