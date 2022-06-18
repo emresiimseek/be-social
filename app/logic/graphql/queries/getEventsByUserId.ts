@@ -47,6 +47,7 @@ export const FLOW_EVENTS = gql`
           }
           users {
             data {
+              id
               attributes {
                 username
                 profile_photo {
@@ -56,6 +57,14 @@ export const FLOW_EVENTS = gql`
                     }
                   }
                 }
+              }
+            }
+          }
+          event_likes {
+            data {
+              id
+              attributes {
+                username
               }
             }
           }

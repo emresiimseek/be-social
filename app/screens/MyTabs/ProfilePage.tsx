@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
 import { ProfileHeaderComponent } from '../../components/profile/ProfileHeader';
 import { Props } from '../../types/common/props';
-import EventList from '../../components/common/EventList';
+import { EventList } from '../../components/common/EventList';
 import { useQuery } from '@apollo/client';
 import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';

@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import EventList from '../../components/common/EventList';
+import { EventList } from '../../components/common/EventList';
 import { Props } from '../../types/common/props';
-import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { Variables, Data } from '../../types/strapi/base/base';
 import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { View, ScrollView, RefreshControl } from 'react-native';
