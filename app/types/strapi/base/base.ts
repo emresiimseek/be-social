@@ -20,4 +20,6 @@ export interface Variables {
   id?: number;
   userId?: number;
   data?: any;
+  userIds?: number[];
+  follow?: boolean;
 }

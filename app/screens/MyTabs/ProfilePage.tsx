@@ -25,7 +25,7 @@ export const ProfilePage = (props: Props) => {
   });
 
   return (
-    <ScrollView refreshControl={<RefreshControl refreshing={false} />}>
+    <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
       {data && (
         <View>
           <ProfileHeaderComponent isMe={true} user={data} navigation={props.navigation} />

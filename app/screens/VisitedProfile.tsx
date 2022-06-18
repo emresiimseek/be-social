@@ -7,11 +7,19 @@ import { UsersPermissionsUser } from '../types/strapi/models/user-events';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { ProfileHeaderComponent } from '../components/profile/ProfileHeader';
 import EventList from '../components/common/EventList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const VisitedProfile = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
+  const [currentUserId, setCurrentUserId] = useState<number | undefined>();
 
   useEffect(() => {
+    const currentUserId = async () => {
+      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
+      setCurrentUserId(+userId);
+    };
+
+    currentUserId();
     setUserId(props.route.params.userId);
   });
 
@@ -20,13 +28,12 @@ export const VisitedProfile = (props: Props) => {
   });
 
   return (
-    <ScrollView refreshControl={<RefreshControl refreshing={false} />}>
+    <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
       {data && (
         <View>
           <ProfileHeaderComponent
-            followed={() => {
-              refetch();
-            }}
+            refect={() => refetch()}
+            currentUserId={currentUserId}
             isMe={false}
             user={data}
             navigation={props.navigation}

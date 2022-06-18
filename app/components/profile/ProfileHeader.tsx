@@ -6,27 +6,30 @@ import { Button } from '@rneui/base';
 import { Props } from '../../types/common/props';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../../logic/graphql/queries/followUser';
+import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/queries/followUser';
 import { Variables } from '../../types/strapi/base/base';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
   isMe: boolean;
-  followed?: any;
+  currentUserId?: number;
+  refect?: any;
 }
 
 export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
   const user = props.user.usersPermissionsUser.data.attributes;
   const userId = props.user.usersPermissionsUser.data.id;
 
+  const followed = user?.users_follow_me.data.find(item => +item.id === props.currentUserId);
+
   const [followUser, { data: mutationData, loading: mutationLoading, error: mutationError }] = useMutation<
     any,
     Variables
-  >(UPDATE_USER);
+  >(FOLLOW_USER);
 
   useEffect(() => {
     if (mutationData) {
-      props.followed();
+      props.refect();
     }
   }, [mutationData]);
 
@@ -80,16 +83,18 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
             <View style={styles.bottom}>
               <Button
                 onPress={() => {
-                  followUser({ variables: { id: 3, data: { users_follow: [4] } } });
+                  followUser({
+                    variables: { userId: props.currentUserId, userIds: [+userId], follow: !followed },
+                  });
                 }}
                 titleStyle={styles.buttonTitle}
                 style={styles.button}
                 size="sm"
                 color="#334756"
               >
-                Takip
+                {followed ? 'Takipten Çık' : 'Takip Et'}
                 <Icon
-                  name="person-add"
+                  name={followed ? 'person-remove' : 'person-add'}
                   type="metarial"
                   size={12}
                   style={{ marginHorizontal: 5 }}
