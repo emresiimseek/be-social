@@ -19,9 +19,7 @@ interface ProfileHeaderProps extends Props {
 export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
   const user = props.user.usersPermissionsUser.data.attributes;
   const userId = props.user.usersPermissionsUser.data.id;
-
   const followed = user?.users_follow_me.data.find(item => +item.id === props.currentUserId);
-
   const [followUser, { data: mutationData, loading: mutationLoading, error: mutationError }] = useMutation<
     any,
     Variables
@@ -79,7 +77,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
               {user?.users_follow_me.data.length} Takipçi
             </Text>
           </View>
-          {props.currentUserId === +props.user.usersPermissionsUser.data.id && (
+          {props.currentUserId !== +props.user.usersPermissionsUser.data.id && (
             <View style={styles.bottom}>
               <Button
                 onPress={() => {

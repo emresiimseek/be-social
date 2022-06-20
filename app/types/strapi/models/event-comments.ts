@@ -1,4 +1,5 @@
 import { Item, Items } from '../base/base';
+import { Event } from './event';
 
 export interface Attributes2 {
   username: string;
@@ -8,6 +9,7 @@ export interface Attributes2 {
 
 export interface Attributes {
   description: string;
+  event: Item<Event>;
   user_comments: Item<Attributes2>;
 }
 

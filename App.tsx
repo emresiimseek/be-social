@@ -7,7 +7,7 @@ import { MyTabs } from './app/screens/MyTabs';
 import LoginPage from './app/screens/LoginPage';
 import Toast from 'react-native-toast-message';
 import RegisterPageComponent from './app/screens/RegisterPage';
-import CommentsComponent from './app/screens/Comments';
+import { CommentsComponent } from './app/screens/Comments';
 import { ApolloClient, ApolloProvider, gql, InMemoryCache, useApolloClient } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 import UserList from './app/screens/UserList';
@@ -33,7 +33,7 @@ export default function App() {
     <>
       <NavigationContainer>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Navigator initialRouteName="MyTabs">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}

@@ -87,7 +87,7 @@ export const EventCard = (props: CardProps) => {
                 onPress={() =>
                   props.navigation.navigate({
                     name: 'Comments',
-                    params: { eventId: props.eventId },
+                    params: { eventId: props.eventId, currentUserId: props.currentUserId },
                     merge: true,
                   })
                 }
