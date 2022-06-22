@@ -52,6 +52,7 @@ export const FLOW_EVENTS = gql`
                 username
                 profile_photo {
                   data {
+                    id
                     attributes {
                       url
                     }

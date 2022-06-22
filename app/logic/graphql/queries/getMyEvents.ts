@@ -51,6 +51,7 @@ export const USER_EVENTS = gql`
                 }
                 users {
                   data {
+                    id
                     attributes {
                       username
                     }

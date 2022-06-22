@@ -9,6 +9,7 @@ export const USERS_QUERY = gql`
           firstname
           profile_photo {
             data {
+              id
               attributes {
                 url
               }
@@ -84,10 +85,12 @@ export const USERS_QUERY = gql`
                 }
                 users {
                   data {
+                    id
                     attributes {
                       username
                       profile_photo {
                         data {
+                          id
                           attributes {
                             url
                           }

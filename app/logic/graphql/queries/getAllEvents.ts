@@ -65,10 +65,12 @@ export const ALL_EVENTS = gql`
           }
           users {
             data {
+              id
               attributes {
                 username
                 profile_photo {
                   data {
+                    id
                     attributes {
                       url
                     }

@@ -6,6 +6,32 @@ export const EVENT_COMMENTS = gql`
       data {
         id
         attributes {
+          replies {
+            data {
+              id
+              attributes {
+                description
+                user_comments {
+                  data {
+                    id
+                    attributes {
+                      username
+                      firstname
+                      lastname
+                      profile_photo {
+                        data {
+                          id
+                          attributes {
+                            url
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
           description
           event {
             data {
@@ -15,6 +41,7 @@ export const EVENT_COMMENTS = gql`
               }
             }
           }
+
           user_comments {
             data {
               id
@@ -22,6 +49,14 @@ export const EVENT_COMMENTS = gql`
                 username
                 firstname
                 lastname
+                profile_photo {
+                  data {
+                    id
+                    attributes {
+                      url
+                    }
+                  }
+                }
               }
             }
           }

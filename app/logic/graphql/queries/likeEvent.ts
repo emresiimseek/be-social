@@ -8,6 +8,7 @@ export const LIKE_EVENT = gql`
         attributes {
           event_likes {
             data {
+              id
               attributes {
                 username
               }

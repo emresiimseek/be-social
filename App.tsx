@@ -21,7 +21,9 @@ const client = new ApolloClient({
   },
   cache: new InMemoryCache({
     typePolicies: {
-      Query: { fields: { Event: { merge: true }, UsersPermissionsUserEntity: { merge: true } } },
+      UsersPermissionsUser: { merge: true },
+      Event: { merge: true },
+      Comment: { merge: true },
     },
   }),
 });
