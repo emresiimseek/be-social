@@ -22,7 +22,7 @@ const CommentsReplies = (props: CommentRepliesProps) => {
         <View style={{ flex: 1 }}></View>
         <Text style={{}} onPress={() => setVisible(!isVisible)}>
           {props.replies.data.length && (
-            <Text style={{ fontSize: 10 }}>
+            <Text style={{ fontSize: 12 }}>
               {props.replies.data.length} cevabı {isVisible ? 'gizle' : 'gör'}
             </Text>
           )}
@@ -32,6 +32,7 @@ const CommentsReplies = (props: CommentRepliesProps) => {
         props.replies.data.map((r, i) => (
           <ListItem bottomDivider={i != props.replies.data.length - 1} key={i}>
             <Avatar
+              containerStyle={{ marginBottom: 'auto' }}
               onPress={() =>
                 props.navigation.navigate('VisitedProfile', {
                   userId: r.attributes.user_comments.data.id,

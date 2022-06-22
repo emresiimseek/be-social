@@ -1,7 +1,16 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ListItem, Avatar } from '@rneui/themed';
 import { useState } from 'react';
-import { Alert, Pressable, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Variables, Data } from '../types/strapi/base/base';
 import { CommentAttributes, EventComments } from '../types/strapi/models/event-comments';
 import { Props } from '../types/common/props';
@@ -27,9 +36,8 @@ export const CommentsComponent = (props: Props) => {
   });
 
   return (
-    <Pressable style={{ minHeight: '100%' }}>
+    <Pressable style={{ flex: 1 }}>
       <ScrollView
-        style={{ maxHeight: bottomClass.minHeight === '10%' ? '90%' : '85%' }}
         refreshControl={
           <RefreshControl
             refreshing={loading || queryLoading}
@@ -85,7 +93,11 @@ export const CommentsComponent = (props: Props) => {
         ))}
       </ScrollView>
 
-      <View style={bottomClass}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={bottomClass}
+        keyboardVerticalOffset={100}
+      >
         {selectedComment && (
           <View
             style={{
@@ -154,7 +166,7 @@ export const CommentsComponent = (props: Props) => {
             }}
           />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Pressable>
   );
 };
@@ -162,16 +174,15 @@ export const CommentsComponent = (props: Props) => {
 // define your stylesr
 const styles = StyleSheet.create({
   bottom: {
-    minHeight: '10%',
     paddingHorizontal: 45,
-    paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    paddingVertical: 10,
+
     backgroundColor: '#536162',
   },
   bottomFocus: {
-    minHeight: '15%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',

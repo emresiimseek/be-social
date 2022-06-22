@@ -82,7 +82,7 @@ export const EventCard = (props: CardProps) => {
               name={isLiked ? 'favorite' : 'favorite-border'}
               size={20}
             />
-            <View style={{ marginRight: 10, marginLeft: 10 }}>
+            <View style={{ marginHorizontal: 10 }}>
               <Icon
                 onPress={() =>
                   props.navigation.navigate({
@@ -105,6 +105,7 @@ export const EventCard = (props: CardProps) => {
             <Text style={{ fontSize: 12, marginLeft: 5 }}>{props.item.users.data.length} Kişi Katılıyor</Text>
           </View>
         </View>
+
         <View
           style={{
             flexDirection: 'row',
@@ -115,6 +116,7 @@ export const EventCard = (props: CardProps) => {
             <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
             <Text style={{ flex: 1 }}>{props.item.description}</Text>
           </View>
+
           <View
             style={{
               flexDirection: 'column',
@@ -131,6 +133,20 @@ export const EventCard = (props: CardProps) => {
               <Icon name="tagso" type="ant-design" />
             </View>
           </View>
+        </View>
+        <View>
+          <Text
+            onPress={() =>
+              props.navigation.navigate({
+                name: 'Comments',
+                params: { eventId: props.eventId, currentUserId: props.currentUserId },
+                merge: true,
+              })
+            }
+            style={{ fontSize: 10, marginLeft: 2 }}
+          >
+            {props.item.comments.data.length} yorumu gör...
+          </Text>
         </View>
       </View>
     </View>
