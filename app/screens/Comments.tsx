@@ -14,7 +14,6 @@ export const CommentsComponent = (props: Props) => {
   const [bottomClass, setClass] = useState(styles.bottom);
   const [comment, setComment] = useState('');
   const [selectedComment, setSelectedComment] = useState<Data<CommentAttributes> | null>(null);
-
   const [createComment, { loading, data }] = useMutation(CREATE_COMMENT);
 
   const {
@@ -43,6 +42,7 @@ export const CommentsComponent = (props: Props) => {
         {queryData?.comments.data.flatMap((comment, i) => (
           <ListItem.Swipeable
             key={i}
+            onPress={() => {}}
             bottomDivider
             rightContent={reset => (
               <Button
@@ -149,6 +149,7 @@ export const CommentsComponent = (props: Props) => {
 
               await refetch();
               setComment('');
+              setSelectedComment(null);
               setClass(styles.bottom);
             }}
           />
