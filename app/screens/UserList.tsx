@@ -34,13 +34,13 @@ class UserList extends Component<Props> {
                       <Avatar
                         source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
                         rounded
-                        size={70}
+                        size={40}
                       />
                       <ListItem.Content>
-                        <ListItem.Title>{user.attributes.username}</ListItem.Title>
-                        <ListItem.Subtitle>
+                        <ListItem.Title>
                           {user.attributes.firstname + '  ' + user.attributes.lastname}
-                        </ListItem.Subtitle>
+                        </ListItem.Title>
+                        <ListItem.Subtitle>{user.attributes.username}</ListItem.Subtitle>
                       </ListItem.Content>
                     </ListItem>
                   ))
@@ -57,7 +57,7 @@ class UserList extends Component<Props> {
                       <Avatar
                         source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
                         rounded
-                        size={70}
+                        size={40}
                       />
                       <ListItem.Content>
                         <ListItem.Title>{user.attributes.username}</ListItem.Title>
