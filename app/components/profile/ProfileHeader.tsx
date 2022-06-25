@@ -99,10 +99,6 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
                   color="#FF4C29"
                 />
               </Button>
-              <Button titleStyle={styles.buttonTitle} style={styles.button} size="sm" color="#334756">
-                Mesaj
-                <Icon name="send" type="metarial" size={12} style={{ marginHorizontal: 5 }} color="#FF4C29" />
-              </Button>
             </View>
           )}
         </View>

@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: 1,
     flexDirection: 'column',
-    minHeight: 420,
+    minHeight: 500,
   },
   header: {
-    flex: 0.25,
+    flex: 0.2,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
