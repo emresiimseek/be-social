@@ -50,11 +50,14 @@ export const EventCard = (props: CardProps) => {
       {/* Body */}
 
       <View style={styles.body}>
-        <PostCards posts={props.item.posts} />
-        {/* <ImageBackground
-          style={{ width: '100%', height: '100%' }}
-          source={{ uri: props.item.images.data[0].attributes.url }}
-        /> */}
+        {props.item.posts.data.length ? (
+          <PostCards posts={props.item.posts} />
+        ) : (
+          <ImageBackground
+            style={{ width: '100%', height: '100%' }}
+            source={{ uri: props.item.images.data[0].attributes.url }}
+          />
+        )}
       </View>
       {/* Footer */}
 

@@ -21,7 +21,6 @@ const PostCard = (props: PostCardProps) => {
     >
       {/* Header */}
       <View style={styles.header}>
-        <Text style={{ marginRight: 5 }}>{props.item.attributes.users.data[0].attributes.username}</Text>
         <Avatar
           size={30}
           rounded
@@ -31,52 +30,23 @@ const PostCard = (props: PostCardProps) => {
               'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
           }}
         />
+        <Text style={{ marginLeft: 5 }}>{props.item.attributes.users.data[0].attributes.username}</Text>
       </View>
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={{ flex: 1 }}>{props.item.attributes.description}</Text>
-
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', flex: 1 }}>
           <Icon
-            onPress={() => {
-              // likeEvent({
-              //   variables: {
-              //     id: +props.eventId,
-              //     data: {
-              //       event_likes: isLiked
-              //         ? [
-              //             ...props.item.event_likes.data
-              //               .map(l => +l.id)
-              //               .filter(l => l !== props.currentUserId),
-              //           ]
-              //         : [...props.item.event_likes.data.map(l => l.id), props.currentUserId],
-              //     },
-              //   },
-              // });
-            }}
+            onPress={() => {}}
             type="metarial"
             color={true ? 'red' : 'black'}
             name={true ? 'favorite' : 'favorite-border'}
             size={20}
           />
           <View style={{ marginHorizontal: 10 }}>
-            <Icon
-              onPress={
-                () => {}
-                // props.navigation.navigate({
-                //   name: 'Comments',
-                //   params: { eventId: props.eventId, currentUserId: props.currentUserId },
-                //   merge: true,
-                // })
-              }
-              type="font-awesome-5"
-              name="comment"
-              size={20}
-            />
+            <Icon onPress={() => {}} type="font-awesome-5" name="comment" size={20} />
           </View>
-
-          {/* <Icon name="paper-plane-o" type="font-awesome" size={20} /> */}
         </View>
+        <Text>{props.item.attributes.description}</Text>
       </View>
     </ImageBackground>
   );
@@ -92,6 +62,8 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF90',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     padding: 15,
     marginTop: 'auto',
   },
@@ -99,7 +71,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFFFF90',
     padding: 10,
-    justifyContent: 'flex-end',
     alignItems: 'center',
     paddingRight: 15,
   },
