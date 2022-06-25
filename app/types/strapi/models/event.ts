@@ -1,13 +1,20 @@
-import { Image } from '../base/base';
+import { Image, Item } from '../base/base';
 import { Items } from '../base/base';
 import { Category } from './category';
-import { Comment } from './comment';
+import { Comment, UserCommentsAttributes } from './comment';
 
 import { User } from './user';
 import { UserAttributes } from './user-events';
 
 interface Like {
   username: string;
+}
+
+export interface Post {
+  post_likes: Items<UserCommentsAttributes>;
+  description: string;
+  images: Items<Image>;
+  users: Items<UserAttributes>;
 }
 
 export interface Event {
@@ -19,6 +26,7 @@ export interface Event {
   images: Items<Image>;
   users: Items<UserAttributes>;
   event_likes: Items<Like>;
+  posts: Items<Post>;
 }
 
 export interface EventData {

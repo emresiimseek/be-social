@@ -9,6 +9,7 @@ import { useMutation } from '@apollo/client';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { Variables } from '../../types/strapi/base/base';
 import { LIKE_EVENT } from '../../logic/graphql/queries/likeEvent';
+import PostCards from './PostCards';
 
 interface CardProps extends Props {
   item: Event;
@@ -49,10 +50,11 @@ export const EventCard = (props: CardProps) => {
       {/* Body */}
 
       <View style={styles.body}>
-        <ImageBackground
+        <PostCards posts={props.item.posts} />
+        {/* <ImageBackground
           style={{ width: '100%', height: '100%' }}
           source={{ uri: props.item.images.data[0].attributes.url }}
-        />
+        /> */}
       </View>
       {/* Footer */}
 
@@ -97,7 +99,7 @@ export const EventCard = (props: CardProps) => {
               />
             </View>
 
-            <Icon name="paper-plane-o" type="font-awesome" size={20} />
+            {/* <Icon name="paper-plane-o" type="font-awesome" size={20} /> */}
           </View>
           {/* Right */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -108,32 +110,36 @@ export const EventCard = (props: CardProps) => {
 
         <View
           style={{
-            flexDirection: 'row',
-            marginTop: 10,
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            marginTop: 5,
           }}
         >
-          <View style={{ flex: 1 }}>
+          {/* First Line */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
-            <Text style={{ flex: 1 }}>{props.item.description}</Text>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-            }}
-          >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text> {moment(props.item.eventDate).format('LLL')} </Text>
-              <Icon name="calendar" type="ant-design" />
+              <Icon name="calendar" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
+          </View>
 
+          {/* Second Line */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Text>{props.item.description}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text>{props.item.categories.data.map(c => c.attributes.title)}</Text>
-              <Icon name="tagso" type="ant-design" />
+              <Icon name="tagso" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
           </View>
         </View>
+
         <View>
           <Text
             onPress={() =>
@@ -157,9 +163,10 @@ const styles = StyleSheet.create({
   cardContainer: {
     borderColor: '#D3D3D3',
     backgroundColor: 'white',
-    borderBottomWidth: 1,
     flexDirection: 'column',
     minHeight: 500,
+    marginBottom: 15,
+    borderRadius: 5,
   },
   header: {
     flex: 0.2,
@@ -176,11 +183,11 @@ const styles = StyleSheet.create({
   body: {
     flex: 3,
     borderTopColor: '#D3D3D3',
+    borderRadius: 5,
   },
   footer: {
     flexDirection: 'column',
     borderTopColor: '#D3D3D3',
-    borderTopWidth: 1,
     padding: 10,
   },
 });

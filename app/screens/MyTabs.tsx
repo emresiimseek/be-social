@@ -11,7 +11,7 @@ interface MyTabsProps extends Props {}
 export function MyTabs(props: MyTabsProps) {
   return (
     <Tab.Navigator
-      initialRouteName="NewEvent"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')

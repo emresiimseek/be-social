@@ -7,6 +7,7 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getEventsByUserId';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CarouselCard from '../../components/common/PostCards';
 
 export const HomePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();

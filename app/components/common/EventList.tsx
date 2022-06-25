@@ -22,7 +22,7 @@ export const EventList = (props: EventProps) => {
   }, []);
 
   return (
-    <View>
+    <View style={{ padding: 10, backgroundColor: '#EEEEEE' }}>
       {props.event.getEventsByUserId.data.length ? (
         props.event.getEventsByUserId.data.map(event => (
           <EventCard
