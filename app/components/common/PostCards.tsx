@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { Props } from '../../types/common/props';
 import { Items } from '../../types/strapi/base/base';
 import { Post } from '../../types/strapi/models/event';
 import PostCard from './PostCard';
 
-interface PostCardProps {
+interface PostCardProps extends Props {
   posts: Items<Post>;
 }
 
@@ -23,12 +24,14 @@ const PostCards = (props: PostCardProps) => {
       <Carousel
         layout={'stack'}
         loop={true}
-        pagingEnabled
         layoutCardOffset={18}
+        apparitionDelay={0}
         data={props.posts.data}
         sliderWidth={360}
         itemWidth={360}
-        renderItem={item => <PostCard item={item.item} navigation={null} />}
+        renderItem={item => (
+          <PostCard item={item.item} currentUserId={props.currentUserId} navigation={props.navigation} />
+        )}
         onSnapToItem={index => 0}
       />
     </View>

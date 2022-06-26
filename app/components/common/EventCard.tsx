@@ -51,7 +51,11 @@ export const EventCard = (props: CardProps) => {
 
       <View style={styles.body}>
         {props.item.posts.data.length ? (
-          <PostCards posts={props.item.posts} />
+          <PostCards
+            posts={props.item.posts}
+            currentUserId={props.currentUserId}
+            navigation={props.navigation}
+          />
         ) : (
           <ImageBackground
             style={{ width: '100%', height: '100%' }}

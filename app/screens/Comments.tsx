@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ListItem, Avatar } from '@rneui/themed';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -20,10 +20,10 @@ import { CREATE_COMMENT } from '../logic/graphql/queries/createComment';
 import CommentsReplies from './MyTabs/CommentReplies';
 
 export const CommentsComponent = (props: Props) => {
-  const [bottomClass, setClass] = useState(styles.bottom);
   const [comment, setComment] = useState('');
   const [selectedComment, setSelectedComment] = useState<Data<CommentAttributes> | null>(null);
   const [createComment, { loading, data }] = useMutation(CREATE_COMMENT);
+  const [comments, setComments] = useState<EventComments>();
 
   const {
     data: queryData,
@@ -34,6 +34,21 @@ export const CommentsComponent = (props: Props) => {
       filters: { event: { id: { eq: props.route.params.eventId } }, comments: { id: { eq: null } } },
     },
   });
+
+  const {
+    data: postData,
+    refetch: refectPost,
+    loading: queryPostLoading,
+  } = useQuery<EventComments, Variables>(EVENT_COMMENTS, {
+    variables: {
+      filters: { post: { id: { eq: props.route.params.postId } }, comments: { id: { eq: null } } },
+    },
+  });
+
+  useEffect(() => {
+    if (props.route.params.postId) setComments(postData);
+    else setComments(queryData);
+  }, [postData, queryData]);
 
   return (
     <Pressable style={{ flex: 1 }}>
@@ -47,7 +62,7 @@ export const CommentsComponent = (props: Props) => {
           />
         }
       >
-        {queryData?.comments.data.flatMap((comment, i) => (
+        {comments?.comments.data.flatMap((comment, i) => (
           <ListItem.Swipeable
             key={i}
             onPress={() => {}}
@@ -56,7 +71,6 @@ export const CommentsComponent = (props: Props) => {
               <Button
                 onPress={() => {
                   setSelectedComment(comment);
-                  setClass(styles.bottomFocus);
                   reset();
                 }}
                 buttonStyle={{ minHeight: '100%', backgroundColor: '#424642' }}
@@ -95,7 +109,7 @@ export const CommentsComponent = (props: Props) => {
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={bottomClass}
+        style={styles.bottom}
         keyboardVerticalOffset={100}
       >
         {selectedComment && (
@@ -116,7 +130,6 @@ export const CommentsComponent = (props: Props) => {
               style={{ marginLeft: 5 }}
               onPress={() => {
                 setSelectedComment(null);
-                setClass(styles.bottom);
               }}
             />
           </View>
@@ -140,6 +153,7 @@ export const CommentsComponent = (props: Props) => {
                     data: {
                       description: comment,
                       event: props.route.params.eventId,
+                      post: props.route.params.postId,
                       user_comments: props.route.params.currentUserId,
                       publishedAt: new Date(),
                       comments: [selectedComment.id],
@@ -152,6 +166,7 @@ export const CommentsComponent = (props: Props) => {
                     data: {
                       description: comment,
                       event: props.route.params.eventId,
+                      post: props.route.params.postId,
                       user_comments: props.route.params.currentUserId,
                       publishedAt: new Date(),
                     },
@@ -160,9 +175,9 @@ export const CommentsComponent = (props: Props) => {
               }
 
               await refetch();
+              await refectPost();
               setComment('');
               setSelectedComment(null);
-              setClass(styles.bottom);
             }}
           />
         </View>
@@ -178,15 +193,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    paddingVertical: 10,
-
-    backgroundColor: '#536162',
-  },
-  bottomFocus: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 45,
     paddingVertical: 10,
     backgroundColor: '#536162',
   },
