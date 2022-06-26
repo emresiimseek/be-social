@@ -26,9 +26,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.BeSocial.besocial"/>
-        <data android:scheme="foobar"/>
-        <data android:scheme="be-social"/>
+        <data android:scheme="besocial"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

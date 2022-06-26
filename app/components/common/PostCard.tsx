@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
 import { Data, Item } from '../../types/strapi/base/base';
 import { Post } from '../../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
@@ -13,6 +13,7 @@ import { useState } from 'react';
 
 interface PostCardProps extends Props {
   item: Data<Post>;
+  emitIndex: any;
 }
 
 // create a component
@@ -31,66 +32,84 @@ const PostCard = (props: PostCardProps) => {
     setPost(props.item);
   }, []);
 
+  const unLike = (post: Data<Post>) => {
+    likePost({
+      variables: {
+        id: post.id,
+        data: {
+          post_likes: post.attributes.post_likes.data.filter(pl => +pl.id !== props.currentUserId),
+        },
+      },
+    });
+  };
+
+  const like = (post: Data<Post>) => {
+    likePost({
+      variables: {
+        id: post.id,
+        data: {
+          post_likes: [props.currentUserId, ...post.attributes.post_likes.data.map(pl => pl.id)],
+        },
+      },
+    });
+  };
+
+  const directToCommentPage = () => {
+    props.navigation.navigate({
+      name: 'Comments',
+      params: { postId: props.item.id, currentUserId: props.currentUserId },
+      merge: true,
+    });
+  };
+
   return post ? (
-    <ImageBackground
-      borderRadius={5}
-      style={styles.container}
-      source={{ uri: post.attributes.images.data[0].attributes.url }}
-    >
-      {/* Header */}
-      <View style={styles.header}>
-        <Avatar
-          size={30}
-          rounded
-          source={{
-            uri:
-              post.attributes.users.data[0].attributes.profile_photo.data.attributes.url ??
-              'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-          }}
-        />
-        <Text style={{ marginLeft: 5 }}>{post.attributes.users.data[0].attributes.username}</Text>
-      </View>
-      {/* Footer */}
-      <View style={styles.footer}>
-        <View style={{ flexDirection: 'row', flex: 1 }}>
-          <Icon
-            onPress={() => {
-              likePost({
-                variables: {
-                  id: post.id,
-                  data: {
-                    post_likes: [props.currentUserId, ...post.attributes.post_likes.data.map(pl => pl.id)],
-                  },
-                },
-              });
+    <Pressable onPress={() => props.emitIndex()}>
+      <ImageBackground
+        borderRadius={5}
+        style={styles.container}
+        source={{ uri: post.attributes.images.data[0].attributes.url }}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <Avatar
+            size={30}
+            rounded
+            source={{
+              uri:
+                post.attributes.users.data[0].attributes.profile_photo.data.attributes.url ??
+                'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
             }}
-            type="metarial"
-            color={post.attributes.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'}
-            name={
-              post.attributes.post_likes.data.find(l => +l.id === props.currentUserId)
-                ? 'favorite'
-                : 'favorite-border'
-            }
-            size={20}
           />
-          <View style={{ marginHorizontal: 10 }}>
+          <Text style={{ marginLeft: 5 }}>{post.attributes.users.data[0].attributes.username}</Text>
+        </View>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <View style={{ flexDirection: 'row', flex: 1 }}>
             <Icon
               onPress={() => {
-                props.navigation.navigate({
-                  name: 'Comments',
-                  params: { postId: props.item.id, currentUserId: props.currentUserId },
-                  merge: true,
-                });
+                props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId)
+                  ? unLike(post)
+                  : like(post);
               }}
-              type="font-awesome-5"
-              name="comment"
+              type="metarial"
+              color={
+                post.attributes.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
+              }
+              name={
+                post.attributes.post_likes.data.find(l => +l.id === props.currentUserId)
+                  ? 'favorite'
+                  : 'favorite-border'
+              }
               size={20}
             />
+            <View style={{ marginHorizontal: 10 }}>
+              <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={20} />
+            </View>
           </View>
+          <Text>{post.attributes.description}</Text>
         </View>
-        <Text>{post.attributes.description}</Text>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </Pressable>
   ) : null;
 };
 
