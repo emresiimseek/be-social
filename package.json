@@ -17,6 +17,7 @@
     "@rneui/base": "0.0.0-edge.2",
     "@rneui/themed": "0.0.0-edge.2",
     "@types/react-native-snap-carousel": "^3.8.5",
+    "deprecated-react-native-prop-types": "^2.2.0",
     "expo": "~45.0.0",
     "expo-dev-client": "^1.0.0",
     "expo-splash-screen": "~0.15.1",
