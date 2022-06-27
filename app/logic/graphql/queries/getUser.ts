@@ -48,6 +48,11 @@ export const USERS_QUERY = gql`
                   data {
                     id
                     attributes {
+                      comments {
+                        data {
+                          id
+                        }
+                      }
                       post_likes {
                         data {
                           id

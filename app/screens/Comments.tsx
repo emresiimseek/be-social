@@ -118,73 +118,81 @@ export const CommentsComponent = (props: Props) => {
               backgroundColor: 'white',
               flexDirection: 'row',
               borderRadius: 10,
-              alignItems: 'center',
+              marginHorizontal: 25,
+              marginBottom: 15,
               padding: 8,
             }}
           >
-            <Text style={{ marginRight: 5 }}>{selectedComment?.attributes.description}</Text>
+            <Text style={{ marginRight: 5, paddingHorizontal: 15 }}>
+              {selectedComment?.attributes.description}
+            </Text>
             <Icon
               type="metarial"
               name="close"
               size={15}
-              style={{ marginLeft: 5 }}
+              style={{ marginLeft: 5, marginBottom: 'auto' }}
               onPress={() => {
                 setSelectedComment(null);
               }}
             />
           </View>
         )}
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 25 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 }}>
           <Input
             value={comment}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 45 }}
             rightIcon={
-              <Icon
-                type="font-awesome-5"
-                size={35}
-                name="arrow-circle-up"
-                color={'white'}
-                onPress={async () => {
-                  if (selectedComment) {
-                    await createComment({
-                      variables: {
-                        data: {
-                          description: comment,
-                          event: props.route.params.eventId,
-                          post: props.route.params.postId,
-                          user_comments: props.route.params.currentUserId,
-                          publishedAt: new Date(),
-                          comments: [selectedComment.id],
-                        },
-                      },
-                    });
-                  } else {
-                    await createComment({
-                      variables: {
-                        data: {
-                          description: comment,
-                          event: props.route.params.eventId,
-                          post: props.route.params.postId,
-                          user_comments: props.route.params.currentUserId,
-                          publishedAt: new Date(),
-                        },
-                      },
-                    });
-                  }
+              <View>
+                {loading ? (
+                  <Icon type="evilicon" name="spinner" size={40} color="white" />
+                ) : (
+                  <Icon
+                    type="evilicon"
+                    size={40}
+                    name="arrow-up"
+                    color={'white'}
+                    onPress={async () => {
+                      if (selectedComment) {
+                        await createComment({
+                          variables: {
+                            data: {
+                              description: comment,
+                              event: props.route.params.eventId,
+                              post: props.route.params.postId,
+                              user_comments: props.route.params.currentUserId,
+                              publishedAt: new Date(),
+                              comments: [selectedComment.id],
+                            },
+                          },
+                        });
+                      } else {
+                        await createComment({
+                          variables: {
+                            data: {
+                              description: comment,
+                              event: props.route.params.eventId,
+                              post: props.route.params.postId,
+                              user_comments: props.route.params.currentUserId,
+                              publishedAt: new Date(),
+                            },
+                          },
+                        });
+                      }
 
-                  await refetch();
-                  await refectPost();
-                  setComment('');
-                  setSelectedComment(null);
-                }}
-              />
+                      await refetch();
+                      await refectPost();
+                      setComment('');
+                      setSelectedComment(null);
+                    }}
+                  />
+                )}
+              </View>
             }
             inputContainerStyle={{
               borderColor: '#F3F4ED',
               borderWidth: 1,
               borderRadius: 1000,
               paddingLeft: 20,
-              paddingRight: 3,
             }}
             onChangeText={text => setComment(text)}
             style={{
