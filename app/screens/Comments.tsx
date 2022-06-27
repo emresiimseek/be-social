@@ -134,50 +134,61 @@ export const CommentsComponent = (props: Props) => {
             />
           </View>
         )}
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 25 }}>
           <Input
             value={comment}
-            containerStyle={{ height: 40 }}
-            onChangeText={text => setComment(text)}
-            style={{ color: 'white' }}
-          />
-          <Icon
-            type="metrial"
-            name="send"
-            style={{ marginTop: 12, marginLeft: 5 }}
-            color={'white'}
-            onPress={async () => {
-              if (selectedComment) {
-                await createComment({
-                  variables: {
-                    data: {
-                      description: comment,
-                      event: props.route.params.eventId,
-                      post: props.route.params.postId,
-                      user_comments: props.route.params.currentUserId,
-                      publishedAt: new Date(),
-                      comments: [selectedComment.id],
-                    },
-                  },
-                });
-              } else {
-                await createComment({
-                  variables: {
-                    data: {
-                      description: comment,
-                      event: props.route.params.eventId,
-                      post: props.route.params.postId,
-                      user_comments: props.route.params.currentUserId,
-                      publishedAt: new Date(),
-                    },
-                  },
-                });
-              }
+            containerStyle={{ height: 50 }}
+            rightIcon={
+              <Icon
+                type="font-awesome-5"
+                size={35}
+                name="arrow-circle-up"
+                color={'white'}
+                onPress={async () => {
+                  if (selectedComment) {
+                    await createComment({
+                      variables: {
+                        data: {
+                          description: comment,
+                          event: props.route.params.eventId,
+                          post: props.route.params.postId,
+                          user_comments: props.route.params.currentUserId,
+                          publishedAt: new Date(),
+                          comments: [selectedComment.id],
+                        },
+                      },
+                    });
+                  } else {
+                    await createComment({
+                      variables: {
+                        data: {
+                          description: comment,
+                          event: props.route.params.eventId,
+                          post: props.route.params.postId,
+                          user_comments: props.route.params.currentUserId,
+                          publishedAt: new Date(),
+                        },
+                      },
+                    });
+                  }
 
-              await refetch();
-              await refectPost();
-              setComment('');
-              setSelectedComment(null);
+                  await refetch();
+                  await refectPost();
+                  setComment('');
+                  setSelectedComment(null);
+                }}
+              />
+            }
+            inputContainerStyle={{
+              borderColor: '#F3F4ED',
+              borderWidth: 1,
+              borderRadius: 1000,
+              paddingLeft: 20,
+              paddingRight: 3,
+            }}
+            onChangeText={text => setComment(text)}
+            style={{
+              color: 'white',
             }}
           />
         </View>
@@ -189,11 +200,12 @@ export const CommentsComponent = (props: Props) => {
 // define your stylesr
 const styles = StyleSheet.create({
   bottom: {
-    paddingHorizontal: 45,
+    paddingTop: 15,
+    paddingBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     paddingVertical: 10,
-    backgroundColor: '#536162',
+    backgroundColor: '#424642',
   },
 });

@@ -15,6 +15,7 @@ export interface Post {
   description: string;
   images: Items<Image>;
   users: Items<UserAttributes>;
+  comments: Items<Comment>;
 }
 
 export interface Event {

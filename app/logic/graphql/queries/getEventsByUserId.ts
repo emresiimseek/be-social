@@ -10,6 +10,11 @@ export const FLOW_EVENTS = gql`
             data {
               id
               attributes {
+                comments {
+                  data {
+                    id
+                  }
+                }
                 post_likes {
                   data {
                     id

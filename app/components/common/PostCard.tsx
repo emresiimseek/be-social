@@ -63,7 +63,7 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return post ? (
-    <Pressable onPress={() => props.emitIndex()}>
+    <Pressable onLongPress={() => props.emitIndex()}>
       <ImageBackground
         borderRadius={5}
         style={styles.container}
@@ -71,42 +71,51 @@ const PostCard = (props: PostCardProps) => {
       >
         {/* Header */}
         <View style={styles.header}>
-          <Avatar
-            size={30}
-            rounded
-            source={{
-              uri:
-                post.attributes.users.data[0].attributes.profile_photo.data.attributes.url ??
-                'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-            }}
-          />
-          <Text style={{ marginLeft: 5 }}>{post.attributes.users.data[0].attributes.username}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+            <Avatar
+              size={30}
+              rounded
+              source={{
+                uri:
+                  post.attributes.users.data[0].attributes.profile_photo.data.attributes.url ??
+                  'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
+              }}
+            />
+            <Text style={{ marginLeft: 5 }}>{post.attributes.users.data[0].attributes.username}</Text>
+          </View>
+          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
         </View>
         {/* Footer */}
         <View style={styles.footer}>
-          <View style={{ flexDirection: 'row', flex: 1 }}>
-            <Icon
-              onPress={() => {
-                props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId)
-                  ? unLike(post)
-                  : like(post);
-              }}
-              type="metarial"
-              color={
-                post.attributes.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
-              }
-              name={
-                post.attributes.post_likes.data.find(l => +l.id === props.currentUserId)
-                  ? 'favorite'
-                  : 'favorite-border'
-              }
-              size={20}
-            />
-            <View style={{ marginHorizontal: 10 }}>
-              <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={20} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Icon
+                onPress={() => {
+                  props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId)
+                    ? unLike(post)
+                    : like(post);
+                }}
+                type="metarial"
+                color={
+                  post.attributes.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
+                }
+                name={
+                  post.attributes.post_likes.data.find(l => +l.id === props.currentUserId)
+                    ? 'favorite'
+                    : 'favorite-border'
+                }
+                size={20}
+              />
+              <View style={{ marginHorizontal: 10 }}>
+                <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={20} />
+              </View>
             </View>
+            <Text style={{ fontSize: 12 }}>{post.attributes.description}</Text>
           </View>
-          <Text>{post.attributes.description}</Text>
+
+          {props.item.attributes.comments.data.length > 0 && (
+            <Text style={{ fontSize: 10 }}>{props.item.attributes.comments.data.length} yorumun gör...</Text>
+          )}
         </View>
       </ImageBackground>
     </Pressable>
@@ -124,7 +133,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFFFF90',
     alignItems: 'center',
-    justifyContent: 'space-around',
     padding: 15,
     marginTop: 'auto',
   },
@@ -133,7 +141,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF90',
     padding: 10,
     alignItems: 'center',
-    paddingRight: 15,
   },
 });
 

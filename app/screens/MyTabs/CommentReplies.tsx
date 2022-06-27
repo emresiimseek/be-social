@@ -30,7 +30,11 @@ const CommentsReplies = (props: CommentRepliesProps) => {
       </View>
       {isVisible &&
         props.replies.data.map((r, i) => (
-          <ListItem bottomDivider={i != props.replies.data.length - 1} key={i}>
+          <ListItem
+            bottomDivider={i != props.replies.data.length - 1}
+            key={i}
+            containerStyle={{ paddingHorizontal: 0 }}
+          >
             <Avatar
               containerStyle={{ marginBottom: 'auto' }}
               onPress={() =>
