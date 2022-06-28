@@ -100,8 +100,8 @@ export const CommentsComponent = (props: Props) => {
                   <Text> {comment.attributes.description}</Text>
                 </View>
               </ListItem.Subtitle>
+              {/* comment replies */}
               <CommentsReplies replies={comment.attributes.replies} navigation={props.navigation} />
-              {/* here */}
             </ListItem.Content>
           </ListItem.Swipeable>
         ))}

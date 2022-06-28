@@ -1,5 +1,6 @@
 export interface Props {
-  navigation: any;
+  navigation?: any;
   route?: any;
   currentUserId?: number | null;
+  children?: any;
 }

@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useState } from 'react';
 import { Icon } from '@rneui/themed';
 import { TabStatusItem } from '../../types/common/tab-status-item';
@@ -8,42 +8,66 @@ import { useEffect } from 'react';
 
 interface TabStatusProps {
   items: TabStatusItem[];
+  currentIndex: number;
 }
 
 // create a component
 const TabStatus = (props: TabStatusProps) => {
   const [items, setItems] = useState<TabStatusItem[]>([]);
 
+  const [progressWidth, setProgressWidth] = useState<string>('');
+
+  const processWithEffect = () => {
+    const value = 100 / items.length;
+    const index = (props.currentIndex + 1) * value;
+    const widthString = `${index}%`;
+    setProgressWidth(widthString);
+  };
+
+  useEffect(() => {
+    processWithEffect();
+  }, [items, props.currentIndex]);
+
   useEffect(() => {
     setItems(props.items);
+    processWithEffect();
   }, []);
 
   return (
-    <View style={styles.container}>
-      {items.map((item, index) => (
-        <>
-          <View style={styles.item} key={index}>
-            <Text
-              style={{
-                color: item.isActive ? '#C06014' : 'white',
-                marginBottom: 2,
-                fontWeight: item.isActive ? 'bold' : 'normal',
-              }}
-            >
-              {item.title}
-            </Text>
-            <Icon
-              name={item.icon.name}
-              type={item.icon.type}
-              color={item.isActive ? '#C06014' : 'white'}
-              size={item.icon.size}
-            />
+    <View>
+      <View style={styles.container}>
+        {items.map((item, index) => (
+          <View
+            key={index}
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', flex: 1 }}
+          >
+            <View>
+              <Text
+                style={{
+                  color: item.isActive ? '#C06014' : 'white',
+                  fontWeight: item.isActive ? 'bold' : 'normal',
+                  marginBottom: 'auto',
+                }}
+              >
+                {item.title}
+              </Text>
+              <Icon
+                style={{ marginTop: 10 }}
+                name={item.icon.name}
+                type={item.icon.type}
+                color={item.isActive ? '#C06014' : 'white'}
+                size={item.icon.size}
+              />
+            </View>
+            {items.length - 1 !== index && (
+              <Icon name="arrow-forward" type="material" color="white" size={20} />
+            )}
           </View>
-          {index < items.length - 1 && (
-            <Icon name="arrow-forward" type="metarial" color="#F3F4ED" size={20} />
-          )}
-        </>
-      ))}
+        ))}
+      </View>
+      {progressWidth !== '' ? (
+        <View style={{ width: progressWidth, backgroundColor: '#C06014', padding: 3 }}></View>
+      ) : null}
     </View>
   );
 };
@@ -55,9 +79,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: 10,
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
-  item: {},
+  item: { marginRight: 15 },
 });
 
 //make this component available to the app
