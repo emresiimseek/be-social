@@ -26,8 +26,12 @@ const BsDropdown = (props: DropdownProps) => {
     <View style={styles.container}>
       {renderLabel()}
       <Dropdown
-        containerStyle={{ padding: 20 }}
-        style={[styles.dropdown, isFocus && { borderColor: '#C06014' }]}
+        containerStyle={{ borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}
+        style={[
+          styles.dropdown,
+          isFocus && { borderColor: '#C06014' },
+          !isFocus ? { borderRadius: 10 } : { borderTopLeftRadius: 10, borderTopRightRadius: 10 },
+        ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -46,6 +50,7 @@ const BsDropdown = (props: DropdownProps) => {
           setValue(item.value);
           setIsFocus(false);
         }}
+        selectedTextProps={{ style: { color: '#86939e', fontSize: 16 } }}
         renderRightIcon={() => <Icon type="evilicon" name="tag" color="#C06014" />}
       />
     </View>
@@ -59,7 +64,6 @@ const styles = StyleSheet.create({
   dropdown: {
     borderWidth: 1,
     borderColor: '#D1D1D1',
-    borderRadius: 10,
     height: 50,
     paddingLeft: 10,
     paddingRight: 5,

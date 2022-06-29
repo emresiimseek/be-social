@@ -1,5 +1,4 @@
 import { Button } from '@rneui/base';
-import { Input } from '@rneui/themed';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
@@ -8,6 +7,7 @@ import { Props } from '../types/common/props';
 import { BaseState } from '../types/states/base-state';
 import Toast from 'react-native-toast-message';
 import { User } from '../types/strapi/models/user';
+import BsInput from '../components/common/BsInput';
 
 export interface RegisterPageStates extends BaseState {
   user: User | null;
@@ -47,62 +47,54 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
   public render() {
     return (
       <View style={styles.container}>
-        <Input
+        <BsInput
           value={this.state.user?.firstname}
           onChangeText={firstname => this.setState({ user: { ...this.state.user, firstname } })}
-          placeholder="Ad"
-          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014' }}
+          label="Ad"
+          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'firstname')}
-          containerStyle={styles.input}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          errorStyle={{ color: '#C06014' }}
         />
-        <Input
+        <BsInput
           value={this.state.user?.lastname}
           onChangeText={lastname => this.setState({ user: { ...this.state.user, lastname } })}
-          placeholder="Soyad"
-          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014' }}
+          label="Soyad"
+          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'lastName')}
-          containerStyle={styles.input}
-          placeholderTextColor="#536162"
-          inputStyle={{ color: '#536162' }}
-          errorStyle={{ color: '#C06014' }}
         />
-        <Input
+
+        <BsInput
           value={this.state.user?.username}
           onChangeText={username => this.setState({ user: { ...this.state.user, username } })}
-          placeholder="Kullanıcı Adı"
-          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014' }}
+          label="Kullanıcı Adı"
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'username')}
-          containerStyle={styles.input}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          errorStyle={{ color: '#C06014' }}
         />
-        <Input
+
+        <BsInput
           value={this.state.user?.email}
           onChangeText={email => this.setState({ user: { ...this.state.user, email } })}
-          placeholder="E-Posta"
-          rightIcon={{ type: 'meterial', name: 'email', color: '#C06014' }}
+          label="E-Posta"
+          rightIcon={{ type: 'meterial', name: 'email', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'email')}
-          containerStyle={styles.input}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          errorStyle={{ color: '#C06014' }}
         />
-        <Input
+
+        <BsInput
           value={this.state.user?.password}
           onChangeText={password => this.setState({ user: { ...this.state.user, password } })}
-          placeholder="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014' }}
-          containerStyle={styles.input}
-          errorMessage={this.getErrorMessage(this.state.validations, 'password')}
-          secureTextEntry={true}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          errorStyle={{ color: '#C06014' }}
+          label="Parola"
+          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
+          errorMessage={this.getErrorMessage(this.state.validations, 'email')}
+          password
         />
+        <BsInput
+          value={this.state.user?.password}
+          onChangeText={password => this.setState({ user: { ...this.state.user, password } })}
+          label="Parola Tekrar"
+          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
+          errorMessage={this.getErrorMessage(this.state.validations, 'email')}
+          password
+        />
+
         <Button
           title="Kaydet"
           color="#C06014"
@@ -118,7 +110,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#F3F4ED' },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'white' },
   input: { marginBottom: 5 },
   button: { marginHorizontal: 10, marginVertical: 20 },
 });

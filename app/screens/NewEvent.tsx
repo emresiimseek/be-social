@@ -82,6 +82,7 @@ const NewEvent = () => {
             items={categories ?? []}
             onChange={category => setEvent({ ...event, categories: [+category.value] })}
             dropDownLabel="Kategori"
+            placeholder="Kategori Seçiniz"
           />
         </View>
       )}

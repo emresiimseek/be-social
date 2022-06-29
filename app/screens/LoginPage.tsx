@@ -1,5 +1,4 @@
 import { Button } from '@rneui/base';
-import { Input } from '@rneui/themed';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { login } from '../logic/login';
@@ -7,6 +6,7 @@ import { Props } from '../types/common/props';
 import BaseComponent from '../components/common/BaseComponent';
 import { BaseState } from '../types/states/base-state';
 import { AutResponse } from '../types/strapi/models/aut-response';
+import BsInput from '../components/common/BsInput';
 
 export interface LoginState extends BaseState {
   identifier: string;
@@ -27,29 +27,21 @@ class LoginPage extends BaseComponent<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Input
+        <BsInput
           value={this.state.identifier}
           onChangeText={identifier => this.setState({ ...this.state, identifier })}
-          placeholder="E-Posta"
+          label="E-Posta"
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'identifier')}
-          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014' }}
-          containerStyle={styles.input}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          errorStyle={{ color: '#C06014' }}
-          inputContainerStyle={{ borderBottomColor: '#536162' }}
         />
-        <Input
+
+        <BsInput
+          value={this.state.password}
           onChangeText={password => this.setState({ ...this.state, password })}
-          placeholder="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014' }}
+          label="Parola"
+          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'password')}
-          containerStyle={styles.input}
-          secureTextEntry={true}
-          inputStyle={{ color: '#536162' }}
-          placeholderTextColor="#536162"
-          inputContainerStyle={{ borderBottomColor: '#424642' }}
-          errorStyle={{ color: '#C06014' }}
+          password
         />
         <Button
           onPress={() => this.login()}
@@ -65,7 +57,7 @@ class LoginPage extends BaseComponent<Props> {
   }
 }
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#F3F4ED' },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'white' },
   input: { marginBottom: 5 },
   button: { marginHorizontal: 10 },
 });

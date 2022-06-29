@@ -13,6 +13,8 @@ interface InputProps {
   rightIcon?: IconNode;
   leftIcon?: IconNode;
   disabled?: boolean;
+  errorMessage?: string;
+  password?: boolean;
 }
 
 // create a component
@@ -38,6 +40,9 @@ const BsInput = (props: InputProps) => {
       leftIcon={props.leftIcon}
       disabled={props.disabled}
       onTouchStart={() => (props.onTouchStart ? props.onTouchStart() : null)}
+      errorStyle={{ color: 'red' }}
+      errorMessage={props.errorMessage}
+      secureTextEntry={props.password}
     />
   );
 };
