@@ -67,7 +67,8 @@ export const EventCard = (props: CardProps) => {
         ) : (
           <ImageBackground
             style={{ width: '100%', height: '100%' }}
-            source={{ uri: props.item.images.data[0].attributes.url }}
+            imageStyle={{ backgroundColor: 'gray' }}
+            source={{ uri: props.item?.images?.data?.[0]?.attributes?.url }}
           />
         )}
       </View>

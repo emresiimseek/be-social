@@ -12,56 +12,89 @@ import { CreateEventModel } from '../types/common/create-event-model';
 import { Button } from '@rneui/base';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/queries/createEvent';
-import { Variables } from '../types/strapi/base/base';
+import { Items, Variables } from '../types/strapi/base/base';
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from '../logic/graphql/queries/getCategories';
+import { Attributes } from '../types/strapi/models/user-events';
+import { Category } from '../types/strapi/models/category';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
 const NewEvent = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Tab Status
   const items: TabStatusItem[] = [
-    { title: 'Tarih', icon: { name: 'calendar-outline', type: 'ionicon', size: 20 }, isActive: true },
+    { title: 'Detay', icon: { name: 'calendar-outline', type: 'ionicon', size: 20 }, isActive: true },
     { title: 'Görsel', icon: { name: 'image-outline', type: 'ionicon', size: 20 } },
-    { title: 'Detay', icon: { name: 'form', type: 'antdesign', size: 20 } },
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [event, setEvent] = useState<CreateEventModel | null>({ publishedAt: Date() });
+  // Current User
+  const [userId, setUserId] = useState<number | undefined>();
+  const [event, setEvent] = useState<CreateEventModel | null>({
+    eventDate: new Date(),
+    publishedAt: new Date(),
+  });
 
+  // Create Event
+  useEffect(() => {
+    const getUserId = async () => {
+      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
+      setEvent({ ...event, users: [+userId] });
+    };
+
+    getUserId();
+  }, []);
   const [createEvent, { data, loading, error }] = useMutation<CreateEventModel, Variables>(CREATE_EVENT);
 
-  console.log(error);
+  console.log(data);
+
+  // Get Categories
+  const {
+    data: queryData,
+    refetch,
+    loading: gueryLoading,
+  } = useQuery<{ categories: Items<Category> }>(GET_CATEGORIES);
+
+  const categories = queryData?.categories.data.map(c => ({ value: c.id, label: c.attributes.title }));
 
   return (
     <View style={styles.container}>
       <TabStatus items={items} currentIndex={currentIndex} />
       {currentIndex === 0 && (
-        <View style={{ flex: 1, alignItems: 'center', padding: 15, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, padding: 20, backgroundColor: 'white' }}>
           <Input
             value={event?.title}
             onChangeText={title => setEvent({ ...event, title })}
             placeholder="Başlık"
-            rightIcon={{ type: 'meterial', name: 'edit', color: '#C06014' }}
-            inputStyle={{ color: '#536162' }}
+            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014', size: 30 }}
+            inputStyle={{ color: '#536162', fontSize: 14 }}
             placeholderTextColor="#536162"
-            inputContainerStyle={{ borderBottomColor: '#424642' }}
+            inputContainerStyle={{ height: 35 }}
             errorStyle={{ color: '#C06014' }}
           />
           <Input
             value={event?.description}
             onChangeText={description => setEvent({ ...event, description })}
             placeholder="Açıklama"
-            rightIcon={{ type: 'meterial', name: 'edit', color: '#C06014' }}
-            inputStyle={{ color: '#536162' }}
+            inputContainerStyle={{ height: 35, marginBottom: -4 }}
+            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014', size: 30 }}
+            inputStyle={{ color: '#536162', fontSize: 14 }}
             placeholderTextColor="#536162"
-            inputContainerStyle={{ borderBottomColor: '#424642' }}
             errorStyle={{ color: '#C06014' }}
           />
-          <DropdownComponent items={[]} onChange={categoryId => setEvent({ categories: [categoryId] })} />
-          <DatePicker onChange={eventDate => setEvent({ eventDate: eventDate })} />
+          <DropdownComponent
+            items={categories ?? []}
+            onChange={category => setEvent({ ...event, categories: [+category.value] })}
+          />
+          <DatePicker onChange={eventDate => setEvent({ ...event, eventDate: eventDate })} />
           <Button
             title="Gönder"
             loading={loading}
             onPress={() => {
-              createEvent({ variables: { data: event } });
+              createEvent({ variables: { data: { ...event } } });
             }}
           />
         </View>

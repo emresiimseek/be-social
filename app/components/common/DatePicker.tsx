@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, View, Pressable } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { Props } from '../../types/common/props';
@@ -21,10 +21,15 @@ export default (props: DatePickerProps) => {
       <Input
         onTouchStart={() => setOpen(true)}
         value={moment(date).format('LLL')}
-        rightIcon={<Icon name="calendar-outline" type="ionicon" color={'#C06014'} />}
+        inputStyle={{ color: '#536162', fontSize: 14 }}
+        inputContainerStyle={{ height: 35 }}
+        rightIcon={{ type: 'evilicon', name: 'calendar', color: '#C06014', size: 30 }}
       />
       <DatePicker
-        locale="tr"
+        confirmText="Onayla"
+        cancelText="İptal"
+        title="Tarih Seçiniz"
+        is24hourSource="locale"
         modal
         open={open}
         date={date}

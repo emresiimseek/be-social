@@ -1,8 +1,7 @@
 import { Icon } from '@rneui/base';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Props } from '../../types/common/props';
 
 interface DropdownProps extends Props {
@@ -15,14 +14,14 @@ const DropdownComponent = (props: DropdownProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View style={{ paddingBottom: 20 }}>
       <Dropdown
         style={[styles.dropdown]}
         selectedTextStyle={styles.selectedTextStyle}
         data={props.items}
         search
         maxHeight={300}
-        placeholderStyle={{ color: '#546062', fontSize: 18 }}
+        placeholderStyle={{ color: '#546062', fontSize: 14 }}
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? 'Kategori Seçiniz' : '...'}
@@ -35,7 +34,9 @@ const DropdownComponent = (props: DropdownProps) => {
           setIsFocus(false);
           props.onChange(item);
         }}
-        renderRightIcon={() => <Icon type="evilicon" name="tag" size={31} color="#C06014" />}
+        renderRightIcon={() => (
+          <Icon type="evilicon" name="tag" size={30} style={{ paddingRight: 5 }} color="#C06014" />
+        )}
       />
     </View>
   );
@@ -44,15 +45,10 @@ const DropdownComponent = (props: DropdownProps) => {
 export default DropdownComponent;
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
   dropdown: {
-    height: 50,
-    borderColor: 'black',
+    borderColor: '#8b97a2',
     borderBottomWidth: 1,
     marginHorizontal: 10,
-    marginBottom: 10,
   },
 
   selectedTextStyle: {

@@ -39,14 +39,17 @@ const TabStatus = (props: TabStatusProps) => {
         {items.map((item, index) => (
           <View
             key={index}
-            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', flex: 1 }}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
+            }}
           >
-            <View>
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
                 style={{
                   color: item.isActive ? '#C06014' : 'white',
                   fontWeight: item.isActive ? 'bold' : 'normal',
-                  marginBottom: 'auto',
                 }}
               >
                 {item.title}
@@ -76,12 +79,11 @@ const TabStatus = (props: TabStatusProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#424642',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     padding: 10,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
-  item: { marginRight: 15 },
 });
 
 //make this component available to the app
