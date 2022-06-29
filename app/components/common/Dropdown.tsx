@@ -1,57 +1,93 @@
 import { Icon } from '@rneui/base';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Props } from '../../types/common/props';
 
 interface DropdownProps extends Props {
   items: any[];
   onChange: (item: any) => void;
+  placeholder?: string;
+  dropDownLabel?: string;
 }
 
-const DropdownComponent = (props: DropdownProps) => {
+const BsDropdown = (props: DropdownProps) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return <Text style={[styles.label, isFocus && { color: '#C06014' }]}>{props.dropDownLabel}</Text>;
+    }
+    return null;
+  };
+
   return (
-    <View style={{ paddingBottom: 20 }}>
+    <View style={styles.container}>
+      {renderLabel()}
       <Dropdown
-        style={[styles.dropdown]}
+        containerStyle={{ padding: 20 }}
+        style={[styles.dropdown, isFocus && { borderColor: '#C06014' }]}
+        placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
         data={props.items}
         search
         maxHeight={300}
-        placeholderStyle={{ color: '#546062', fontSize: 14 }}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? 'Kategori Seçiniz' : '...'}
-        searchPlaceholder="Search..."
+        placeholder={!isFocus ? props.placeholder : ''}
+        searchPlaceholder="Ara"
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {
           setValue(item.value);
           setIsFocus(false);
-          props.onChange(item);
         }}
-        renderRightIcon={() => (
-          <Icon type="evilicon" name="tag" size={30} style={{ paddingRight: 5 }} color="#C06014" />
-        )}
+        renderRightIcon={() => <Icon type="evilicon" name="tag" color="#C06014" />}
       />
     </View>
   );
 };
 
-export default DropdownComponent;
+export default BsDropdown;
 
 const styles = StyleSheet.create({
+  container: { marginBottom: 25 },
   dropdown: {
-    borderColor: '#8b97a2',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderColor: '#D1D1D1',
+    borderRadius: 10,
+    height: 50,
+    paddingLeft: 10,
+    paddingRight: 5,
     marginHorizontal: 10,
   },
-
+  label: {
+    paddingBottom: 5,
+    color: '#D1D1D1',
+    position: 'absolute',
+    backgroundColor: 'white',
+    fontWeight: 'bold',
+    left: 25,
+    top: -7,
+    zIndex: 999,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 13,
+  },
   selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
     fontSize: 16,
   },
 });

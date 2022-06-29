@@ -1,24 +1,21 @@
 //import liraries
-import { Input } from '@rneui/base';
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import DatePicker from '../components/common/DatePicker';
 import TabStatus from '../components/common/TabStatus';
 import { TabStatusItem } from '../types/common/tab-status-item';
-import { Event } from '../types/strapi/models/event';
 import { Icon } from '@rneui/themed';
-import DropdownComponent from '../components/common/Dropdown';
 import { CreateEventModel } from '../types/common/create-event-model';
-import { Button } from '@rneui/base';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/queries/createEvent';
 import { Items, Variables } from '../types/strapi/base/base';
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from '../logic/graphql/queries/getCategories';
-import { Attributes } from '../types/strapi/models/user-events';
 import { Category } from '../types/strapi/models/category';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BsInput from '../components/common/BsInput';
+import BsDropdown from '../components/common/Dropdown';
 
 // create a component
 const NewEvent = () => {
@@ -65,37 +62,26 @@ const NewEvent = () => {
       <TabStatus items={items} currentIndex={currentIndex} />
       {currentIndex === 0 && (
         <View style={{ flex: 1, padding: 20, backgroundColor: 'white' }}>
-          <Input
+          <BsInput
             value={event?.title}
             onChangeText={title => setEvent({ ...event, title })}
-            placeholder="Başlık"
-            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014', size: 30 }}
-            inputStyle={{ color: '#536162', fontSize: 14 }}
-            placeholderTextColor="#536162"
-            inputContainerStyle={{ height: 35 }}
-            errorStyle={{ color: '#C06014' }}
+            label="Başlık"
+            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
           />
-          <Input
+
+          <BsInput
             value={event?.description}
             onChangeText={description => setEvent({ ...event, description })}
-            placeholder="Açıklama"
-            inputContainerStyle={{ height: 35, marginBottom: -4 }}
-            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014', size: 30 }}
-            inputStyle={{ color: '#536162', fontSize: 14 }}
-            placeholderTextColor="#536162"
-            errorStyle={{ color: '#C06014' }}
+            label="Açıklama"
+            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
           />
-          <DropdownComponent
+
+          <DatePicker onDateChange={eventDate => setEvent({ ...event, eventDate })} />
+
+          <BsDropdown
             items={categories ?? []}
             onChange={category => setEvent({ ...event, categories: [+category.value] })}
-          />
-          <DatePicker onChange={eventDate => setEvent({ ...event, eventDate: eventDate })} />
-          <Button
-            title="Gönder"
-            loading={loading}
-            onPress={() => {
-              createEvent({ variables: { data: { ...event } } });
-            }}
+            dropDownLabel="Kategori"
           />
         </View>
       )}

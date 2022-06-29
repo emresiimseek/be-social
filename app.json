@@ -1,11 +1,10 @@
 {
   "expo": {
     "name": "be-social",
+    "userInterfaceStyle": "automatic",
     "slug": "be-social",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "y"
     },
