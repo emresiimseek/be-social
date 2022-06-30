@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BsInput from '../components/common/BsInput';
 import BsDropdown from '../components/common/Dropdown';
+import ImagePickerExample from '../components/common/Camera';
 
 // create a component
 const NewEvent = () => {
@@ -98,6 +99,7 @@ const NewEvent = () => {
             name="arrow-right"
             size={50}
           />
+          <ImagePickerExample />
         </View>
       )}
       {currentIndex > 0 && (
