@@ -16,11 +16,14 @@ import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BsInput from '../components/common/BsInput';
 import BsDropdown from '../components/common/Dropdown';
-import ImagePickerExample from '../components/common/Camera';
+import ImagePickerComponent from '../components/common/ImagePicker';
+import { EventCard } from '../components/common/EventCard';
+import { User } from '../types/strapi/models/user';
+import { PreviewEventCard } from '../components/common/PreviewEventCard';
 
 // create a component
 const NewEvent = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   // Tab Status
   const items: TabStatusItem[] = [
@@ -87,6 +90,13 @@ const NewEvent = () => {
           />
         </View>
       )}
+      {currentIndex === 1 && (
+        <>
+          <ImagePickerComponent onSelect={image => setEvent({ ...event, images: [image] })} />
+
+          {event?.images?.length && <PreviewEventCard item={event} />}
+        </>
+      )}
       {/* Direction Buttons */}
       {currentIndex < items.length - 1 && (
         <View style={{ position: 'absolute', bottom: 15, zIndex: 1, right: 10 }}>
@@ -97,9 +107,9 @@ const NewEvent = () => {
             }}
             type="evilicon"
             name="arrow-right"
+            color="white"
             size={50}
           />
-          <ImagePickerExample />
         </View>
       )}
       {currentIndex > 0 && (
@@ -111,6 +121,7 @@ const NewEvent = () => {
             }}
             type="evilicon"
             name="arrow-left"
+            color="white"
             size={50}
           />
         </View>
