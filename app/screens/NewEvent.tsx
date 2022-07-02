@@ -1,23 +1,14 @@
 //import liraries
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import DatePicker from '../components/common/DatePicker';
 import TabStatus from '../components/common/TabStatus';
 import { TabStatusItem } from '../types/common/tab-status-item';
-import { Icon } from '@rneui/themed';
 import { CreateEventModel } from '../types/common/create-event-model';
 import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/mutations/createEvent';
 import { Items, Variables } from '../types/strapi/base/base';
-import { useQuery } from '@apollo/client';
-import { GET_CATEGORIES } from '../logic/graphql/queries/getCategories';
-import { Category } from '../types/strapi/models/category';
 import { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import BsInput from '../components/common/BsInput';
-import BsDropdown from '../components/common/Dropdown';
 import ImagePickerComponent from '../components/common/ImagePicker';
-import { EventCard } from '../components/common/EventCard';
 import { User } from '../types/strapi/models/user';
 import { PreviewEventCard } from '../components/common/PreviewEventCard';
 import { getItem } from '../logic/helpers/useAsyncStorage';

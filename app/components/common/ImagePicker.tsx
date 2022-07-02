@@ -43,9 +43,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View
-      style={{ paddingHorizontal: 30, paddingVertical: 5, flexDirection: 'column', alignItems: 'center' }}
-    >
+    <View style={{ paddingVertical: 5, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
         containerStyle={{ width: '70%' }}
         onPress={index => {
@@ -76,7 +74,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
           style={{
             backgroundColor: 'white',
             borderRadius: 10,
-            padding: 5,
+            padding: 20,
             flexDirection: 'column',
             alignItems: 'center',
           }}

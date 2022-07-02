@@ -34,6 +34,7 @@ const EventFormArrows = (props: EventFormArrowsProps) => {
             type="evilicon"
             name="arrow-left"
             color="#C06014"
+            style={{ opacity: 0.5 }}
             size={50}
           />
         </View>
