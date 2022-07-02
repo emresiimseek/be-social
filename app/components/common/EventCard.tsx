@@ -8,7 +8,7 @@ import { Event } from '../../types/strapi/models/event';
 import { useMutation } from '@apollo/client';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { Variables } from '../../types/strapi/base/base';
-import { LIKE_EVENT } from '../../logic/graphql/queries/likeEvent';
+import { LIKE_EVENT } from '../../logic/graphql/mutations/likeEvent';
 import PostCards from './PostCards';
 
 interface CardProps extends Props {

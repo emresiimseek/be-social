@@ -7,7 +7,7 @@ import { ImageBackground } from 'react-native';
 import { Avatar, Icon } from '@rneui/base';
 import { Props } from '../../types/common/props';
 import { useMutation } from '@apollo/client';
-import { UPDATE_POST } from '../../logic/graphql/queries/updatePost';
+import { UPDATE_POST } from '../../logic/graphql/mutations/updatePost';
 import { useEffect } from 'react';
 import { useState } from 'react';
 

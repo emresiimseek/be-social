@@ -7,23 +7,25 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getEventsByUserId';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CarouselCard from '../../components/common/PostCards';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
 
 export const HomePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
+
+  const getUserId = async () => {
+    const userId = await getItem<number>('userId');
+    setUserId(userId);
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []);
+
   const [event, setEvent] = useState<FlowEventData | null>(null);
 
   const { loading, error, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
     variables: { userId: userId },
   });
-
-  useEffect(() => {
-    const getUserId = async () => {
-      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
-      setUserId(+userId);
-    };
-    getUserId();
-  }, []);
 
   useEffect(() => {
     setEvent(data ? data : null);

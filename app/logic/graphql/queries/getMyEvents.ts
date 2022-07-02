@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client';
+import { EVENTS_FIELDS } from '../fragments/event-fragments';
 
 export const USER_EVENTS = gql`
+  ${EVENTS_FIELDS}
+
   query getUser($id: ID!) {
     usersPermissionsUser(id: $id) {
       data {
@@ -8,56 +11,7 @@ export const USER_EVENTS = gql`
         attributes {
           events {
             data {
-              id
-              attributes {
-                categories {
-                  data {
-                    id
-                    attributes {
-                      title
-                    }
-                  }
-                }
-                title
-                description
-                eventDate
-
-                comments {
-                  data {
-                    id
-                    attributes {
-                      description
-                      user_comments {
-                        data {
-                          id
-                          attributes {
-                            username
-                            email
-                            firstname
-                            lastname
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                images {
-                  data {
-                    id
-                    attributes {
-                      url
-                    }
-                  }
-                }
-                users {
-                  data {
-                    id
-                    attributes {
-                      username
-                    }
-                  }
-                }
-              }
+              ...EventFields
             }
           }
         }

@@ -1,6 +1,10 @@
 import { gql } from '@apollo/client';
+import { COMMENT_FIELDS } from '../fragments/comment-fragment';
+import { POST_FIELDS } from '../fragments/post-fragment';
 
 export const FLOW_EVENTS = gql`
+  ${COMMENT_FIELDS}
+  ${POST_FIELDS}
   query Get($userId: Int!) {
     getEventsByUserId(userId: $userId) {
       data {
@@ -8,50 +12,7 @@ export const FLOW_EVENTS = gql`
         attributes {
           posts {
             data {
-              id
-              attributes {
-                comments {
-                  data {
-                    id
-                  }
-                }
-                post_likes {
-                  data {
-                    id
-                    attributes {
-                      username
-                      firstname
-                      lastname
-                    }
-                  }
-                }
-                description
-                images {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-                users {
-                  data {
-                    id
-                    attributes {
-                      username
-                      firstname
-                      lastname
-                      profile_photo {
-                        data {
-                          id
-                          attributes {
-                            url
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              ...PostFields
             }
           }
           categories {
@@ -68,21 +29,7 @@ export const FLOW_EVENTS = gql`
 
           comments {
             data {
-              id
-              attributes {
-                description
-                user_comments {
-                  data {
-                    id
-                    attributes {
-                      username
-                      email
-                      firstname
-                      lastname
-                    }
-                  }
-                }
-              }
+              ...CommentFields
             }
           }
           images {

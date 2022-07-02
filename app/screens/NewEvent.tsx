@@ -7,7 +7,7 @@ import { TabStatusItem } from '../types/common/tab-status-item';
 import { Icon } from '@rneui/themed';
 import { CreateEventModel } from '../types/common/create-event-model';
 import { useMutation } from '@apollo/client';
-import { CREATE_EVENT } from '../logic/graphql/queries/createEvent';
+import { CREATE_EVENT } from '../logic/graphql/mutations/createEvent';
 import { Items, Variables } from '../types/strapi/base/base';
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from '../logic/graphql/queries/getCategories';
@@ -33,24 +33,12 @@ const NewEvent = () => {
   ];
 
   // Current User
-  const [userId, setUserId] = useState<number | undefined>();
   const [event, setEvent] = useState<CreateEventModel | null>({
     eventDate: new Date(),
     publishedAt: new Date(),
   });
 
-  // Create Event
-  useEffect(() => {
-    const getUserId = async () => {
-      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
-      setEvent({ ...event, users: [+userId] });
-    };
-
-    getUserId();
-  }, []);
   const [createEvent, { data, loading, error }] = useMutation<CreateEventModel, Variables>(CREATE_EVENT);
-
-  console.log(data);
 
   // Get Categories
   const {
@@ -90,6 +78,7 @@ const NewEvent = () => {
           />
         </View>
       )}
+
       {currentIndex === 1 && (
         <>
           <ImagePickerComponent onSelect={image => setEvent({ ...event, images: [image] })} />
@@ -97,35 +86,50 @@ const NewEvent = () => {
           {event?.images?.length && <PreviewEventCard item={event} />}
         </>
       )}
-      {/* Direction Buttons */}
-      {currentIndex < items.length - 1 && (
-        <View style={{ position: 'absolute', bottom: 15, zIndex: 1, right: 10 }}>
-          <Icon
-            onPress={() => {
-              const index = currentIndex + 1;
-              setCurrentIndex(index);
-            }}
-            type="evilicon"
-            name="arrow-right"
-            color="white"
-            size={50}
-          />
-        </View>
-      )}
-      {currentIndex > 0 && (
-        <View style={{ position: 'absolute', bottom: 15, zIndex: 1, left: 10 }}>
-          <Icon
-            onPress={() => {
-              const index = currentIndex - 1;
-              setCurrentIndex(index);
-            }}
-            type="evilicon"
-            name="arrow-left"
-            color="white"
-            size={50}
-          />
-        </View>
-      )}
+
+      <View
+        style={{
+          backgroundColor: 'black',
+          position: 'absolute',
+          bottom: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          opacity: 0.5,
+          width: '100%',
+          padding: 10,
+        }}
+      >
+        {currentIndex > 0 && (
+          <View>
+            <Icon
+              onPress={() => {
+                const index = currentIndex - 1;
+                setCurrentIndex(index);
+              }}
+              type="evilicon"
+              name="arrow-left"
+              color="white"
+              size={50}
+            />
+          </View>
+        )}
+        {/* Direction Buttons */}
+        {currentIndex < items.length - 1 && (
+          <View>
+            <Icon
+              onPress={() => {
+                const index = currentIndex + 1;
+                setCurrentIndex(index);
+              }}
+              type="evilicon"
+              name="arrow-right"
+              color="white"
+              size={50}
+            />
+          </View>
+        )}
+      </View>
     </View>
   );
 };

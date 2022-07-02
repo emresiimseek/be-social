@@ -6,7 +6,7 @@ import { Button } from '@rneui/base';
 import { Props } from '../../types/common/props';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { useMutation } from '@apollo/client';
-import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/queries/followUser';
+import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/mutations/followUser';
 import { Variables } from '../../types/strapi/base/base';
 
 interface ProfileHeaderProps extends Props {

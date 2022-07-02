@@ -8,15 +8,17 @@ import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { Variables } from '../../types/strapi/base/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
 
 export const ProfilePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
-  useEffect(() => {
-    const getUserId = async () => {
-      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
-      setUserId(+userId);
-    };
 
+  const getUserId = async () => {
+    const userId = await getItem<number>('userId');
+    setUserId(userId);
+  };
+
+  useEffect(() => {
     getUserId();
   }, []);
 

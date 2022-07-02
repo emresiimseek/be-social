@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 import { EventCard } from './EventCard';
 import { Props } from '../../types/common/props';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { useState, useEffect } from 'react';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
 
 export interface EventProps extends Props {
   isMine: boolean;
@@ -11,14 +11,15 @@ export interface EventProps extends Props {
 }
 
 export const EventList = (props: EventProps) => {
-  const [userId, setUserId] = useState<number | undefined | null>();
+  const [userId, setUserId] = useState<number | undefined>();
+
+  const getUserId = async () => {
+    const userId = await getItem<number>('userId');
+    setUserId(userId);
+  };
 
   useEffect(() => {
-    const setId = async () => {
-      const userId = await AsyncStorage.getItem('userId');
-      setUserId(userId ? +userId : null);
-    };
-    setId();
+    getUserId();
   }, []);
 
   return (

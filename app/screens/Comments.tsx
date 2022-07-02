@@ -16,7 +16,7 @@ import { CommentAttributes, EventComments } from '../types/strapi/models/event-c
 import { Props } from '../types/common/props';
 import { Button, Icon, Input, Text } from '@rneui/base';
 import { EVENT_COMMENTS } from '../logic/graphql/queries/eventComments';
-import { CREATE_COMMENT } from '../logic/graphql/queries/createComment';
+import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
 import CommentsReplies from './MyTabs/CommentReplies';
 
 export const CommentsComponent = (props: Props) => {

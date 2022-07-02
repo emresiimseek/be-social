@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client';
+import { EVENTS_FIELDS } from '../fragments/event-fragments';
 
 export const USERS_QUERY = gql`
+  ${EVENTS_FIELDS}
+
   query getUser($id: ID!) {
     usersPermissionsUser(id: $id) {
       data {
@@ -42,120 +45,7 @@ export const USERS_QUERY = gql`
           }
           events {
             data {
-              id
-              attributes {
-                posts {
-                  data {
-                    id
-                    attributes {
-                      comments {
-                        data {
-                          id
-                        }
-                      }
-                      post_likes {
-                        data {
-                          id
-                          attributes {
-                            username
-                            firstname
-                            lastname
-                          }
-                        }
-                      }
-                      description
-                      images {
-                        data {
-                          attributes {
-                            url
-                          }
-                        }
-                      }
-                      users {
-                        data {
-                          id
-                          attributes {
-                            username
-                            firstname
-                            lastname
-                            profile_photo {
-                              data {
-                                id
-                                attributes {
-                                  url
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                event_likes {
-                  data {
-                    id
-                    attributes {
-                      username
-                    }
-                  }
-                }
-                categories {
-                  data {
-                    id
-                    attributes {
-                      title
-                    }
-                  }
-                }
-                title
-                description
-                eventDate
-
-                comments {
-                  data {
-                    id
-                    attributes {
-                      description
-                      user_comments {
-                        data {
-                          id
-                          attributes {
-                            username
-                            email
-                            firstname
-                            lastname
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                images {
-                  data {
-                    id
-                    attributes {
-                      url
-                    }
-                  }
-                }
-                users {
-                  data {
-                    id
-                    attributes {
-                      username
-                      profile_photo {
-                        data {
-                          id
-                          attributes {
-                            url
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              ...EventFields
             }
           }
         }
