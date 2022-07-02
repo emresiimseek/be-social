@@ -43,7 +43,9 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ padding: 10, flexDirection: 'column', alignItems: 'center' }}>
+    <View
+      style={{ paddingHorizontal: 30, paddingVertical: 5, flexDirection: 'column', alignItems: 'center' }}
+    >
       <ButtonGroup
         containerStyle={{ width: '70%' }}
         onPress={index => {
@@ -56,7 +58,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
           <Icon
             type="ionicon"
             name="camera-outline"
-            color={currentIndex == 0 ? 'red' : 'black'}
+            color={currentIndex == 0 ? 'white' : 'black'}
             style={{ paddingTop: 7 }}
           />,
           <Icon
@@ -69,7 +71,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
         selectedButtonStyle={{ backgroundColor: '#C06014' }}
         selectedTextStyle={{ color: 'white' }}
       />
-      {!image && (
+      {!image && props.showMessage && (
         <View
           style={{
             backgroundColor: 'white',

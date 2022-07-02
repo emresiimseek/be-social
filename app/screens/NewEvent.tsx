@@ -73,7 +73,7 @@ const NewEvent = () => {
         <>
           <View>
             <ImagePickerComponent
-              showMessage={!!event?.images?.length}
+              showMessage={!event?.images?.length}
               onSelect={image => setEvent({ ...event, images: [image] })}
             />
           </View>
