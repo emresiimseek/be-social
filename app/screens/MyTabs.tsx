@@ -42,7 +42,7 @@ export function MyTabs(baseProps: MyTabsProps) {
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: '#F3F4ED', position: 'absolute' },
+        tabBarStyle: { backgroundColor: '#F3F4ED' },
         headerStyle: { backgroundColor: '#C06014' },
         headerTitleStyle: { color: '#F3F4ED' },
       })}
