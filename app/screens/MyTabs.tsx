@@ -4,7 +4,7 @@ import { Props } from '../types/common/props';
 import { HomePage } from './MyTabs/HomePage';
 import { ProfilePage } from './MyTabs/ProfilePage';
 import NewEvent from './NewEvent';
-import { TouchableOpacity, View, StyleSheet, Dimensions, Animated } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Dimensions, Animated, Pressable } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 
 const Tab = createBottomTabNavigator();
@@ -42,45 +42,64 @@ export function MyTabs(baseProps: MyTabsProps) {
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: '#F3F4ED' },
+        tabBarStyle: { backgroundColor: '#F3F4ED', position: 'absolute' },
         headerStyle: { backgroundColor: '#C06014' },
         headerTitleStyle: { color: '#F3F4ED' },
       })}
     >
-      <Tab.Screen name="Home" options={{ headerTitle: 'Akış' }} component={HomePage} />
+      <Tab.Screen
+        name="Home"
+        options={{ headerTitle: 'Akış' }}
+        component={HomePage}
+        listeners={() => ({ tabPress: () => setFocus(false) })}
+      />
       <Tab.Screen
         name="NewEvent"
+        listeners={() => ({ tabPress: () => setFocus(false) })}
         options={{
           headerTitle: 'Etkinlik',
           tabBarButton: props => (
             <>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                 {focus && (
-                  <Animated.View
-                    style={[
-                      styles.customNavBarContainer,
-                      { transform: [{ translateY: translateYAnim }], opacity: fadeAnim },
-                    ]}
-                  >
-                    <TouchableOpacity
+                  <>
+                    <Pressable
                       onPress={() => {
                         setFocus(false);
-                        baseProps.navigation.navigate('NewEvent');
                       }}
-                      style={styles.customTabBar}
-                    >
-                      <Icon type="simple-line-icon" name="event" size={15} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.customTabBar}
-                      onPress={() => {
-                        setFocus(false);
-                        baseProps.navigation.navigate('NewPost');
+                      style={{
+                        position: 'absolute',
+                        top: -Dimensions.get('window').height,
+                        width: Dimensions.get('window').width,
+                        height: Dimensions.get('window').height,
                       }}
+                    ></Pressable>
+                    <Animated.View
+                      style={[
+                        styles.customNavBarContainer,
+                        { transform: [{ translateY: translateYAnim }], opacity: fadeAnim },
+                      ]}
                     >
-                      <Icon type="ionicon" name="albums-outline" size={18} />
-                    </TouchableOpacity>
-                  </Animated.View>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setFocus(false);
+                          baseProps.navigation.navigate('NewEvent');
+                        }}
+                        style={styles.customTabBar}
+                      >
+                        <Icon type="simple-line-icon" name="event" size={20} />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.customTabBar}
+                        onPress={() => {
+                          setFocus(false);
+                          baseProps.navigation.navigate('NewPost');
+                        }}
+                      >
+                        <Icon type="ionicon" name="albums-outline" size={21} />
+                      </TouchableOpacity>
+                    </Animated.View>
+                  </>
                 )}
 
                 <TouchableOpacity onPress={() => setFocus(!focus)}>
@@ -92,7 +111,12 @@ export function MyTabs(baseProps: MyTabsProps) {
         }}
         component={NewEvent}
       />
-      <Tab.Screen name="Profile" component={ProfilePage} options={{ headerTitle: 'Profil' }} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfilePage}
+        options={{ headerTitle: 'Profil' }}
+        listeners={() => ({ tabPress: () => setFocus(false) })}
+      />
     </Tab.Navigator>
   );
 }
