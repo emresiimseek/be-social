@@ -49,6 +49,7 @@ const BsDropdown = (props: DropdownProps) => {
         onChange={item => {
           setValue(item.value);
           setIsFocus(false);
+          props.onChange(item);
         }}
         selectedTextProps={{ style: { color: '#86939e', fontSize: 16 } }}
         renderRightIcon={() => <Icon type="evilicon" name="tag" color="#C06014" />}

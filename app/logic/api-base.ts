@@ -15,7 +15,12 @@ class ApiBase {
     },
   });
 
-  async postRequest<T>(url: string, value: any, cancelToken?: any): Promise<Awaited<AxiosResponse<T>>> {
+  async postRequest<T>(
+    url: string,
+    value: any,
+    populate?: string,
+    cancelToken?: any
+  ): Promise<Awaited<AxiosResponse<T>>> {
     let result: AxiosResponse<T> = { validations: [], data: null };
 
     if (this.cancelTokenSource != null && cancelToken) this.cancelTokenSource.cancel('request canceled');
@@ -23,7 +28,10 @@ class ApiBase {
     this.cancelTokenSource = axios.CancelToken.source();
 
     await this.conduitApi
-      .post(url, value, { cancelToken: this.cancelTokenSource.token })
+      .post(url, value, {
+        cancelToken: this.cancelTokenSource.token,
+        params: { populate: populate ? populate : '*' },
+      })
       .then(response => {
         result.data = response.data;
       })

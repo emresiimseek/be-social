@@ -20,10 +20,23 @@ import ImagePickerComponent from '../components/common/ImagePicker';
 import { EventCard } from '../components/common/EventCard';
 import { User } from '../types/strapi/models/user';
 import { PreviewEventCard } from '../components/common/PreviewEventCard';
+import { getItem } from '../logic/helpers/useAsyncStorage';
+import EventForm from '../components/common/EventForm';
+import EventFormArrows from '../components/common/EventFormArrows';
 
 // create a component
 const NewEvent = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [user, setUser] = useState<User | undefined>();
+
+  const getUser = async () => {
+    const user = await getItem<User>('user');
+    setUser(user);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   // Tab Status
   const items: TabStatusItem[] = [
@@ -41,102 +54,44 @@ const NewEvent = () => {
   const [createEvent, { data, loading, error }] = useMutation<CreateEventModel, Variables>(CREATE_EVENT);
 
   // Get Categories
-  const {
-    data: queryData,
-    refetch,
-    loading: gueryLoading,
-  } = useQuery<{ categories: Items<Category> }>(GET_CATEGORIES);
 
-  const categories = queryData?.categories.data.map(c => ({ value: c.id, label: c.attributes.title }));
+  const isDisabled = event?.title != '';
 
   return (
     <View style={styles.container}>
       <TabStatus items={items} currentIndex={currentIndex} />
       {currentIndex === 0 && (
-        <View style={{ flex: 1, padding: 20, backgroundColor: 'white' }}>
-          <BsInput
-            value={event?.title}
-            onChangeText={title => setEvent({ ...event, title })}
-            label="Başlık"
-            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
-          />
-
-          <BsInput
-            value={event?.description}
-            onChangeText={description => setEvent({ ...event, description })}
-            label="Açıklama"
-            rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
-          />
-
-          <DatePicker onDateChange={eventDate => setEvent({ ...event, eventDate })} />
-
-          <BsDropdown
-            items={categories ?? []}
-            onChange={category => setEvent({ ...event, categories: [+category.value] })}
-            dropDownLabel="Kategori"
-            placeholder="Kategori Seçiniz"
-          />
-        </View>
+        <EventForm
+          onModelChange={newModel => {
+            setEvent({ ...event, ...newModel });
+          }}
+          event={event}
+        />
       )}
 
       {currentIndex === 1 && (
         <>
-          <ImagePickerComponent onSelect={image => setEvent({ ...event, images: [image] })} />
-
+          <View>
+            <ImagePickerComponent
+              showMessage={!!event?.images?.length}
+              onSelect={image => setEvent({ ...event, images: [image] })}
+            />
+          </View>
           {event?.images?.length && <PreviewEventCard item={event} />}
         </>
       )}
-
-      <View
-        style={{
-          backgroundColor: 'black',
-          position: 'absolute',
-          bottom: 0,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          opacity: 0.5,
-          width: '100%',
-          padding: 10,
-        }}
-      >
-        {currentIndex > 0 && (
-          <View>
-            <Icon
-              onPress={() => {
-                const index = currentIndex - 1;
-                setCurrentIndex(index);
-              }}
-              type="evilicon"
-              name="arrow-left"
-              color="white"
-              size={50}
-            />
-          </View>
-        )}
-        {/* Direction Buttons */}
-        {currentIndex < items.length - 1 && (
-          <View>
-            <Icon
-              onPress={() => {
-                const index = currentIndex + 1;
-                setCurrentIndex(index);
-              }}
-              type="evilicon"
-              name="arrow-right"
-              color="white"
-              size={50}
-            />
-          </View>
-        )}
-      </View>
+      <EventFormArrows
+        currentIndex={currentIndex}
+        onIndexChange={index => setCurrentIndex(index)}
+        itemsLength={items.length}
+      />
     </View>
   );
 };
 
 // define your styles
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, position: 'relative' },
 });
 
 //make this component available to the app

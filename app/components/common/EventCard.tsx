@@ -112,7 +112,7 @@ export const EventCard = (props: CardProps) => {
                   }
                   type="font-awesome-5"
                   name="comment"
-                  size={20}
+                  size={18}
                 />
               </View>
 

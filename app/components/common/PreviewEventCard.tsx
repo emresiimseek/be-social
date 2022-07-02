@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { Props } from '../../types/common/props';
 import { CreateEventModel } from '../../types/common/create-event-model';
-import { Item } from '../../types/strapi/base/base';
+import { useQuery } from '@apollo/client';
+import { GET_USER_ONLY } from '../../logic/graphql/queries/getUserOnly';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
+import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 
 interface CardProps extends Props {
   item: CreateEventModel;
 }
 
 export const PreviewEventCard = (props: CardProps) => {
+  const [userId, setUserId] = useState<number | undefined>();
+
+  const getUserId = async () => {
+    const userId = await getItem<number>('userId');
+    setUserId(userId);
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []);
+
+  const { data, loading } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: userId } });
+  const url = data?.usersPermissionsUser.data.attributes.profile_photo.data.attributes.url;
+  const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
+  const uri = url ? url : defaultAvatarImage;
   moment.locale('tr');
 
   return (
@@ -19,15 +37,16 @@ export const PreviewEventCard = (props: CardProps) => {
       {/* Header */}
       <View style={styles.header}>
         <Pressable style={styles.headerContainer}>
-          {/* <Avatar
-            size={35}
-            rounded
-            source={{
-              uri: props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
-                ? props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
-                : 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-            }}
-          /> */}
+          {data?.usersPermissionsUser && (
+            <Avatar
+              size={35}
+              rounded
+              source={{
+                uri,
+              }}
+            />
+          )}
+
           <Text style={{ marginLeft: 5 }}>emresimsek</Text>
         </Pressable>
 
@@ -49,7 +68,7 @@ export const PreviewEventCard = (props: CardProps) => {
           <View style={{ flex: 1, flexDirection: 'row' }}>
             <Icon type="metarial" name="favorite-border" size={20} />
             <View style={{ marginHorizontal: 10 }}>
-              <Icon type="font-awesome-5" name="comment" size={20} />
+              <Icon type="font-awesome-5" name="comment" size={18} />
             </View>
 
             {/* <Icon name="paper-plane-o" type="font-awesome" size={20} /> */}
@@ -87,14 +106,10 @@ export const PreviewEventCard = (props: CardProps) => {
           >
             <Text>{props.item.description}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>{props.item.categories?.map(c => c)}</Text>
+              <Text>{props.item.categoryLabels?.map(c => c)}</Text>
               <Icon name="tagso" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
           </View>
-        </View>
-
-        <View>
-          <Text style={{ fontSize: 10, marginLeft: 2 }}>0 yorumu gör...</Text>
         </View>
       </View>
     </View>
@@ -106,12 +121,12 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: 500,
-    marginBottom: 15,
+    minHeight: '70%',
+    marginHorizontal: 10,
     borderRadius: 5,
   },
   header: {
-    flex: 0.2,
+    flex: 0.5,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

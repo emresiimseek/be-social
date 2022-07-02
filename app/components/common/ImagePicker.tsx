@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Image, View, Platform, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, ButtonGroup } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 
 interface ImagePickerProps {
   onSelect: (image: string) => void;
+  showMessage: boolean;
 }
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
@@ -41,18 +43,48 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ padding: 10, flexDirection: 'column' }}>
+    <View style={{ padding: 10, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
+        containerStyle={{ width: '70%' }}
         onPress={index => {
           setCurrentIndex(index);
           index === 0 && launchCamera();
           index === 1 && pickImage();
         }}
         selectedIndex={currentIndex}
-        buttons={['Kamera', 'Galeri']}
+        buttons={[
+          <Icon
+            type="ionicon"
+            name="camera-outline"
+            color={currentIndex == 0 ? 'red' : 'black'}
+            style={{ paddingTop: 7 }}
+          />,
+          <Icon
+            type="ionicon"
+            name="image-outline"
+            color={currentIndex == 1 ? 'white' : 'black'}
+            style={{ paddingTop: 7 }}
+          />,
+        ]}
         selectedButtonStyle={{ backgroundColor: '#C06014' }}
         selectedTextStyle={{ color: 'white' }}
       />
+      {!image && (
+        <View
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 10,
+            padding: 5,
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ marginBottom: 5 }}>Neredeyse Tamam!</Text>
+          <Text style={{ textAlign: 'center' }}>
+            Istersen galerinden bir fotoğraf seçibilir ya da kamerayı kullanabilirsin.
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

@@ -107,7 +107,7 @@ const PostCard = (props: PostCardProps) => {
                 size={20}
               />
               <View style={{ marginHorizontal: 10 }}>
-                <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={20} />
+                <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
               </View>
             </View>
             <Text style={{ fontSize: 12 }}>{post.attributes.description}</Text>
