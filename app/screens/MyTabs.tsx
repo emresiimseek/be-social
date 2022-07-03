@@ -39,15 +39,6 @@ export function MyTabs(baseProps: MyTabsProps) {
               <Icon
                 name="control-point"
                 type="metarial"
-                size={30}
-                color={focused ? colors.secondColor : 'gray'}
-              />
-            );
-          else if (route.name == 'NewEvent')
-            return (
-              <Icon
-                name="control-point"
-                type="metarial"
                 size={40}
                 color={focused ? colors.secondColor : 'gray'}
               />
@@ -57,9 +48,9 @@ export function MyTabs(baseProps: MyTabsProps) {
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: '#F3F4ED' },
+        tabBarStyle: { backgroundColor: 'white' },
         headerStyle: { backgroundColor: colors.secondColor },
-        headerTitleStyle: { color: '#F3F4ED' },
+        headerTitleStyle: { color: 'white' },
       })}
     >
       <Tab.Screen
@@ -118,7 +109,7 @@ export function MyTabs(baseProps: MyTabsProps) {
                 )}
 
                 <TouchableOpacity onPress={() => setFocus(!focus)}>
-                  <Icon type="ionicon" name="add-circle-outline" size={50} color="gray" />
+                  <Icon type="font-awesome" name="plus-circle" size={50} color={colors.secondColor} />
                 </TouchableOpacity>
               </View>
             </>
