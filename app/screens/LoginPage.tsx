@@ -7,6 +7,7 @@ import BaseComponent from '../components/common/BaseComponent';
 import { BaseState } from '../types/states/base-state';
 import { AutResponse } from '../types/strapi/models/aut-response';
 import BsInput from '../components/common/BsInput';
+import colors from '../styles/colors';
 
 export interface LoginState extends BaseState {
   identifier: string;
@@ -31,7 +32,7 @@ class LoginPage extends BaseComponent<Props> {
           value={this.state.identifier}
           onChangeText={identifier => this.setState({ ...this.state, identifier })}
           label="E-Posta"
-          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'identifier')}
         />
 
@@ -39,7 +40,7 @@ class LoginPage extends BaseComponent<Props> {
           value={this.state.password}
           onChangeText={password => this.setState({ ...this.state, password })}
           label="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'password')}
           password
         />
@@ -48,9 +49,9 @@ class LoginPage extends BaseComponent<Props> {
           title="Giriş"
           loading={this.state.loading}
           buttonStyle={styles.button}
-          titleStyle={{ color: '#F3F4ED' }}
+          titleStyle={{ color: colors.headerTitleColor }}
           size="lg"
-          color="#C06014"
+          color={colors.secondColor}
         />
       </View>
     );

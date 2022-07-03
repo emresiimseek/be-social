@@ -6,6 +6,8 @@ import { gql, useQuery } from '@apollo/client';
 import { WelcomePageModel } from '../types/strapi/models/welcome-page';
 import Loading from '../components/common/Loading';
 import Toast from 'react-native-toast-message';
+import colors from '../styles/colors';
+import backgroundColors from '../styles/backgroundColors';
 
 const welcome = gql`
   query GetWelcomePage {
@@ -58,7 +60,7 @@ function WelcomePage(props: Props) {
             buttonStyle={styles.bottomButton}
             size="lg"
             title="Giriş Yap"
-            color="#C06014"
+            color={colors.secondColor}
           />
           {/* <Input value={errorMessage} onChangeText={value => setError(value)}></Input> */}
           <Button
@@ -66,7 +68,7 @@ function WelcomePage(props: Props) {
             buttonStyle={styles.bottomButton}
             size="lg"
             title="Kayıt Ol"
-            color="#C06014"
+            color={colors.secondColor}
           />
         </View>
       </ImageBackground>
@@ -84,11 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F3F4ED',
+    backgroundColor: colors.headerTitleColor,
   },
   body: {
     color: 'white',
-    backgroundColor: '#53616299',
+    backgroundColor: backgroundColors.backgroundColorOpacity,
     borderRadius: 5,
     minHeight: '33%',
     paddingHorizontal: 15,
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
 
-  text: { textAlign: 'center', fontSize: 18, color: '#F3F4ED' },
+  text: { textAlign: 'center', fontSize: 18, color: colors.headerTitleColor },
   bottom: { bottom: 40, position: 'absolute', width: '100%' },
   bottomButton: {
     marginHorizontal: 10,
@@ -107,6 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 15,
-    color: '#F3F4ED',
+    color: colors.headerTitleColor,
   },
 });

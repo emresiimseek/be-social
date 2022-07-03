@@ -18,6 +18,8 @@ import { Button, Icon, Input, Text } from '@rneui/base';
 import { EVENT_COMMENTS } from '../logic/graphql/queries/eventComments';
 import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
 import CommentsReplies from './MyTabs/CommentReplies';
+import { colors } from '../styles/colors';
+import backgroundColors from '../styles/backgroundColors';
 
 export const CommentsComponent = (props: Props) => {
   const [comment, setComment] = useState('');
@@ -73,8 +75,8 @@ export const CommentsComponent = (props: Props) => {
                   setSelectedComment(comment);
                   reset();
                 }}
-                buttonStyle={{ minHeight: '100%', backgroundColor: '#424642' }}
-                icon={<Icon type="entype" name="reply" />}
+                buttonStyle={{ minHeight: '100%', backgroundColor: colors.fourthColor }}
+                icon={<Icon type="entype" name="reply" color={colors.secondColor} />}
               />
             )}
           >
@@ -131,26 +133,27 @@ export const CommentsComponent = (props: Props) => {
               name="close"
               size={15}
               style={{ marginLeft: 5, marginBottom: 'auto' }}
+              color={colors.secondColor}
               onPress={() => {
                 setSelectedComment(null);
               }}
             />
           </View>
         )}
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 24 }}>
           <Input
             value={comment}
             containerStyle={{ height: 45 }}
             rightIcon={
               <View>
                 {loading ? (
-                  <Icon type="evilicon" name="spinner" size={40} color="white" />
+                  <Icon type="evilicon" name="spinner" size={40} color={colors.secondColor} />
                 ) : (
                   <Icon
                     type="evilicon"
                     size={40}
                     name="arrow-up"
-                    color={'white'}
+                    color={colors.secondColor}
                     onPress={async () => {
                       if (selectedComment) {
                         await createComment({
@@ -189,7 +192,7 @@ export const CommentsComponent = (props: Props) => {
               </View>
             }
             inputContainerStyle={{
-              borderColor: '#F3F4ED',
+              borderColor: colors.secondColor,
               borderWidth: 1,
               borderRadius: 1000,
               paddingLeft: 20,
@@ -214,6 +217,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     paddingVertical: 10,
-    backgroundColor: '#424642',
+    backgroundColor: 'white',
   },
 });

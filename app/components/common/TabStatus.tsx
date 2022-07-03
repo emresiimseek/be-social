@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Icon } from '@rneui/themed';
 import { TabStatusItem } from '../../types/common/tab-status-item';
 import { useEffect } from 'react';
+import colors from '../../styles/colors';
+import { color } from '@rneui/base';
 
 interface TabStatusProps {
   items: TabStatusItem[];
@@ -48,8 +50,8 @@ const TabStatus = (props: TabStatusProps) => {
             <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
                 style={{
-                  color: item.isActive ? '#C06014' : 'white',
-                  fontWeight: item.isActive ? 'bold' : 'normal',
+                  color: props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity,
+                  fontWeight: props.currentIndex === index ? 'bold' : 'normal',
                 }}
               >
                 {item.title}
@@ -58,18 +60,35 @@ const TabStatus = (props: TabStatusProps) => {
                 style={{ marginTop: 10 }}
                 name={item.icon.name}
                 type={item.icon.type}
-                color={item.isActive ? '#C06014' : 'white'}
+                color={props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity}
                 size={item.icon.size}
               />
             </View>
             {items.length - 1 !== index && (
-              <Icon name="arrow-forward" type="material" color="white" size={20} />
+              <Icon name="arrow-forward" type="material" color={colors.secondColorOpacity} size={20} />
             )}
           </View>
         ))}
       </View>
       {progressWidth !== '' ? (
-        <View style={{ width: progressWidth, backgroundColor: '#C06014', padding: 3 }}></View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              width: progressWidth,
+              backgroundColor: colors.secondColor,
+              padding: 3,
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: props.currentIndex === props.items.length - 1 ? 10 : 0,
+            }}
+          ></View>
+        </View>
       ) : null}
     </View>
   );
@@ -78,11 +97,15 @@ const TabStatus = (props: TabStatusProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#424642',
+    backgroundColor: colors.fourthColor,
     justifyContent: 'space-between',
     flexDirection: 'row',
     padding: 10,
     alignItems: 'center',
+    marginHorizontal: 10,
+    marginTop: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
 });
 

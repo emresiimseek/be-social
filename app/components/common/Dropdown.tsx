@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Props } from '../../types/common/props';
+import colors from '../../styles/colors';
 
 interface DropdownProps extends Props {
   items: any[];
@@ -17,7 +18,9 @@ const BsDropdown = (props: DropdownProps) => {
 
   const renderLabel = () => {
     if (value || isFocus) {
-      return <Text style={[styles.label, isFocus && { color: '#C06014' }]}>{props.dropDownLabel}</Text>;
+      return (
+        <Text style={[styles.label, isFocus && { color: colors.secondColor }]}>{props.dropDownLabel}</Text>
+      );
     }
     return null;
   };
@@ -29,7 +32,7 @@ const BsDropdown = (props: DropdownProps) => {
         containerStyle={{ borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}
         style={[
           styles.dropdown,
-          isFocus && { borderColor: '#C06014' },
+          isFocus && { borderColor: colors.secondColor },
           !isFocus ? { borderRadius: 10 } : { borderTopLeftRadius: 10, borderTopRightRadius: 10 },
         ]}
         placeholderStyle={styles.placeholderStyle}
@@ -52,7 +55,7 @@ const BsDropdown = (props: DropdownProps) => {
           props.onChange(item);
         }}
         selectedTextProps={{ style: { color: '#86939e', fontSize: 16 } }}
-        renderRightIcon={() => <Icon type="evilicon" name="tag" color="#C06014" />}
+        renderRightIcon={() => <Icon type="evilicon" name="tag" color={colors.secondColor} />}
       />
     </View>
   );
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   container: { marginBottom: 25 },
   dropdown: {
     borderWidth: 1,
-    borderColor: '#D1D1D1',
+    borderColor: colors.focusColor,
     height: 50,
     paddingLeft: 10,
     paddingRight: 5,
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   },
   label: {
     paddingBottom: 5,
-    color: '#D1D1D1',
+    color: colors.focusColor,
     position: 'absolute',
     backgroundColor: 'white',
     fontWeight: 'bold',

@@ -6,6 +6,7 @@ import { ProfilePage } from './MyTabs/ProfilePage';
 import NewEvent from './NewEvent';
 import { TouchableOpacity, View, StyleSheet, Dimensions, Animated, Pressable } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
+import colors from '../styles/colors';
 
 const Tab = createBottomTabNavigator();
 interface MyTabsProps extends Props {}
@@ -26,16 +27,30 @@ export function MyTabs(baseProps: MyTabsProps) {
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')
-            return <Icon name="home" size={30} type="antdesign" color={focused ? '#C06014' : 'gray'} />;
+            return (
+              <Icon name="home" size={30} type="antdesign" color={focused ? colors.secondColor : 'gray'} />
+            );
           else if (route.name == 'Profile')
-            return <Icon name="user" size={40} type="evilicon" color={focused ? '#C06014' : 'gray'} />;
+            return (
+              <Icon name="user" size={40} type="evilicon" color={focused ? colors.secondColor : 'gray'} />
+            );
           else if (route.name == 'Search')
             return (
-              <Icon name="control-point" type="metarial" size={30} color={focused ? '#C06014' : 'gray'} />
+              <Icon
+                name="control-point"
+                type="metarial"
+                size={30}
+                color={focused ? colors.secondColor : 'gray'}
+              />
             );
           else if (route.name == 'NewEvent')
             return (
-              <Icon name="control-point" type="metarial" size={40} color={focused ? '#C06014' : 'gray'} />
+              <Icon
+                name="control-point"
+                type="metarial"
+                size={40}
+                color={focused ? colors.secondColor : 'gray'}
+              />
             );
         },
 
@@ -43,7 +58,7 @@ export function MyTabs(baseProps: MyTabsProps) {
         tabBarShowLabel: false,
         headerShown: true,
         tabBarStyle: { backgroundColor: '#F3F4ED' },
-        headerStyle: { backgroundColor: '#C06014' },
+        headerStyle: { backgroundColor: colors.secondColor },
         headerTitleStyle: { color: '#F3F4ED' },
       })}
     >
@@ -127,7 +142,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 35,
     borderWidth: 1,
-    borderColor: '#ededed',
+    borderColor: colors.secondColor,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',

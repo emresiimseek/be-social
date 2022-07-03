@@ -6,6 +6,5 @@ interface Icon {
 
 export interface TabStatusItem {
   title: string;
-  isActive?: boolean;
   icon: Icon;
 }

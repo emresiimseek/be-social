@@ -8,6 +8,7 @@ import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
 import { USERS_QUERY } from '../logic/graphql/queries/getUser';
+import colors from '../styles/colors';
 
 // create a component
 class UserList extends Component<Props> {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: colors.thirdColor,
   },
 });
 

@@ -8,6 +8,7 @@ import { BaseState } from '../types/states/base-state';
 import Toast from 'react-native-toast-message';
 import { User } from '../types/strapi/models/user';
 import BsInput from '../components/common/BsInput';
+import colors from '../styles/colors';
 
 export interface RegisterPageStates extends BaseState {
   user: User | null;
@@ -51,14 +52,14 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
           value={this.state.user?.firstname}
           onChangeText={firstname => this.setState({ user: { ...this.state.user, firstname } })}
           label="Ad"
-          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'person', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'firstname')}
         />
         <BsInput
           value={this.state.user?.lastname}
           onChangeText={lastname => this.setState({ user: { ...this.state.user, lastname } })}
           label="Soyad"
-          rightIcon={{ type: 'meterial', name: 'person', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'person', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'lastName')}
         />
 
@@ -66,7 +67,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
           value={this.state.user?.username}
           onChangeText={username => this.setState({ user: { ...this.state.user, username } })}
           label="Kullanıcı Adı"
-          rightIcon={{ type: 'meterial', name: 'alternate-email', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'alternate-email', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'username')}
         />
 
@@ -74,7 +75,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
           value={this.state.user?.email}
           onChangeText={email => this.setState({ user: { ...this.state.user, email } })}
           label="E-Posta"
-          rightIcon={{ type: 'meterial', name: 'email', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'email', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'email')}
         />
 
@@ -82,7 +83,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
           value={this.state.user?.password}
           onChangeText={password => this.setState({ user: { ...this.state.user, password } })}
           label="Parola"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'email')}
           password
         />
@@ -90,15 +91,15 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
           value={this.state.user?.password}
           onChangeText={password => this.setState({ user: { ...this.state.user, password } })}
           label="Parola Tekrar"
-          rightIcon={{ type: 'meterial', name: 'lock', color: '#C06014', size: 20 }}
+          rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
           errorMessage={this.getErrorMessage(this.state.validations, 'email')}
           password
         />
 
         <Button
           title="Kaydet"
-          color="#C06014"
-          titleStyle={{ color: '#F3F4ED' }}
+          color={colors.secondColor}
+          titleStyle={{ color: colors.headerTitleColor }}
           buttonStyle={styles.button}
           onPress={() => this.register()}
           size="lg"

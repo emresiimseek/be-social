@@ -12,6 +12,7 @@ import { ApolloClient, ApolloProvider, gql, InMemoryCache, useApolloClient } fro
 import { Query } from '@apollo/client/react/components';
 import UserList from './app/screens/UserList';
 import { VisitedProfile } from './app/screens/VisitedProfile';
+import colors from './app/styles/colors';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -40,9 +41,9 @@ export default function App() {
               name="Welcome"
               component={WelcomePage}
               options={{
-                headerTitleStyle: { color: '#F3F4ED' },
+                headerTitleStyle: { color: colors.headerTitleColor },
                 title: 'Be Social',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
             <Stack.Screen
@@ -51,7 +52,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Giriş',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
             <Stack.Screen
@@ -59,8 +60,8 @@ export default function App() {
               component={RegisterPageComponent}
               options={{
                 title: 'Kayıt Ol',
-                headerTitleStyle: { color: '#F3F4ED' },
-                headerStyle: { backgroundColor: '#C06014' },
+                headerTitleStyle: { color: colors.headerTitleColor },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
             <Stack.Screen
@@ -68,7 +69,7 @@ export default function App() {
               component={MyTabs}
               options={{
                 headerTintColor: 'white',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
                 headerShown: false,
               }}
             />
@@ -78,7 +79,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Yorumlar',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
             <Stack.Screen
@@ -87,7 +88,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Takip Listesi',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
             <Stack.Screen
@@ -96,7 +97,7 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Profile',
-                headerStyle: { backgroundColor: '#C06014' },
+                headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
           </Stack.Navigator>

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from '@rneui/themed';
+import colors from '../../styles/colors';
 
 interface EventFormArrowsProps {
   currentIndex: number;
@@ -33,7 +34,7 @@ const EventFormArrows = (props: EventFormArrowsProps) => {
             onPress={() => props.onIndexChange(props.currentIndex - 1)}
             type="evilicon"
             name="arrow-left"
-            color="#C06014"
+            color={colors.secondColor}
             style={{ opacity: 0.5 }}
             size={50}
           />
@@ -46,7 +47,7 @@ const EventFormArrows = (props: EventFormArrowsProps) => {
             onPress={() => props.onIndexChange(props.currentIndex + 1)}
             type="evilicon"
             name="arrow-right"
-            color="#C06014"
+            color={colors.secondColor}
             size={50}
           />
         </View>

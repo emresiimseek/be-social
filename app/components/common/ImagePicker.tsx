@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, ButtonGroup } from '@rneui/base';
 import { Icon } from '@rneui/themed';
+import colors from '../../styles/colors';
 
 interface ImagePickerProps {
   onSelect: (image: string) => void;
@@ -43,9 +44,9 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ paddingVertical: 5, flexDirection: 'column', alignItems: 'center' }}>
+    <View style={{ marginHorizontal: 10, marginVertical: 5, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
-        containerStyle={{ width: '70%' }}
+        containerStyle={{ width: '100%' }}
         onPress={index => {
           setCurrentIndex(index);
           index === 0 && launchCamera();
@@ -56,17 +57,17 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
           <Icon
             type="ionicon"
             name="camera-outline"
-            color={currentIndex == 0 ? 'white' : 'black'}
+            color={currentIndex == 0 ? 'white' : colors.secondColor}
             style={{ paddingTop: 7 }}
           />,
           <Icon
             type="ionicon"
             name="image-outline"
-            color={currentIndex == 1 ? 'white' : 'black'}
+            color={currentIndex == 1 ? 'white' : colors.secondColor}
             style={{ paddingTop: 7 }}
           />,
         ]}
-        selectedButtonStyle={{ backgroundColor: '#C06014' }}
+        selectedButtonStyle={{ backgroundColor: colors.secondColor }}
         selectedTextStyle={{ color: 'white' }}
       />
       {!image && props.showMessage && (

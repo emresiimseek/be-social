@@ -9,6 +9,7 @@ import { GET_CATEGORIES } from '../../logic/graphql/queries/getCategories';
 import { Category } from '../../types/strapi/models/category';
 import { Items } from '../../types/strapi/base/base';
 import { useQuery } from '@apollo/client';
+import colors from '../../styles/colors';
 
 interface EventFormProps {
   event: CreateEventModel | null;
@@ -35,14 +36,14 @@ const EventForm = (props: EventFormProps) => {
         value={props.event?.title}
         onChangeText={title => props.onModelChange({ ...props.event, title })}
         label="Başlık"
-        rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
+        rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
       />
 
       <BsInput
         value={props.event?.description}
         onChangeText={description => props.onModelChange({ ...props.event, description })}
         label="Açıklama"
-        rightIcon={{ type: 'evilicon', name: 'pencil', color: '#C06014' }}
+        rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
       />
 
       <DatePicker onDateChange={eventDate => props.onModelChange({ ...props.event, eventDate })} />
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: colors.thirdColor,
   },
 });
 

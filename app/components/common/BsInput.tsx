@@ -3,6 +3,7 @@ import { IconNode, Input } from '@rneui/base';
 import React, { Component, lazy } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
+import colors from '../../styles/colors';
 
 interface InputProps {
   label: string;
@@ -27,13 +28,18 @@ const BsInput = (props: InputProps) => {
       label={props.label}
       inputStyle={styles.input}
       labelStyle={
-        focus || props.value ? { ...styles.label, color: focus ? '#C06014' : '#D1D1D1' } : { display: 'none' }
+        focus || props.value
+          ? { ...styles.label, color: focus ? colors.secondColor : colors.focusColor }
+          : { display: 'none' }
       }
       onBlur={() => setFocus(false)}
       onFocus={() => {
         setFocus(true);
       }}
-      inputContainerStyle={{ ...styles.inputContainer, borderColor: focus ? '#C06014' : '#D1D1D1' }}
+      inputContainerStyle={{
+        ...styles.inputContainer,
+        borderColor: focus ? colors.secondColor : colors.focusColor,
+      }}
       placeholder={focus ? '' : props.placeHolder ?? props.label}
       onChangeText={value => (props.onChangeText ? props?.onChangeText(value) : null)}
       rightIcon={props.rightIcon}
@@ -50,7 +56,7 @@ const BsInput = (props: InputProps) => {
 // define your styles
 const styles = StyleSheet.create({
   input: { fontSize: 16 },
-  inputContainer: { borderWidth: 1, borderColor: '#D1D1D1', borderRadius: 10, paddingLeft: 10 },
+  inputContainer: { borderWidth: 1, borderColor: colors.focusColor, borderRadius: 10, paddingLeft: 10 },
   label: {
     paddingBottom: 5,
     position: 'absolute',

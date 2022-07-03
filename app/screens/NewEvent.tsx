@@ -31,7 +31,7 @@ const NewEvent = () => {
 
   // Tab Status
   const items: TabStatusItem[] = [
-    { title: 'Detay', icon: { name: 'calendar-outline', type: 'ionicon', size: 20 }, isActive: true },
+    { title: 'Detay', icon: { name: 'calendar-outline', type: 'ionicon', size: 20 } },
     { title: 'Görsel', icon: { name: 'image-outline', type: 'ionicon', size: 20 } },
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
