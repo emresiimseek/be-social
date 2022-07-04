@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_POST } from '../../logic/graphql/mutations/updatePost';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import backgroundColors from '../../styles/backgroundColors';
 
 interface PostCardProps extends Props {
   item: Data<Post>;
@@ -131,14 +132,14 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF90',
+    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
     alignItems: 'center',
     padding: 15,
     marginTop: 'auto',
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF90',
+    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
     padding: 10,
     alignItems: 'center',
   },

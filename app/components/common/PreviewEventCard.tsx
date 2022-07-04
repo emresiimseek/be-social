@@ -118,7 +118,6 @@ export const PreviewEventCard = (props: CardProps) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    borderColor: '#D3D3D3',
     backgroundColor: 'white',
     flexDirection: 'column',
     minHeight: '70%',
@@ -139,12 +138,10 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 3,
-    borderTopColor: '#D3D3D3',
     borderRadius: 5,
   },
   footer: {
     flexDirection: 'column',
-    borderTopColor: '#D3D3D3',
     padding: 10,
   },
 });

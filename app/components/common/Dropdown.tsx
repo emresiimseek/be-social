@@ -54,7 +54,7 @@ const BsDropdown = (props: DropdownProps) => {
           setIsFocus(false);
           props.onChange(item);
         }}
-        selectedTextProps={{ style: { color: '#86939e', fontSize: 16 } }}
+        selectedTextProps={{ style: { color: colors.dropdownSelectedTextColor, fontSize: 16 } }}
         renderRightIcon={() => <Icon type="evilicon" name="tag" color={colors.secondColor} />}
       />
     </View>

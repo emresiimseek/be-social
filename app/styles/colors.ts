@@ -1,11 +1,17 @@
 export const colors = {
   firstColor: '#606060',
-  secondColor: '#3D2C8D',
+  secondColor: '#FF7171',
   headerTitleColor: '#FFFFFF',
-  focusColor: '#3D2C8D',
+  focusColor: '#F5C0C0',
   thirdColor: '#2c3e50',
   fourthColor: 'white',
-  secondColorOpacity: '#3D2C8D99',
+  secondColorOpacity: '#FF717199',
+
+  dropdownSelectedTextColor: '#86939e',
+
+  eventCardBackgroundColor: '#EEEEEE',
+  loadingColor: '#334756',
+  shadowColor: '#000',
 };
 
 export default colors;

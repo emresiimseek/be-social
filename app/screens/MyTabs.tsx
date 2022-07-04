@@ -28,11 +28,11 @@ export function MyTabs(baseProps: MyTabsProps) {
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')
             return (
-              <Icon name="home" size={30} type="antdesign" color={focused ? colors.secondColor : 'gray'} />
+              <Icon name="home" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
           else if (route.name == 'Profile')
             return (
-              <Icon name="user" size={40} type="evilicon" color={focused ? colors.secondColor : 'gray'} />
+              <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
           else if (route.name == 'Search')
             return (
@@ -48,7 +48,7 @@ export function MyTabs(baseProps: MyTabsProps) {
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: 'white' },
+        tabBarStyle: { backgroundColor: 'white', height: 90 },
         headerStyle: { backgroundColor: colors.secondColor },
         headerTitleStyle: { color: 'white' },
       })}
@@ -93,7 +93,7 @@ export function MyTabs(baseProps: MyTabsProps) {
                         }}
                         style={styles.customTabBar}
                       >
-                        <Icon type="simple-line-icon" name="event" size={20} />
+                        <Icon type="simple-line-icon" name="event" size={20} color={colors.secondColor} />
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.customTabBar}
@@ -102,14 +102,14 @@ export function MyTabs(baseProps: MyTabsProps) {
                           baseProps.navigation.navigate('NewPost');
                         }}
                       >
-                        <Icon type="ionicon" name="albums-outline" size={21} />
+                        <Icon type="ionicon" name="albums-outline" size={21} color={colors.secondColor} />
                       </TouchableOpacity>
                     </Animated.View>
                   </>
                 )}
 
                 <TouchableOpacity onPress={() => setFocus(!focus)}>
-                  <Icon type="font-awesome" name="plus-circle" size={50} color={colors.secondColor} />
+                  <Icon type="feather" name="plus-circle" size={50} color={colors.secondColor} />
                 </TouchableOpacity>
               </View>
             </>
@@ -132,15 +132,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 35,
-    borderWidth: 1,
-    borderColor: colors.secondColor,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 10,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
   customNavBarContainer: {
     flexDirection: 'row',
     position: 'absolute',
-    shadowColor: '#000',
+    shadowColor: colors.shadowColor,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -4,6 +4,7 @@ import { Props } from '../../types/common/props';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { useState, useEffect } from 'react';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
+import { colors } from '../../styles/colors';
 
 export interface EventProps extends Props {
   isMine: boolean;
@@ -23,7 +24,7 @@ export const EventList = (props: EventProps) => {
   }, []);
 
   return (
-    <View style={{ padding: 10, backgroundColor: '#EEEEEE' }}>
+    <>
       {props.event.getEventsByUserId.data.length ? (
         props.event.getEventsByUserId.data.map(event => (
           <EventCard
@@ -37,6 +38,6 @@ export const EventList = (props: EventProps) => {
       ) : (
         <Text></Text>
       )}
-    </View>
+    </>
   );
 };

@@ -10,6 +10,8 @@ import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { Variables } from '../../types/strapi/base/base';
 import { LIKE_EVENT } from '../../logic/graphql/mutations/likeEvent';
 import PostCards from './PostCards';
+import { colors } from '../../styles/colors';
+import backgroundColors from '../../styles/backgroundColors';
 
 interface CardProps extends Props {
   item: Event;
@@ -120,7 +122,7 @@ export const EventCard = (props: CardProps) => {
             </View>
             {/* Right */}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="groups" type="metarial" size={25} />
+              <Icon name="groups" type="metarial" />
               <Text style={{ fontSize: 12, marginLeft: 5 }}>
                 {props.item.users.data.length} Kişi Katılıyor
               </Text>
@@ -181,12 +183,12 @@ export const EventCard = (props: CardProps) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    borderColor: '#D3D3D3',
     backgroundColor: 'white',
     flexDirection: 'column',
     minHeight: 500,
     marginBottom: 15,
     borderRadius: 5,
+    margin: 10,
   },
   header: {
     flex: 0.2,
@@ -199,15 +201,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
   },
   body: {
     flex: 3,
-    borderTopColor: '#D3D3D3',
     borderRadius: 5,
   },
   footer: {
     flexDirection: 'column',
-    borderTopColor: '#D3D3D3',
+    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
     padding: 10,
   },
 });
