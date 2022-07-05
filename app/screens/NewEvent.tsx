@@ -118,7 +118,7 @@ const NewEvent = () => {
             <>
               <View style={{ flexDirection: 'column' }}>
                 <ImagePickerComponent
-                  showMessage={!event?.images?.length}
+                  showMessage={draftImage === null}
                   onImageChanged={image => setDraftImage(image)}
                 />
               </View>

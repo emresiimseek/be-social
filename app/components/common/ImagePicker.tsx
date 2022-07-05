@@ -46,7 +46,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ marginHorizontal: 10, marginVertical: 5, flexDirection: 'column', alignItems: 'center' }}>
+    <View style={{ marginHorizontal: 10, marginTop: 1, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
         containerStyle={{ width: '100%' }}
         onPress={index => {
@@ -73,20 +73,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
         selectedTextStyle={{ color: 'white' }}
       />
       {!image && props.showMessage && (
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderRadius: 10,
-            padding: 20,
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Text style={{ marginBottom: 5 }}>Neredeyse Tamam!</Text>
-          <Text style={{ textAlign: 'center' }}>
-            Istersen galerinden bir fotoğraf seçibilir ya da kamerayı kullanabilirsin.
-          </Text>
-        </View>
+        <Text style={{ margin: 5, color: 'gray', fontSize: 13 }}>Bir görsel seçiniz.</Text>
       )}
     </View>
   );
