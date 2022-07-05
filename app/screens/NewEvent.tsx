@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import TabStatus from '../components/common/TabStatus';
 import { TabStatusItem } from '../types/common/tab-status-item';
 import { CreateEventModel } from '../types/common/create-event-model';
@@ -8,34 +8,25 @@ import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/mutations/createEvent';
 import { Variables } from '../types/strapi/base/base';
 import { useEffect } from 'react';
-import ImagePickerComponent from '../components/common/ImagePicker';
 import { User } from '../types/strapi/models/user';
-import { PreviewEventCard } from '../components/common/PreviewEventCard';
 import { getItem } from '../logic/helpers/useAsyncStorage';
 import EventForm from '../components/common/EventForm';
-import EventFormArrows from '../components/common/EventFormArrows';
 import * as FileSystem from 'expo-file-system';
-import { Button } from '@rneui/base';
-import Loading from '../components/common/Loading';
-import { color } from '@rneui/base';
-import { colors } from '../styles/colors';
-import { resultKeyNameFromField } from '@apollo/client/utilities';
-import { Event } from '../types/strapi/models/event';
-import { Item } from '../types/strapi/base/base';
 import Toast from 'react-native-toast-message';
+import NewEventImageSection from '../components/common/NewEventImageSection';
+import { Props } from '../types/common/props';
+import { Button } from '@rneui/base';
+import { colors } from '../styles/colors';
+import { color } from '@rneui/base';
 
 // create a component
-const NewEvent = () => {
+const NewEvent = (props: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [user, setUser] = useState<User | undefined>();
-  const [result, setResult] = useState<any | undefined>();
-  const [uploadedImageId, setUploadedImageId] = useState<number | undefined>();
   const [createLoading, setLoading] = useState(false);
   const [categoryLabels, setCategoryLabels] = useState<string[]>([]);
 
   const getUser = async () => {
     const user = await getItem<User>('user');
-    setUser(user);
     setEvent({ ...event, users: [user?.id ?? 0] });
   };
 
@@ -61,21 +52,23 @@ const NewEvent = () => {
     return await body[0].id;
   };
 
-  const [createEvent, { data, loading, error }] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
+  const [createEvent] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
 
   const createNewEvent = async () => {
     setLoading(true);
     const id = await uploadImage();
-    const value = { ...event, images: [id] };
     const result = await createEvent({ variables: { data: { ...event, images: [id] } } });
     console.log(result.data?.createEvent.data.id, 'Selam');
 
-    if (result.data?.createEvent.data.id)
+    if (result.data?.createEvent.data.id) {
+      setEvent(null);
+      setCurrentIndex(0);
+      props.navigation.navigate('Home');
       Toast.show({
         type: 'success',
         text1: 'Başarılı',
       });
-    else Toast.show({ type: 'error', text1: result?.errors?.[0].message, position: 'bottom' });
+    } else Toast.show({ type: 'error', text1: result?.errors?.[0].message, position: 'bottom' });
 
     setLoading(false);
   };
@@ -86,63 +79,59 @@ const NewEvent = () => {
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  // Current User
   const [event, setEvent] = useState<CreateEventModel | null>({
     eventDate: new Date(),
     publishedAt: new Date(),
   });
 
-  const isDisabled = event?.title != '';
-  console.log(error, 'error');
+  const isLastStep = currentIndex === items.length - 1;
 
   return (
     <View style={styles.container}>
-      <TabStatus items={items} currentIndex={currentIndex} />
+      <TabStatus items={items} currentIndex={currentIndex} onIndexChange={index => setCurrentIndex(index)} />
       {currentIndex === 0 && (
         <EventForm
-          onModelChange={newModel => {
-            setEvent({ ...event, ...newModel });
-          }}
+          event={event}
           categoryLabelsChanged={newLabels => {
             setCategoryLabels(newLabels);
           }}
-          event={event}
+          onModelChange={newModel => {
+            setEvent({ ...event, ...newModel });
+          }}
         />
       )}
 
       {currentIndex === 1 && (
-        <>
-          {createLoading ? (
-            <Loading />
-          ) : (
-            <>
-              <View style={{ flexDirection: 'column' }}>
-                <ImagePickerComponent
-                  showMessage={draftImage === null}
-                  onImageChanged={image => setDraftImage(image)}
-                />
-              </View>
-              {draftImage && event && (
-                <PreviewEventCard categoryLabels={categoryLabels} item={{ ...event, images: [draftImage] }} />
-              )}
-            </>
-          )}
-        </>
+        <NewEventImageSection
+          categoryLabels={categoryLabels}
+          event={event}
+          loading={createLoading}
+          onImageChange={image => setDraftImage(image)}
+          draftImage={draftImage}
+        />
       )}
-      <EventFormArrows
-        currentIndex={currentIndex}
-        onIndexChange={index => setCurrentIndex(index)}
-        onSubmit={createNewEvent}
-        itemsLength={items.length}
-      />
+      <View style={{ position: 'absolute', bottom: 0, width: '100%', padding: 10 }}>
+        <View style={{ flex: 1 }}>
+          <Button
+            title={isLastStep ? 'Gönder' : 'İleri'}
+            color={colors.secondColor}
+            icon={
+              isLastStep
+                ? { name: 'checkmark-done-outline', type: 'ionicon', size: 20, color: 'white' }
+                : { name: 'chevron-forward-outline', type: 'ionicon', size: 20, color: 'white' }
+            }
+            iconPosition="right"
+            size="lg"
+            onPress={() => (isLastStep ? createNewEvent() : setCurrentIndex(currentIndex + 1))}
+          />
+        </View>
+      </View>
     </View>
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: { flex: 1, position: 'relative' },
 });
 
-//make this component available to the app
 export default NewEvent;

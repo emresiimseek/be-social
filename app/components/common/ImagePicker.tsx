@@ -46,9 +46,9 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ marginHorizontal: 10, marginTop: 1, flexDirection: 'column', alignItems: 'center' }}>
+    <View style={{ marginHorizontal: 10, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
-        containerStyle={{ width: '100%' }}
+        containerStyle={{ width: '91%', paddingTop: 0, marginTop: 0 }}
         onPress={index => {
           setCurrentIndex(index);
           index === 0 && launchCamera();

@@ -17,6 +17,12 @@ interface CardProps extends Props {
 
 export const PreviewEventCard = (props: CardProps) => {
   const [userId, setUserId] = useState<number | undefined>();
+  const { data } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: userId } });
+  const url = data?.usersPermissionsUser.data.attributes.profile_photo.data.attributes.url;
+  const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
+  const uri = url ? url : defaultAvatarImage;
+
+  moment.locale('tr');
 
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
@@ -26,12 +32,6 @@ export const PreviewEventCard = (props: CardProps) => {
   useEffect(() => {
     getUserId();
   }, []);
-
-  const { data, loading } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: userId } });
-  const url = data?.usersPermissionsUser.data.attributes.profile_photo.data.attributes.url;
-  const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
-  const uri = url ? url : defaultAvatarImage;
-  moment.locale('tr');
 
   return (
     <View style={styles.cardContainer}>
@@ -121,9 +121,10 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: '70%',
+    minHeight: '90%',
     marginHorizontal: 10,
     borderRadius: 5,
+    marginTop: 1,
   },
   header: {
     flex: 0.5,

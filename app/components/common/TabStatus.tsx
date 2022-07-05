@@ -7,10 +7,12 @@ import { TabStatusItem } from '../../types/common/tab-status-item';
 import { useEffect } from 'react';
 import colors from '../../styles/colors';
 import { color } from '@rneui/base';
+import { Pressable } from 'react-native';
 
 interface TabStatusProps {
   items: TabStatusItem[];
   currentIndex: number;
+  onIndexChange: (index: number) => void;
 }
 
 // create a component
@@ -36,18 +38,36 @@ const TabStatus = (props: TabStatusProps) => {
   }, []);
 
   return (
-    <View>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ width: '7%' }}>
+        {props.currentIndex > 0 && (
+          <Icon
+            onPress={() => props.onIndexChange(props.currentIndex - 1)}
+            name="chevron-back-outline"
+            type="ionicon"
+            color={colors.secondColor}
+            size={25}
+          />
+        )}
+      </View>
+
       <View style={styles.container}>
         {items.map((item, index) => (
-          <View
+          <Pressable
+            onPress={() => props.onIndexChange(index)}
             key={index}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              flex: 1,
-            }}
+            style={[
+              {
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 1,
+                borderBottomLeftRadius: index === 0 ? 5 : 0,
+                borderBottomRightRadius: index === items.length - 1 ? 5 : 0,
+              },
+              index === props.currentIndex ? styles.active : null,
+            ]}
           >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 10 }}>
               <Text
                 style={{
                   color: props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity,
@@ -57,7 +77,6 @@ const TabStatus = (props: TabStatusProps) => {
                 {item.title}
               </Text>
               <Icon
-                style={{ marginTop: 10 }}
                 name={item.icon.name}
                 type={item.icon.type}
                 color={props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity}
@@ -65,31 +84,22 @@ const TabStatus = (props: TabStatusProps) => {
               />
             </View>
             {items.length - 1 !== index && (
-              <Icon name="arrow-forward" type="material" color={colors.secondColorOpacity} size={20} />
+              <Icon name="arrow-right" type="feather" color={colors.secondColor} size={25} />
             )}
-          </View>
+          </Pressable>
         ))}
       </View>
-      {progressWidth !== '' ? (
-        <View
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 10,
-            borderBottomLeftRadius: 10,
-            borderBottomRightRadius: 10,
-          }}
-        >
-          <View
-            style={{
-              width: progressWidth,
-              backgroundColor: colors.secondColor,
-              padding: 3,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: props.currentIndex === props.items.length - 1 ? 10 : 0,
-            }}
-          ></View>
-        </View>
-      ) : null}
+      <View style={{ width: '7%' }}>
+        {props.currentIndex < props.items.length - 1 && (
+          <Icon
+            onPress={() => props.onIndexChange(props.currentIndex + 1)}
+            name="chevron-forward-outline"
+            type="ionicon"
+            color={colors.secondColor}
+            size={25}
+          />
+        )}
+      </View>
     </View>
   );
 };
@@ -100,12 +110,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.fourthColor,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    padding: 10,
     alignItems: 'center',
-    marginHorizontal: 10,
-    marginTop: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    marginVertical: 10,
+    borderRadius: 5,
+    width: '86%',
+  },
+  active: {
+    borderBottomWidth: 5,
+    borderBottomColor: colors.secondColor,
   },
 });
 

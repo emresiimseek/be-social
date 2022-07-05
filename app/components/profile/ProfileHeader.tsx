@@ -32,7 +32,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
   }, [mutationData]);
 
   return (
-    <View>
+    <View style={{ alignItems: 'center' }}>
       {user && (
         <View style={styles.container}>
           <View style={styles.info}>
@@ -109,8 +109,10 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     minHeight: 150,
-    marginBottom: 10,
+    width: '90%',
     borderRadius: 5,
+    marginHorizontal: 10,
+    marginTop: 10,
     padding: 20,
     backgroundColor: 'white',
   },
