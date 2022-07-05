@@ -12,6 +12,7 @@ import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 
 interface CardProps extends Props {
   item: CreateEventModel;
+  categoryLabels: string[];
 }
 
 export const PreviewEventCard = (props: CardProps) => {
@@ -106,7 +107,7 @@ export const PreviewEventCard = (props: CardProps) => {
           >
             <Text>{props.item.description}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>{props.item.categoryLabels?.map(c => c)}</Text>
+              <Text>{props.categoryLabels?.map(c => c)}</Text>
               <Icon name="tagso" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
           </View>

@@ -14,6 +14,7 @@ import colors from '../../styles/colors';
 interface EventFormProps {
   event: CreateEventModel | null;
   onModelChange: (event: CreateEventModel) => void;
+  categoryLabelsChanged: (categoryLabels: string[]) => void;
 }
 // create a component
 const EventForm = (props: EventFormProps) => {
@@ -50,13 +51,13 @@ const EventForm = (props: EventFormProps) => {
 
       <BsDropdown
         items={categories ?? []}
-        onChange={category =>
+        onChange={category => {
           props.onModelChange({
             ...props.event,
             categories: [category.value],
-            categoryLabels: [category.label],
-          })
-        }
+          });
+          props.categoryLabelsChanged([category.label]);
+        }}
         dropDownLabel="Kategori"
         placeholder="Kategori Seçiniz"
       />

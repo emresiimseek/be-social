@@ -6,7 +6,7 @@ import { Icon } from '@rneui/themed';
 import colors from '../../styles/colors';
 
 interface ImagePickerProps {
-  onSelect: (image: string) => void;
+  onImageChanged: (image: string) => void;
   showMessage: boolean;
 }
 export default function ImagePickerComponent(props: ImagePickerProps) {
@@ -17,6 +17,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -24,7 +25,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      props.onSelect(result.uri);
+      props.onImageChanged(result.uri);
     }
   };
 
@@ -34,12 +35,13 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
+      base64: true,
       quality: 1,
     });
 
     if (!result.cancelled) {
       setImage(result.uri);
-      props.onSelect(result.uri);
+      props.onImageChanged(result.uri);
     }
   };
 

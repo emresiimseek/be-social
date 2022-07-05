@@ -6,5 +6,4 @@ export interface CreateEventModel {
   categories?: number[];
   publishedAt?: Date;
   images?: string[];
-  categoryLabels?: string[];
 }

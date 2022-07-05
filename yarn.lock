@@ -3359,7 +3359,7 @@
   "resolved" "https://registry.npmjs.org/expo-error-recovery/-/expo-error-recovery-3.1.0.tgz"
   "version" "3.1.0"
 
-"expo-file-system@~14.0.0":
+"expo-file-system@^14.0.0", "expo-file-system@~14.0.0":
   "integrity" "sha512-Asva7ehLUq/PIem6Y+/OQvoIqhFqYDd7l4l49yDRDgLSbK2I7Fr8qGhDeDpnUXrMVamg2uwt9zRGhyrjFNRhVw=="
   "resolved" "https://registry.npmjs.org/expo-file-system/-/expo-file-system-14.0.0.tgz"
   "version" "14.0.0"
