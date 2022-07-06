@@ -13,6 +13,7 @@ interface NewEventImageSectionProps {
   event: CreateEventModel | null;
   categoryLabels: string[];
   onImageChange: (image: string) => void;
+  createLoading: boolean;
 }
 
 // create a component
@@ -26,6 +27,7 @@ const NewEventImageSection = (props: NewEventImageSectionProps) => {
           <ImagePickerComponent
             showMessage={props.draftImage === null}
             onImageChanged={image => props.onImageChange(image)}
+            createLoading={props.createLoading}
           />
           {props.draftImage && props.event && (
             <PreviewEventCard

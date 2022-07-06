@@ -13,6 +13,8 @@ interface TabStatusProps {
   items: TabStatusItem[];
   currentIndex: number;
   onIndexChange: (index: number) => void;
+  isValid: boolean;
+  createLoading: boolean;
 }
 
 // create a component
@@ -42,7 +44,7 @@ const TabStatus = (props: TabStatusProps) => {
       <View style={{ width: '7%' }}>
         {props.currentIndex > 0 && (
           <Icon
-            onPress={() => props.onIndexChange(props.currentIndex - 1)}
+            onPress={() => (props.createLoading ? null : props.onIndexChange(props.currentIndex - 1))}
             name="chevron-back-outline"
             type="ionicon"
             color={colors.secondColor}
@@ -54,7 +56,9 @@ const TabStatus = (props: TabStatusProps) => {
       <View style={styles.container}>
         {items.map((item, index) => (
           <Pressable
-            onPress={() => props.onIndexChange(index)}
+            onPress={() =>
+              index > 0 && props.isValid && !props.createLoading ? props.onIndexChange(index) : null
+            }
             key={index}
             style={[
               {
@@ -89,17 +93,7 @@ const TabStatus = (props: TabStatusProps) => {
           </Pressable>
         ))}
       </View>
-      <View style={{ width: '7%' }}>
-        {props.currentIndex < props.items.length - 1 && (
-          <Icon
-            onPress={() => props.onIndexChange(props.currentIndex + 1)}
-            name="chevron-forward-outline"
-            type="ionicon"
-            color={colors.secondColor}
-            size={25}
-          />
-        )}
-      </View>
+      <View style={{ width: '7%' }}></View>
     </View>
   );
 };

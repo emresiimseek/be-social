@@ -10,6 +10,13 @@ import { Category } from '../../types/strapi/models/category';
 import { Items } from '../../types/strapi/base/base';
 import { useQuery } from '@apollo/client';
 import colors from '../../styles/colors';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import moment from 'moment';
+import 'moment/locale/tr';
+import { useState } from 'react';
+import { Text } from 'react-native';
+import { Button } from '@rneui/base';
 
 interface EventFormProps {
   event: CreateEventModel | null;
@@ -24,44 +31,126 @@ const EventForm = (props: EventFormProps) => {
     loading: gueryLoading,
   } = useQuery<{ categories: Items<Category> }>(GET_CATEGORIES);
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const categories = queryData?.categories.data.map(c => ({ value: c.id, label: c.attributes.title }));
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 20,
-        backgroundColor: 'white',
+    <Formik
+      initialValues={{ ...props.event, categories: [] }}
+      onSubmit={values => {
+        props.onModelChange(values);
       }}
+      validationSchema={yup.object().shape({
+        title: yup.string().required('Başlık gereklidir'),
+        description: yup.string().required('Açıklama gereklidir'),
+        categories: yup.array().length(1, 'Kategori zorunludur.').required('Kategori gereklidir'),
+        eventDate: yup.string().required('Tarih gereklidir'),
+      })}
     >
-      <BsInput
-        value={props.event?.title}
-        onChangeText={title => props.onModelChange({ ...props.event, title })}
-        label="Başlık"
-        rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
-      />
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        setFieldTouched,
+        isValid,
+        setFieldValue,
+      }) => (
+        <>
+          <View
+            style={{
+              flex: 1,
+              padding: 20,
+              backgroundColor: 'white',
+            }}
+          >
+            <BsInput
+              value={values.title}
+              onChangeText={handleChange('title')}
+              onBlur={() => setFieldTouched('title')}
+              errorMessage={errors.title}
+              label="Başlık"
+              rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
+            />
 
-      <BsInput
-        value={props.event?.description}
-        onChangeText={description => props.onModelChange({ ...props.event, description })}
-        label="Açıklama"
-        rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
-      />
+            <BsInput
+              value={values.description}
+              onChangeText={handleChange('description')}
+              onBlur={() => setFieldTouched('description')}
+              errorMessage={errors.description}
+              label="Açıklama"
+              rightIcon={{ type: 'evilicon', name: 'pencil', color: colors.secondColor }}
+            />
 
-      <DatePicker onDateChange={eventDate => props.onModelChange({ ...props.event, eventDate })} />
+            <>
+              <BsInput
+                value={values.eventDate ? values.eventDate : ''}
+                onTouchStart={() => setDatePickerVisibility(!isDatePickerVisible)}
+                onBlur={() => setFieldTouched('eventDate')}
+                errorMessage={errors.eventDate}
+                label="Etkinlik Tarihi"
+                rightIcon={{ type: 'evilicon', name: 'calendar', color: colors.secondColor }}
+              />
+              <DatePicker
+                value={isDatePickerVisible}
+                onDateChange={handleChange('eventDate')}
+                onValueChange={() => setDatePickerVisibility(false)}
+              />
+            </>
 
-      <BsDropdown
-        items={categories ?? []}
-        onChange={category => {
-          props.onModelChange({
-            ...props.event,
-            categories: [category.value],
-          });
-          props.categoryLabelsChanged([category.label]);
-        }}
-        dropDownLabel="Kategori"
-        placeholder="Kategori Seçiniz"
-      />
-    </View>
+            <>
+              <BsDropdown
+                items={categories ?? []}
+                onChange={categories => {
+                  setFieldValue('categories', [categories.value]);
+                  props.categoryLabelsChanged([categories.label]);
+                }}
+                dropDownLabel="Kategori"
+                placeholder="Kategori Seçiniz"
+              >
+                <Text
+                  style={{
+                    margin: 5,
+                    fontSize: 12,
+                    color: 'red',
+                    marginHorizontal: 15,
+                  }}
+                >
+                  {errors?.categories}
+                </Text>
+              </BsDropdown>
+            </>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              padding: 10,
+              width: '100%',
+              flex: 1,
+            }}
+          >
+            <Button
+              color={colors.secondColor}
+              onPress={() => handleSubmit()}
+              titleStyle={{ color: isValid ? 'white' : colors.thirdColor }}
+              disabled={!isValid}
+              title="İleri"
+              size="lg"
+              iconPosition="right"
+              icon={{
+                name: 'chevron-forward-outline',
+                type: 'ionicon',
+                size: 20,
+                color: isValid ? 'white' : 'hsl(208, 8%, 63%)',
+              }}
+            />
+          </View>
+        </>
+      )}
+    </Formik>
   );
 };
 

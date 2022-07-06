@@ -1,16 +1,16 @@
 import { Event } from './event';
 
 export interface User {
-  id: number;
+  id?: number;
   username: string;
   email: string;
-  provider: string;
+  provider?: string;
   confirmed: boolean;
-  blocked: boolean;
+  blocked?: boolean;
   createdAt: Date;
   updatedAt: Date;
   firstname: string;
   lastname: string;
   password: string;
-  events: Event[];
+  events?: Event[];
 }

@@ -92,7 +92,7 @@ export const PreviewEventCard = (props: CardProps) => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text> {moment(props.item.eventDate).format('LLL')} </Text>
+              <Text> {props.item.eventDate} </Text>
               <Icon name="calendar" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
           </View>

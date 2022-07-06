@@ -76,8 +76,8 @@ export function MyTabs(baseProps: MyTabsProps) {
                       style={{
                         position: 'absolute',
                         top: -Dimensions.get('window').height,
-                        width: Dimensions.get('window').width,
                         height: Dimensions.get('window').height,
+                        width: Dimensions.get('window').width,
                       }}
                     ></Pressable>
                     <Animated.View

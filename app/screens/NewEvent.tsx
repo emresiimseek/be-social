@@ -15,15 +15,16 @@ import * as FileSystem from 'expo-file-system';
 import Toast from 'react-native-toast-message';
 import NewEventImageSection from '../components/common/NewEventImageSection';
 import { Props } from '../types/common/props';
+import { Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
-import { color } from '@rneui/base';
 
 // create a component
 const NewEvent = (props: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [createLoading, setLoading] = useState(false);
   const [categoryLabels, setCategoryLabels] = useState<string[]>([]);
+  const [isEventFormValid, setEventFormValid] = useState(false);
 
   const getUser = async () => {
     const user = await getItem<User>('user');
@@ -37,11 +38,9 @@ const NewEvent = (props: Props) => {
   const [draftImage, setDraftImage] = useState<string | null>(null);
 
   const uploadImage = async () => {
-    if (!draftImage) return;
-
     const result = await FileSystem.uploadAsync(
       'https://quiet-retreat-10533.herokuapp.com/api/upload',
-      draftImage,
+      draftImage ?? '',
       {
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         fieldName: 'files',
@@ -55,10 +54,16 @@ const NewEvent = (props: Props) => {
   const [createEvent] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
 
   const createNewEvent = async () => {
+    if (!draftImage) {
+      Toast.show({
+        type: 'error',
+        text1: 'Lütfen bir resim seçiniz.',
+      });
+      return;
+    }
     setLoading(true);
     const id = await uploadImage();
     const result = await createEvent({ variables: { data: { ...event, images: [id] } } });
-    console.log(result.data?.createEvent.data.id, 'Selam');
 
     if (result.data?.createEvent.data.id) {
       setEvent(null);
@@ -79,16 +84,19 @@ const NewEvent = (props: Props) => {
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  const [event, setEvent] = useState<CreateEventModel | null>({
-    eventDate: new Date(),
-    publishedAt: new Date(),
-  });
+  const [event, setEvent] = useState<CreateEventModel | null>({ categories: [] });
 
   const isLastStep = currentIndex === items.length - 1;
 
   return (
     <View style={styles.container}>
-      <TabStatus items={items} currentIndex={currentIndex} onIndexChange={index => setCurrentIndex(index)} />
+      <TabStatus
+        items={items}
+        currentIndex={currentIndex}
+        onIndexChange={index => setCurrentIndex(index)}
+        isValid={isEventFormValid}
+        createLoading={createLoading}
+      />
       {currentIndex === 0 && (
         <EventForm
           event={event}
@@ -97,6 +105,8 @@ const NewEvent = (props: Props) => {
           }}
           onModelChange={newModel => {
             setEvent({ ...event, ...newModel });
+            setEventFormValid(true);
+            setCurrentIndex(currentIndex + 1);
           }}
         />
       )}
@@ -104,28 +114,29 @@ const NewEvent = (props: Props) => {
       {currentIndex === 1 && (
         <NewEventImageSection
           categoryLabels={categoryLabels}
+          createLoading={createLoading}
           event={event}
           loading={createLoading}
           onImageChange={image => setDraftImage(image)}
           draftImage={draftImage}
         />
       )}
-      <View style={{ position: 'absolute', bottom: 0, width: '100%', padding: 10 }}>
-        <View style={{ flex: 1 }}>
-          <Button
-            title={isLastStep ? 'Gönder' : 'İleri'}
-            color={colors.secondColor}
-            icon={
-              isLastStep
-                ? { name: 'checkmark-done-outline', type: 'ionicon', size: 20, color: 'white' }
-                : { name: 'chevron-forward-outline', type: 'ionicon', size: 20, color: 'white' }
-            }
-            iconPosition="right"
-            size="lg"
-            onPress={() => (isLastStep ? createNewEvent() : setCurrentIndex(currentIndex + 1))}
-          />
+      {isLastStep && (
+        <View style={{ position: 'absolute', bottom: 0, width: '100%', padding: 10 }}>
+          <View style={{ flex: 1 }}>
+            <Button
+              disabled={!isEventFormValid || !draftImage || createLoading}
+              title="Gönder"
+              loading={createLoading}
+              color={colors.secondColor}
+              icon={{ name: 'checkmark-done-outline', type: 'ionicon', size: 20, color: 'white' }}
+              iconPosition="right"
+              size="lg"
+              onPress={() => createNewEvent()}
+            />
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

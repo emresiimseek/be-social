@@ -16,6 +16,7 @@ interface InputProps {
   disabled?: boolean;
   errorMessage?: string;
   password?: boolean;
+  onBlur: () => void;
 }
 
 // create a component
@@ -26,13 +27,17 @@ const BsInput = (props: InputProps) => {
     <Input
       value={props.value}
       label={props.label}
+      containerStyle={{ marginVertical: 5 }}
       inputStyle={styles.input}
       labelStyle={
         focus || props.value
           ? { ...styles.label, color: focus ? colors.secondColor : colors.focusColor }
           : { display: 'none' }
       }
-      onBlur={() => setFocus(false)}
+      onBlur={() => {
+        setFocus(false);
+        props.onBlur();
+      }}
       onFocus={() => {
         setFocus(true);
       }}
@@ -56,7 +61,12 @@ const BsInput = (props: InputProps) => {
 // define your styles
 const styles = StyleSheet.create({
   input: { fontSize: 16 },
-  inputContainer: { borderWidth: 1, borderColor: colors.focusColor, borderRadius: 10, paddingLeft: 10 },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: colors.focusColor,
+    borderRadius: 10,
+    paddingLeft: 10,
+  },
   label: {
     paddingBottom: 5,
     position: 'absolute',

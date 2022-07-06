@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/tr';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import BsInput from './BsInput';
 import colors from '../../styles/colors';
 interface DatePickerProps {
-  onDateChange: (date: Date) => void;
+  onDateChange: (date: string) => void;
+  value: boolean;
+  onValueChange: () => void;
 }
 
 const Example = (props: DatePickerProps) => {
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | null>(null);
+  const [open, setOpen] = useState(props.value);
+
+  useEffect(() => {
+    setOpen(props.value);
+  }, [props.value]);
 
   return (
     <>
-      <BsInput
-        value={moment(date).format('LLL')}
-        onTouchStart={() => setOpen(true)}
-        label="Etkinlik Tarihi"
-        rightIcon={{ type: 'evilicon', name: 'calendar', color: colors.secondColor }}
-        disabled
-      />
       <DateTimePickerModal
         confirmTextIOS="Onayla"
         cancelTextIOS="İptal"
@@ -30,8 +29,12 @@ const Example = (props: DatePickerProps) => {
         onConfirm={date => {
           setDate(date);
           setOpen(false);
+          props.onDateChange(moment(date).format('LLL'));
         }}
-        onCancel={() => setOpen(false)}
+        onCancel={() => {
+          setOpen(false);
+          props.onValueChange();
+        }}
       />
     </>
   );

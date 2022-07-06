@@ -8,6 +8,7 @@ import colors from '../../styles/colors';
 interface ImagePickerProps {
   onImageChanged: (image: string) => void;
   showMessage: boolean;
+  createLoading: boolean;
 }
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
@@ -48,6 +49,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   return (
     <View style={{ marginHorizontal: 10, flexDirection: 'column', alignItems: 'center' }}>
       <ButtonGroup
+        disabled={props.createLoading}
         containerStyle={{ width: '91%', paddingTop: 0, marginTop: 0 }}
         onPress={index => {
           setCurrentIndex(index);

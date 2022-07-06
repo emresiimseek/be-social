@@ -7,7 +7,7 @@ import colors from '../../styles/colors';
 
 interface DropdownProps extends Props {
   items: any[];
-  onChange: (item: any) => void;
+  onChange: (categories: any) => void;
   placeholder?: string;
   dropDownLabel?: string;
 }
@@ -57,6 +57,7 @@ const BsDropdown = (props: DropdownProps) => {
         selectedTextProps={{ style: { color: colors.dropdownSelectedTextColor, fontSize: 16 } }}
         renderRightIcon={() => <Icon type="evilicon" name="tag" color={colors.secondColor} />}
       />
+      {props.children}
     </View>
   );
 };
