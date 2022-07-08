@@ -40,8 +40,8 @@ const TabStatus = (props: TabStatusProps) => {
   }, []);
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View style={{ width: '7%' }}>
+    <View style={styles.container}>
+      <View style={{ position: 'absolute', left: 5 }}>
         {props.currentIndex > 0 && (
           <Icon
             onPress={() => (props.createLoading ? null : props.onIndexChange(props.currentIndex - 1))}
@@ -52,48 +52,42 @@ const TabStatus = (props: TabStatusProps) => {
           />
         )}
       </View>
-
-      <View style={styles.container}>
-        {items.map((item, index) => (
-          <Pressable
-            onPress={() =>
-              index > 0 && props.isValid && !props.createLoading ? props.onIndexChange(index) : null
-            }
-            key={index}
-            style={[
-              {
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 1,
-                borderBottomLeftRadius: index === 0 ? 5 : 0,
-                borderBottomRightRadius: index === items.length - 1 ? 5 : 0,
-              },
-              index === props.currentIndex ? styles.active : null,
-            ]}
-          >
-            <View style={{ flex: 1, alignItems: 'center', padding: 10 }}>
-              <Text
-                style={{
-                  color: props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity,
-                  fontWeight: props.currentIndex === index ? 'bold' : 'normal',
-                }}
-              >
-                {item.title}
-              </Text>
-              <Icon
-                name={item.icon.name}
-                type={item.icon.type}
-                color={props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity}
-                size={item.icon.size}
-              />
-            </View>
-            {items.length - 1 !== index && (
-              <Icon name="arrow-right" type="feather" color={colors.secondColor} size={25} />
-            )}
-          </Pressable>
-        ))}
+      {items.map((item, index) => (
+        <Pressable
+          onPress={() =>
+            index > 0 && props.isValid && !props.createLoading ? props.onIndexChange(index) : null
+          }
+          key={index}
+          style={[
+            styles.pressableItem,
+            index === props.currentIndex ? styles.active : null,
+            {
+              borderBottomLeftRadius: index === 0 ? 5 : 0,
+              borderBottomRightRadius: index === items.length - 1 ? 5 : 0,
+            },
+          ]}
+        >
+          <View style={{ flex: 1, alignItems: 'center', padding: 10 }}>
+            <Text
+              style={{
+                color: props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity,
+                fontWeight: props.currentIndex === index ? 'bold' : 'normal',
+              }}
+            >
+              {item.title}
+            </Text>
+            <Icon
+              name={item.icon.name}
+              type={item.icon.type}
+              color={props.currentIndex === index ? colors.secondColor : colors.secondColorOpacity}
+              size={item.icon.size}
+            />
+          </View>
+        </Pressable>
+      ))}
+      <View style={{ position: 'absolute', alignSelf: 'center', right: '48%' }}>
+        <Icon name="arrow-right" type="feather" color={colors.secondColor} size={25} />
       </View>
-      <View style={{ width: '7%' }}></View>
     </View>
   );
 };
@@ -105,14 +99,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    margin: 10,
     borderRadius: 5,
-    width: '86%',
   },
   active: {
     borderBottomWidth: 5,
     borderBottomColor: colors.secondColor,
   },
+  pressableItem: { flexDirection: 'row', alignItems: 'center', flex: 1, position: 'relative' },
 });
 
 //make this component available to the app
