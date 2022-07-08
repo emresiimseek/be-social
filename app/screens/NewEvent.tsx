@@ -129,7 +129,12 @@ const NewEvent = (props: Props) => {
               title="Gönder"
               loading={createLoading}
               color={colors.secondColor}
-              icon={{ name: 'checkmark-done-outline', type: 'ionicon', size: 20, color: 'white' }}
+              icon={{
+                name: 'checkmark-done-outline',
+                type: 'ionicon',
+                size: 20,
+                color: isEventFormValid ? 'hsl(208, 8%, 63%)' : 'white',
+              }}
               iconPosition="right"
               size="lg"
               onPress={() => createNewEvent()}

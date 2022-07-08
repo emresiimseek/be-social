@@ -41,22 +41,16 @@ const TabStatus = (props: TabStatusProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ position: 'absolute', left: 5 }}>
+      <Pressable
+        onPress={() => (props.createLoading ? null : props.onIndexChange(props.currentIndex - 1))}
+        style={{ position: 'absolute', left: 5, padding: 10, zIndex: 1 }}
+      >
         {props.currentIndex > 0 && (
-          <Icon
-            onPress={() => (props.createLoading ? null : props.onIndexChange(props.currentIndex - 1))}
-            name="chevron-back-outline"
-            type="ionicon"
-            color={colors.secondColor}
-            size={25}
-          />
+          <Icon name="chevron-back-outline" type="ionicon" color={colors.secondColor} size={25} />
         )}
-      </View>
+      </Pressable>
       {items.map((item, index) => (
         <Pressable
-          onPress={() =>
-            index > 0 && props.isValid && !props.createLoading ? props.onIndexChange(index) : null
-          }
           key={index}
           style={[
             styles.pressableItem,
