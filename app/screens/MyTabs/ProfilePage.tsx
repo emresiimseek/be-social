@@ -38,7 +38,7 @@ export const ProfilePage = (props: Props) => {
           />
           <EventList
             event={{
-              getEventsByUserId: { data: [...data.usersPermissionsUser.data.attributes.events.data] },
+              getEventsByUserId: { data: [...data.usersPermissionsUser.data.attributes.owner_events.data] },
             }}
             isMine
             currentUserId={userId}

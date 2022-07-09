@@ -51,7 +51,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
             <Text> @{user?.username}</Text>
           </View>
           <View style={styles.count}>
-            <Text style={styles.countText}>{user?.events.data.length} Etkinlik</Text>
+            <Text style={styles.countText}>{user?.owner_events.data.length} Etkinlik</Text>
             <Text
               onPress={() =>
                 props.navigation.navigate({

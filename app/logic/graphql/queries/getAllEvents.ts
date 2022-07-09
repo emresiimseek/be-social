@@ -63,7 +63,23 @@ export const ALL_EVENTS = gql`
               }
             }
           }
-          users {
+          owners {
+            data {
+              id
+              attributes {
+                username
+                profile_photo {
+                  data {
+                    id
+                    attributes {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+          attendees {
             data {
               id
               attributes {

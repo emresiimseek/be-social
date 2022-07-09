@@ -25,7 +25,8 @@ export interface Event {
   eventDate: Date;
   comments: Items<Comment>;
   images: Items<Image>;
-  users: Items<UserAttributes>;
+  owners: Items<UserAttributes>;
+  attendees: Items<UserAttributes>;
   event_likes: Items<Like>;
   posts: Items<Post>;
 }

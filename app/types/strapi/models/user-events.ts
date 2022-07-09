@@ -20,7 +20,7 @@ export interface UserAttributes {
   username: string;
   users_follow: Items<User>;
   users_follow_me: Items<User>;
-  events: Items<Event>;
+  owner_events: Items<Event>;
   profile_photo: Item<Image>;
 }
 

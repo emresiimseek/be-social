@@ -6,7 +6,6 @@ import { Variables } from '../../types/strapi/base/base';
 import { ScrollView, RefreshControl } from 'react-native';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getEventsByUserId';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 
 export const HomePage = (props: Props) => {

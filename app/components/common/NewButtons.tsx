@@ -49,36 +49,55 @@ const NewButtons = (props: NewButtonProps) => {
             ]}
           >
             <Button
-              color={colors.secondColor}
+              color="rgba(255,255,255,255.5)"
               onPress={() => {
                 props.setFocus(false);
                 props.navigation.navigate('NewPost');
               }}
-              icon={{ type: 'ionicon', name: 'albums-outline', size: 23, color: 'white' }}
               iconPosition="right"
-              title="Post"
+              title="Gönderi Paylaş"
+              containerStyle={{ borderRadius: 5 }}
+              titleStyle={{ color: colors.secondColor, fontSize: 14 }}
+              icon={{
+                name: 'plus-box-multiple',
+                type: 'material-community',
+                color: colors.secondColor,
+                size: 20,
+              }}
               size="lg"
               style={{
-                width: Dimensions.get('window').width - 10,
+                width: Dimensions.get('window').width / 2.5,
+                padding: 0,
               }}
             />
           </Animated.View>
           <Animated.View
             style={[
               { transform: [{ translateX: translateXAnimLeft }], opacity: fadeAnim },
-              { bottom: 65, position: 'absolute' },
+              { bottom: 70, position: 'absolute' },
             ]}
           >
             <Button
-              color={colors.secondColor}
+              color="rgba(255,255,255,255.5)"
               onPress={() => {
                 props.setFocus(false);
                 props.navigation.navigate('NewEvent');
               }}
-              icon={{ type: 'simple-line-icon', name: 'event', size: 20, color: 'white' }}
+              icon={{
+                name: 'calendar',
+                type: 'material-community',
+                color: colors.secondColor,
+                size: 20,
+              }}
               iconPosition="right"
-              title="Etkinlik"
-              style={{ marginTop: 10, width: Dimensions.get('window').width - 20 }}
+              title="Etkinlik Oluştur"
+              titleStyle={{ color: colors.secondColor, fontSize: 14 }}
+              containerStyle={{
+                borderRadius: 5,
+              }}
+              style={{
+                width: Dimensions.get('window').width / 2.5,
+              }}
               size="lg"
             />
           </Animated.View>

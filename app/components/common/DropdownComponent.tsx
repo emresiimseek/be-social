@@ -12,7 +12,7 @@ interface DropdownProps extends Props {
   dropDownLabel?: string;
 }
 
-const BsDropdown = (props: DropdownProps) => {
+const DropdownComponent = (props: DropdownProps) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -62,7 +62,7 @@ const BsDropdown = (props: DropdownProps) => {
   );
 };
 
-export default BsDropdown;
+export default DropdownComponent;
 
 const styles = StyleSheet.create({
   container: { marginBottom: 25 },

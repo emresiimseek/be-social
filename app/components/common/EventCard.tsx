@@ -33,7 +33,7 @@ export const EventCard = (props: CardProps) => {
           <Pressable
             onPress={() =>
               props.navigation.navigate('VisitedProfile', {
-                userId: props.item.users.data[0].id,
+                userId: props.item.owners.data[0].id,
               })
             }
             style={styles.headerContainer}
@@ -42,12 +42,12 @@ export const EventCard = (props: CardProps) => {
               size={35}
               rounded
               source={{
-                uri: props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
-                  ? props.item.users.data[0].attributes.profile_photo?.data?.attributes?.url
+                uri: props.item.owners.data[0].attributes.profile_photo?.data?.attributes?.url
+                  ? props.item.owners.data[0].attributes.profile_photo?.data?.attributes?.url
                   : 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
               }}
             />
-            <Text style={{ marginLeft: 5 }}>{props.item?.users?.data[0]?.attributes.username}</Text>
+            <Text style={{ marginLeft: 5 }}>{props.item?.owners?.data[0]?.attributes.username}</Text>
           </Pressable>
 
           <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
@@ -57,7 +57,7 @@ export const EventCard = (props: CardProps) => {
       {/* Body */}
 
       <View style={styles.body}>
-        {props.item.posts.data.length ? (
+        {props.item.posts?.data.length > 0 ? (
           <PostCards
             emitIndex={(value: boolean) => {
               value ? setVisible(!visible) : setVisible(value);
@@ -124,7 +124,7 @@ export const EventCard = (props: CardProps) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon name="groups" type="metarial" />
               <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                {props.item.users.data.length} Kişi Katılıyor
+                {props.item.attendees.data.length + props.item.owners.data.length} Kişi Katılıyor
               </Text>
             </View>
           </View>

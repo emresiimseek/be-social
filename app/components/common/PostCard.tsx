@@ -78,7 +78,7 @@ const PostCard = (props: PostCardProps) => {
               rounded
               source={{
                 uri:
-                  post.attributes.users.data[0].attributes.profile_photo.data.attributes.url ??
+                  post.attributes?.users?.data?.[0]?.attributes?.profile_photo?.data?.attributes?.url ??
                   'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
               }}
             />

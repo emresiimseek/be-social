@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import BsInput from './BsInput';
-import BsDropdown from './Dropdown';
+import DropdownComponent from './DropdownComponent';
 import DatePicker from '../common/DatePicker';
 import { GET_CATEGORIES } from '../../logic/graphql/queries/getCategories';
 import { Category } from '../../types/strapi/models/category';
@@ -15,8 +15,9 @@ import * as yup from 'yup';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { useState } from 'react';
-import { Text } from 'react-native';
 import { Button } from '@rneui/base';
+import BsDropdown from './BsDropdown';
+import { color } from '@rneui/base';
 
 interface EventFormProps {
   event: CreateEventModel | null;
@@ -99,53 +100,42 @@ const EventForm = (props: EventFormProps) => {
                 onValueChange={() => setDatePickerVisibility(false)}
               />
             </>
-
-            <>
-              <BsDropdown
-                items={categories ?? []}
-                onChange={categories => {
-                  setFieldValue('categories', [categories.value]);
-                  props.categoryLabelsChanged([categories.label]);
-                }}
-                dropDownLabel="Kategori"
-                placeholder="Kategori Seçiniz"
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    fontSize: 12,
-                    color: 'red',
-                    marginHorizontal: 15,
-                  }}
-                >
-                  {errors?.categories}
-                </Text>
-              </BsDropdown>
-            </>
+            <BsDropdown
+              items={categories ?? []}
+              onChange={category => {
+                setFieldValue('categories', [category.value]);
+                props.categoryLabelsChanged([category.label]);
+              }}
+              errors={errors.categories}
+              label="Kategori"
+              placeholder="Kategori seçiniz"
+            />
           </View>
           <View
             style={{
               position: 'absolute',
-              bottom: 20,
-              padding: 10,
+              bottom: 0,
+              backgroundColor: colors.secondColor,
+              padding: 25,
+              paddingTop: 15,
               width: '100%',
               flex: 1,
             }}
           >
             <Button
-              color={colors.secondColor}
+              color="white"
               onPress={() => handleSubmit()}
-              titleStyle={{ color: isValid ? 'white' : colors.thirdColor }}
+              titleStyle={{ color: colors.secondColor }}
               disabled={!isValid}
               title="İleri"
               size="lg"
-              containerStyle={{ borderRadius: 10 }}
+              containerStyle={{ borderRadius: 5 }}
               iconPosition="right"
               icon={{
                 name: 'chevron-forward-outline',
                 type: 'ionicon',
                 size: 20,
-                color: isValid ? 'white' : 'hsl(208, 8%, 63%)',
+                color: isValid ? colors.secondColor : 'hsl(208, 8%, 63%)',
               }}
             />
           </View>

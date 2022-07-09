@@ -18,6 +18,7 @@ import { Props } from '../types/common/props';
 import { Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
+import { color } from '@rneui/base';
 
 // create a component
 const NewEvent = (props: Props) => {
@@ -28,7 +29,7 @@ const NewEvent = (props: Props) => {
 
   const getUser = async () => {
     const user = await getItem<User>('user');
-    setEvent({ ...event, users: [user?.id ?? 0] });
+    setEvent({ ...event, owners: [user?.id ?? 0] });
   };
 
   useEffect(() => {
@@ -122,19 +123,33 @@ const NewEvent = (props: Props) => {
         />
       )}
       {isLastStep && (
-        <View style={{ position: 'absolute', bottom: 20, width: '100%', padding: 10 }}>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            backgroundColor: colors.secondColor,
+            padding: 25,
+            paddingTop: 15,
+            width: '100%',
+            flex: 1,
+          }}
+        >
           <View style={{ flex: 1 }}>
             <Button
               disabled={!isEventFormValid || !draftImage || createLoading}
               title="Gönder"
               loading={createLoading}
-              color={colors.secondColor}
-              containerStyle={{ borderRadius: 10 }}
+              color="white"
+              titleStyle={{ color: colors.secondColor }}
+              containerStyle={{ borderRadius: 5 }}
               icon={{
                 name: 'checkmark-done-outline',
                 type: 'ionicon',
                 size: 20,
-                color: isEventFormValid ? 'white' : 'hsl(208, 8%, 63%)',
+                color:
+                  !isEventFormValid || !draftImage || createLoading
+                    ? 'hsl(208, 8%, 63%)'
+                    : colors.secondColor,
               }}
               iconPosition="right"
               size="lg"

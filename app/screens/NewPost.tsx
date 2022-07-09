@@ -1,14 +1,11 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import BsDropdown from '../components/common/BsDropdown';
 
 // create a component
 const NewPost = () => {
-  return (
-    <View style={styles.container}>
-      <Text>NewPost</Text>
-    </View>
-  );
+  return <View style={styles.container}></View>;
 };
 
 // define your styles

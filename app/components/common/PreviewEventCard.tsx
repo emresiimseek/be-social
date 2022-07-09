@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: '80%',
+    minHeight: '75%',
     marginHorizontal: 10,
     borderRadius: 5,
-    marginTop: 1,
+    marginTop: 15,
   },
   header: {
     flex: 0.5,

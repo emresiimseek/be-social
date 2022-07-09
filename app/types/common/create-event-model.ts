@@ -1,7 +1,8 @@
 export interface CreateEventModel {
   title?: string;
   description?: string;
-  users?: number[];
+  owners?: number[];
+  attendees?: number[];
   eventDate?: Date;
   categories?: string[];
   publishedAt?: Date;

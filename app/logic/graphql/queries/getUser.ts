@@ -43,7 +43,7 @@ export const USERS_QUERY = gql`
               }
             }
           }
-          events {
+          owner_events {
             data {
               ...EventFields
             }
