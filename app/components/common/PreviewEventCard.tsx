@@ -92,7 +92,7 @@ export const PreviewEventCard = (props: CardProps) => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text> {props.item.eventDate} </Text>
+              <Text> {moment(props.item.eventDate).format('LLL')} </Text>
               <Icon name="calendar" type="ant-design" style={{ marginLeft: 5 }} />
             </View>
           </View>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: '90%',
+    minHeight: '80%',
     marginHorizontal: 10,
     borderRadius: 5,
     marginTop: 1,

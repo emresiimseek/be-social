@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import 'moment/locale/tr';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import BsInput from './BsInput';
-import colors from '../../styles/colors';
 interface DatePickerProps {
-  onDateChange: (date: string) => void;
+  onDateChange: (date: Date) => void;
   value: boolean;
   onValueChange: () => void;
 }
@@ -29,7 +26,7 @@ const Example = (props: DatePickerProps) => {
         onConfirm={date => {
           setDate(date);
           setOpen(false);
-          props.onDateChange(moment(date).format('LLL'));
+          props.onDateChange(date);
         }}
         onCancel={() => {
           setOpen(false);

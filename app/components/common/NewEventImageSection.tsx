@@ -19,7 +19,7 @@ interface NewEventImageSectionProps {
 // create a component
 const NewEventImageSection = (props: NewEventImageSectionProps) => {
   return (
-    <ScrollView contentContainerStyle={{ flex: 0.9 }}>
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
       {props.loading ? (
         <Loading />
       ) : (

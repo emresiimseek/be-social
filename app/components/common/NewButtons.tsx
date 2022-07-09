@@ -54,7 +54,7 @@ const NewButtons = (props: NewButtonProps) => {
                 props.setFocus(false);
                 props.navigation.navigate('NewPost');
               }}
-              icon={{ type: 'ionicon', name: 'albums-outline', size: 20, color: 'white' }}
+              icon={{ type: 'ionicon', name: 'albums-outline', size: 23, color: 'white' }}
               iconPosition="right"
               title="Post"
               size="lg"
@@ -78,7 +78,7 @@ const NewButtons = (props: NewButtonProps) => {
               icon={{ type: 'simple-line-icon', name: 'event', size: 20, color: 'white' }}
               iconPosition="right"
               title="Etkinlik"
-              style={{ marginTop: 10, width: Dimensions.get('window').width - 10 }}
+              style={{ marginTop: 10, width: Dimensions.get('window').width - 20 }}
               size="lg"
             />
           </Animated.View>

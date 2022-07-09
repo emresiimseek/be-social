@@ -44,7 +44,7 @@ const EventForm = (props: EventFormProps) => {
         title: yup.string().required('Başlık gereklidir'),
         description: yup.string().required('Açıklama gereklidir'),
         categories: yup.array().length(1, 'Kategori zorunludur.').required('Kategori gereklidir'),
-        eventDate: yup.string().required('Tarih gereklidir'),
+        eventDate: yup.date().required('Tarih gereklidir'),
       })}
     >
       {({
@@ -86,7 +86,7 @@ const EventForm = (props: EventFormProps) => {
 
             <>
               <BsInput
-                value={values.eventDate ? values.eventDate : ''}
+                value={values.eventDate ? moment(values.eventDate).format('LLL') : ''}
                 onTouchStart={() => setDatePickerVisibility(!isDatePickerVisible)}
                 onBlur={() => setFieldTouched('eventDate')}
                 errorMessage={errors.eventDate}
@@ -95,7 +95,7 @@ const EventForm = (props: EventFormProps) => {
               />
               <DatePicker
                 value={isDatePickerVisible}
-                onDateChange={handleChange('eventDate')}
+                onDateChange={date => setFieldValue('eventDate', date)}
                 onValueChange={() => setDatePickerVisibility(false)}
               />
             </>
@@ -126,7 +126,7 @@ const EventForm = (props: EventFormProps) => {
           <View
             style={{
               position: 'absolute',
-              bottom: 0,
+              bottom: 20,
               padding: 10,
               width: '100%',
               flex: 1,
@@ -139,6 +139,7 @@ const EventForm = (props: EventFormProps) => {
               disabled={!isValid}
               title="İleri"
               size="lg"
+              containerStyle={{ borderRadius: 10 }}
               iconPosition="right"
               icon={{
                 name: 'chevron-forward-outline',

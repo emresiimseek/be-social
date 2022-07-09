@@ -3,16 +3,16 @@ import { Icon } from '@rneui/themed';
 import { Props } from '../types/common/props';
 import { HomePage } from './MyTabs/HomePage';
 import { ProfilePage } from './MyTabs/ProfilePage';
-import NewEvent from './NewEvent';
 import { useState } from 'react';
 import colors from '../styles/colors';
 import NewButtons from '../components/common/NewButtons';
+import NewItem from './NewItem';
 
 const Tab = createBottomTabNavigator();
 interface MyTabsProps extends Props {}
 
 export function MyTabs(baseProps: MyTabsProps) {
-  const [focus, setFocus] = useState(true);
+  const [focus, setFocus] = useState(false);
   return (
     <Tab.Navigator
       initialRouteName="NewEvent"
@@ -23,6 +23,10 @@ export function MyTabs(baseProps: MyTabsProps) {
               <Icon name="home" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
           else if (route.name == 'Profile')
+            return (
+              <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
+            );
+          else if (route.name == 'NewPost')
             return (
               <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
@@ -52,16 +56,16 @@ export function MyTabs(baseProps: MyTabsProps) {
         listeners={() => ({ tabPress: () => setFocus(false) })}
       />
       <Tab.Screen
-        name="NewEvent"
-        listeners={() => ({ tabPress: () => setFocus(false) })}
+        name="NewItem"
+        component={NewItem}
         options={{
-          headerTitle: 'Etkinlik',
           tabBarButton: props => (
             <NewButtons focused={focus} setFocus={setFocus} navigation={baseProps.navigation} />
           ),
         }}
-        component={NewEvent}
+        listeners={() => ({ tabPress: () => setFocus(false) })}
       />
+
       <Tab.Screen
         name="Profile"
         component={ProfilePage}

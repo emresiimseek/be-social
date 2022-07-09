@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomePage from './app/screens/WelcomePage';
@@ -8,11 +7,12 @@ import LoginPage from './app/screens/LoginPage';
 import Toast from 'react-native-toast-message';
 import RegisterPageComponent from './app/screens/RegisterPage';
 import { CommentsComponent } from './app/screens/Comments';
-import { ApolloClient, ApolloProvider, gql, InMemoryCache, useApolloClient } from '@apollo/client';
-import { Query } from '@apollo/client/react/components';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import UserList from './app/screens/UserList';
 import { VisitedProfile } from './app/screens/VisitedProfile';
 import colors from './app/styles/colors';
+import NewPost from './app/screens/NewPost';
+import NewEvent from './app/screens/NewEvent';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -97,6 +97,24 @@ export default function App() {
               options={{
                 headerTintColor: 'white',
                 title: 'Profile',
+                headerStyle: { backgroundColor: colors.secondColor },
+              }}
+            />
+            <Stack.Screen
+              name="NewPost"
+              component={NewPost}
+              options={{
+                headerTintColor: 'white',
+                title: 'Post',
+                headerStyle: { backgroundColor: colors.secondColor },
+              }}
+            />
+            <Stack.Screen
+              name="NewEvent"
+              component={NewEvent}
+              options={{
+                headerTintColor: 'white',
+                title: 'Etkinlik',
                 headerStyle: { backgroundColor: colors.secondColor },
               }}
             />

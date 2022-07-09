@@ -84,7 +84,7 @@ const NewEvent = (props: Props) => {
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  const [event, setEvent] = useState<CreateEventModel | null>({ categories: [] });
+  const [event, setEvent] = useState<CreateEventModel | null>({ categories: [], publishedAt: new Date() });
 
   const isLastStep = currentIndex === items.length - 1;
 
@@ -122,18 +122,19 @@ const NewEvent = (props: Props) => {
         />
       )}
       {isLastStep && (
-        <View style={{ position: 'absolute', bottom: 0, width: '100%', padding: 10 }}>
+        <View style={{ position: 'absolute', bottom: 20, width: '100%', padding: 10 }}>
           <View style={{ flex: 1 }}>
             <Button
               disabled={!isEventFormValid || !draftImage || createLoading}
               title="Gönder"
               loading={createLoading}
               color={colors.secondColor}
+              containerStyle={{ borderRadius: 10 }}
               icon={{
                 name: 'checkmark-done-outline',
                 type: 'ionicon',
                 size: 20,
-                color: isEventFormValid ? 'hsl(208, 8%, 63%)' : 'white',
+                color: isEventFormValid ? 'white' : 'hsl(208, 8%, 63%)',
               }}
               iconPosition="right"
               size="lg"
