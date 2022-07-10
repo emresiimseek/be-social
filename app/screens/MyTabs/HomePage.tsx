@@ -4,9 +4,9 @@ import { EventList } from '../../components/common/EventList';
 import { Props } from '../../types/common/props';
 import { Variables } from '../../types/strapi/base/base';
 import { ScrollView, RefreshControl } from 'react-native';
-import { FLOW_EVENTS } from '../../logic/graphql/queries/getEventsByUserId';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
+import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
 
 export const HomePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();

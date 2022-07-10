@@ -17,6 +17,7 @@ export interface Image {
 
 export interface Variables {
   filters?: any;
+  sort?: string | string[];
   id?: number;
   userId?: number;
   data?: any;

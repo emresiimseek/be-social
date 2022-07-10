@@ -7,8 +7,9 @@ import { useQuery } from '@apollo/client';
 import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { Variables } from '../../types/strapi/base/base';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
+import { GET_EVENTS_BY_USER_ID } from '../../logic/graphql/queries/getEventsById';
+import { EventData } from '../../types/strapi/models/event';
 
 export const ProfilePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
@@ -26,6 +27,15 @@ export const ProfilePage = (props: Props) => {
     variables: { id: userId },
   });
 
+  const {
+    loading: eventLoading,
+    error: eventError,
+    data: eventData,
+    refetch: eventRefetch,
+  } = useQuery<any, Variables>(GET_EVENTS_BY_USER_ID, {
+    variables: { filters: { owners: { id: { eq: userId } } }, sort: ['publishedAt:desc'] },
+  });
+
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
       {data && (
@@ -36,14 +46,16 @@ export const ProfilePage = (props: Props) => {
             navigation={props.navigation}
             currentUserId={userId}
           />
-          <EventList
-            event={{
-              getEventsByUserId: { data: [...data.usersPermissionsUser.data.attributes.owner_events.data] },
-            }}
-            isMine
-            currentUserId={userId}
-            navigation={props.navigation}
-          />
+          {eventData?.events.data.length > 0 && (
+            <EventList
+              event={{
+                getEventsByUserId: { ...eventData.events },
+              }}
+              isMine
+              currentUserId={userId}
+              navigation={props.navigation}
+            />
+          )}
         </View>
       )}
     </ScrollView>
