@@ -42,7 +42,7 @@ export const EventCard = (props: CardProps) => {
               size={35}
               rounded
               source={{
-                uri: props.item.owners.data[0].attributes.profile_photo?.data?.attributes?.url
+                uri: props.item?.owners?.data?.[0]?.attributes?.profile_photo?.data?.attributes?.url
                   ? props.item.owners.data[0].attributes.profile_photo?.data?.attributes?.url
                   : 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
               }}

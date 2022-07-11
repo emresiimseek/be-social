@@ -13,8 +13,7 @@ interface TabStatusProps {
   items: TabStatusItem[];
   currentIndex: number;
   onIndexChange: (index: number) => void;
-  isValid: boolean;
-  createLoading: boolean;
+  loading: boolean;
 }
 
 // create a component
@@ -42,7 +41,7 @@ const TabStatus = (props: TabStatusProps) => {
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={() => (props.createLoading ? null : props.onIndexChange(props.currentIndex - 1))}
+        onPress={() => (props.loading ? null : props.onIndexChange(props.currentIndex - 1))}
         style={{ position: 'absolute', left: 5, padding: 10, zIndex: 1 }}
       >
         {props.currentIndex > 0 && (

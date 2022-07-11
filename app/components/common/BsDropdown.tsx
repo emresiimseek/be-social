@@ -10,6 +10,8 @@ interface DropdownProps extends Props {
   errors?: string | string[] | never[];
   label?: string;
   placeholder?: string;
+  loading: boolean;
+  value?: any;
 }
 // create a component
 const BsDropdown = (props: DropdownProps) => {
@@ -19,7 +21,9 @@ const BsDropdown = (props: DropdownProps) => {
         items={props.items ?? []}
         onChange={value => props.onChange(value)}
         dropDownLabel={props.label}
+        value={props.value}
         placeholder={props.placeholder}
+        loading={props.loading}
       >
         <Text
           style={{

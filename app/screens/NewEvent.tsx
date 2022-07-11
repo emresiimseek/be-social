@@ -11,14 +11,12 @@ import { useEffect } from 'react';
 import { User } from '../types/strapi/models/user';
 import { getItem } from '../logic/helpers/useAsyncStorage';
 import EventForm from '../components/common/EventForm';
-import * as FileSystem from 'expo-file-system';
 import Toast from 'react-native-toast-message';
 import NewEventImageSection from '../components/common/NewEventImageSection';
 import { Props } from '../types/common/props';
-import { Alert } from 'react-native';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
-import { color } from '@rneui/base';
+import { useUploadImage } from '../logic/helpers/useImageUpload';
 
 // create a component
 const NewEvent = (props: Props) => {
@@ -38,32 +36,18 @@ const NewEvent = (props: Props) => {
 
   const [draftImage, setDraftImage] = useState<string | null>(null);
 
-  const uploadImage = async () => {
-    const result = await FileSystem.uploadAsync(
-      'https://quiet-retreat-10533.herokuapp.com/api/upload',
-      draftImage ?? '',
-      {
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-        fieldName: 'files',
-        mimeType: 'image/png',
-      }
-    );
-    const body = await JSON.parse(result.body);
-    return await body[0].id;
-  };
-
   const [createEvent] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
 
   const createNewEvent = async () => {
     if (!draftImage) {
       Toast.show({
         type: 'error',
-        text1: 'Lütfen bir resim seçiniz.',
+        text1: 'Lütfen bir görsel seçiniz.',
       });
       return;
     }
     setLoading(true);
-    const id = await uploadImage();
+    const id = await useUploadImage(draftImage);
     const result = await createEvent({ variables: { data: { ...event, images: [id] } } });
 
     if (result.data?.createEvent.data.id) {
@@ -95,8 +79,7 @@ const NewEvent = (props: Props) => {
         items={items}
         currentIndex={currentIndex}
         onIndexChange={index => setCurrentIndex(index)}
-        isValid={isEventFormValid}
-        createLoading={createLoading}
+        loading={createLoading}
       />
       {currentIndex === 0 && (
         <EventForm
@@ -125,13 +108,9 @@ const NewEvent = (props: Props) => {
       {isLastStep && (
         <View
           style={{
-            position: 'absolute',
-            bottom: 0,
             backgroundColor: colors.secondColor,
             padding: 25,
-            paddingTop: 15,
             width: '100%',
-            flex: 1,
           }}
         >
           <View style={{ flex: 1 }}>

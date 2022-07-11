@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/base';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Props } from '../../types/common/props';
 import colors from '../../styles/colors';
@@ -10,6 +10,8 @@ interface DropdownProps extends Props {
   onChange: (categories: any) => void;
   placeholder?: string;
   dropDownLabel?: string;
+  loading: boolean;
+  value?: any;
 }
 
 const DropdownComponent = (props: DropdownProps) => {
@@ -19,7 +21,9 @@ const DropdownComponent = (props: DropdownProps) => {
   const renderLabel = () => {
     if (value || isFocus) {
       return (
-        <Text style={[styles.label, isFocus && { color: colors.secondColor }]}>{props.dropDownLabel}</Text>
+        <>
+          <Text style={[styles.label, isFocus && { color: colors.secondColor }]}>{props.dropDownLabel}</Text>
+        </>
       );
     }
     return null;
@@ -35,6 +39,7 @@ const DropdownComponent = (props: DropdownProps) => {
           isFocus && { borderColor: colors.secondColor },
           !isFocus ? { borderRadius: 10 } : { borderTopLeftRadius: 10, borderTopRightRadius: 10 },
         ]}
+        disable={props.loading}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -46,7 +51,7 @@ const DropdownComponent = (props: DropdownProps) => {
         valueField="value"
         placeholder={!isFocus ? props.placeholder : ''}
         searchPlaceholder="Ara"
-        value={value}
+        value={props.value ?? value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {
@@ -55,7 +60,24 @@ const DropdownComponent = (props: DropdownProps) => {
           props.onChange(item);
         }}
         selectedTextProps={{ style: { color: colors.dropdownSelectedTextColor, fontSize: 16 } }}
-        renderRightIcon={() => <Icon type="evilicon" name="tag" color={colors.secondColor} />}
+        renderRightIcon={() =>
+          props.loading ? (
+            <ActivityIndicator size="small" color="#FF4C29" />
+          ) : value ? (
+            <Icon
+              onPress={() => {
+                setValue(null);
+                props.onChange('');
+              }}
+              type="ionicon"
+              name="close-outline"
+              size={20}
+              color={colors.secondColor}
+            />
+          ) : (
+            <Icon type="evilicon" name="tag" color={colors.secondColor} />
+          )
+        }
       />
       {props.children}
     </View>

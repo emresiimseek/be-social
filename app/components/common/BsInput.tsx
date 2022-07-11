@@ -1,9 +1,10 @@
 //import liraries
 import { IconNode, Input } from '@rneui/base';
-import React, { Component, lazy } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import colors from '../../styles/colors';
+import { FormikErrors } from 'formik';
 
 interface InputProps {
   label: string;
@@ -14,7 +15,7 @@ interface InputProps {
   rightIcon?: IconNode;
   leftIcon?: IconNode;
   disabled?: boolean;
-  errorMessage?: string;
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[] | undefined;
   password?: boolean;
   onBlur: () => void;
 }
@@ -52,7 +53,7 @@ const BsInput = (props: InputProps) => {
       disabled={props.disabled}
       onTouchStart={() => (props.onTouchStart ? props.onTouchStart() : null)}
       errorStyle={{ color: 'red' }}
-      errorMessage={props.errorMessage}
+      errorMessage={props.errorMessage?.toLocaleString()}
       secureTextEntry={props.password}
     />
   );

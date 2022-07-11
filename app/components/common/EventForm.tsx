@@ -3,7 +3,6 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import BsInput from './BsInput';
-import DropdownComponent from './DropdownComponent';
 import DatePicker from '../common/DatePicker';
 import { GET_CATEGORIES } from '../../logic/graphql/queries/getCategories';
 import { Category } from '../../types/strapi/models/category';
@@ -17,7 +16,6 @@ import 'moment/locale/tr';
 import { useState } from 'react';
 import { Button } from '@rneui/base';
 import BsDropdown from './BsDropdown';
-import { color } from '@rneui/base';
 
 interface EventFormProps {
   event: CreateEventModel | null;
@@ -102,6 +100,7 @@ const EventForm = (props: EventFormProps) => {
             </>
             <BsDropdown
               items={categories ?? []}
+              loading={gueryLoading}
               onChange={category => {
                 setFieldValue('categories', [category.value]);
                 props.categoryLabelsChanged([category.label]);

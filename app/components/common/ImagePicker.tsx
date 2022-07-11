@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground, Pressable } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Button, ButtonGroup } from '@rneui/base';
+import { BackgroundImage, Button, ButtonGroup } from '@rneui/base';
 import { Icon } from '@rneui/themed';
 import colors from '../../styles/colors';
+import { BsModal } from './Modal';
 
 interface ImagePickerProps {
   onImageChanged: (image: string) => void;
   showMessage: boolean;
-  createLoading: boolean;
 }
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const launchCamera = async () => {
     // No permissions request is necessary for launching the image library
@@ -25,6 +25,8 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     });
 
     if (!result.cancelled) {
+      setModalVisible(false);
+
       setImage(result.uri);
       props.onImageChanged(result.uri);
     }
@@ -32,6 +34,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
+    ImagePicker.launchImageLibraryAsync;
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -41,41 +44,62 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     });
 
     if (!result.cancelled) {
+      setModalVisible(false);
       setImage(result.uri);
       props.onImageChanged(result.uri);
     }
   };
 
   return (
-    <View style={{ marginHorizontal: 10, flexDirection: 'column', alignItems: 'center' }}>
-      <ButtonGroup
-        disabled={props.createLoading}
-        containerStyle={{ width: '91%', paddingTop: 0, marginTop: 0 }}
-        onPress={index => {
-          setCurrentIndex(index);
-          index === 0 && launchCamera();
-          index === 1 && pickImage();
-        }}
-        selectedIndex={currentIndex}
-        buttons={[
-          <Icon
-            type="ionicon"
-            name="camera-outline"
-            color={currentIndex == 0 ? 'white' : colors.secondColor}
-            style={{ paddingTop: 7 }}
-          />,
-          <Icon
-            type="ionicon"
-            name="image-outline"
-            color={currentIndex == 1 ? 'white' : colors.secondColor}
-            style={{ paddingTop: 7 }}
-          />,
-        ]}
-        selectedButtonStyle={{ backgroundColor: colors.secondColor }}
-        selectedTextStyle={{ color: 'white' }}
-      />
+    <View style={{ marginHorizontal: 10, flex: 1, flexDirection: 'column', alignItems: 'center' }}>
+      <BsModal visible={modalVisible} onClose={() => setModalVisible(false)}>
+        <View style={{ padding: 10, minWidth: '100%' }}>
+          <Button
+            color="rgba(0,0,0,0.5)"
+            onPress={() => {
+              launchCamera();
+            }}
+            style={{ paddingBottom: 10 }}
+            icon={{ type: 'ionicon', name: 'camera-outline', color: 'white' }}
+            title="Kamera"
+            iconPosition="right"
+            size="sm"
+          />
+
+          <Button
+            color="rgba(0,0,0,0.5)"
+            onPress={() => {
+              pickImage();
+            }}
+            icon={{ type: 'ionicon', name: 'image-outline', color: 'white' }}
+            title="Galeri"
+            iconContainerStyle={{ marginLeft: 20 }}
+            iconPosition="right"
+            size="sm"
+          />
+        </View>
+      </BsModal>
       {!image && props.showMessage && (
-        <Text style={{ margin: 5, color: 'gray', fontSize: 13 }}>Bir görsel seçiniz.</Text>
+        <Pressable
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+          style={{
+            width: '100%',
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            borderRadius: 10,
+            marginBottom: 10,
+          }}
+        >
+          <ImageBackground
+            source={{ uri: 'https://img.icons8.com/ios/100/000000/add-camera.png' }}
+            style={{ width: 80, height: 80, padding: 40 }}
+          />
+          <Text style={{ color: 'gray', fontSize: 13 }}>Bir görsel seçmek için tıklayınız.</Text>
+        </Pressable>
       )}
     </View>
   );

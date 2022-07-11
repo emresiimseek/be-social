@@ -27,7 +27,6 @@ const NewEventImageSection = (props: NewEventImageSectionProps) => {
           <ImagePickerComponent
             showMessage={props.draftImage === null}
             onImageChanged={image => props.onImageChange(image)}
-            createLoading={props.createLoading}
           />
           {props.draftImage && props.event && (
             <PreviewEventCard
