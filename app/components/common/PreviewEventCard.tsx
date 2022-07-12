@@ -18,7 +18,7 @@ interface CardProps extends Props {
 export const PreviewEventCard = (props: CardProps) => {
   const [userId, setUserId] = useState<number | undefined>();
   const { data } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: userId } });
-  const url = data?.usersPermissionsUser.data.attributes.profile_photo.data.attributes.url;
+  const url = data?.usersPermissionsUser?.data?.attributes?.profile_photo?.data?.attributes?.url;
   const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
   const uri = url ? url : defaultAvatarImage;
 
@@ -121,13 +121,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: '75%',
-    marginHorizontal: 10,
+    margin: 10,
     borderRadius: 5,
-    marginTop: 15,
+    flex: 2.5,
   },
   header: {
-    flex: 0.5,
+    flex: 0.25,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
@@ -139,11 +138,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   body: {
-    flex: 3,
+    flex: 1.8,
     borderRadius: 5,
   },
   footer: {
     flexDirection: 'column',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    flex: 0.4,
   },
 });

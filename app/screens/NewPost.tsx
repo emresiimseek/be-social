@@ -28,7 +28,7 @@ const NewPost = (props: Props) => {
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<number | undefined>();
   const isLastStep = currentIndex === items.length - 1;
@@ -87,15 +87,21 @@ const NewPost = (props: Props) => {
         />
       )}
       {currentIndex === 1 &&
-        (draftImage && userId ? (
-          <>{loading ? <Loading /> : <PostCardPreview image={draftImage} item={post} userId={userId} />}</>
+        (loading ? (
+          <Loading />
         ) : (
-          <ImagePickerComponent
-            showMessage={!draftImage}
-            onImageChanged={image => {
-              setImage(image);
-            }}
-          />
+          <>
+            {draftImage && post && userId ? (
+              <PostCardPreview image={draftImage} item={post} userId={userId} />
+            ) : (
+              <ImagePickerComponent
+                showMessage={!draftImage}
+                onImageChanged={image => {
+                  setImage(image);
+                }}
+              />
+            )}
+          </>
         ))}
 
       {isLastStep && (

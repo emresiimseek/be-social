@@ -19,36 +19,29 @@ interface NewEventImageSectionProps {
 // create a component
 const NewEventImageSection = (props: NewEventImageSectionProps) => {
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {props.loading ? (
         <Loading />
       ) : (
         <View style={{ flex: 1 }}>
-          <ImagePickerComponent
-            showMessage={props.draftImage === null}
-            onImageChanged={image => props.onImageChange(image)}
-          />
-          {props.draftImage && props.event && (
+          {props.draftImage && props.event ? (
             <PreviewEventCard
               categoryLabels={props.categoryLabels}
               item={{ ...props.event, images: [props.draftImage] }}
             />
+          ) : (
+            <ImagePickerComponent
+              showMessage={props.draftImage === null}
+              onImageChanged={image => props.onImageChange(image)}
+            />
           )}
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
-  },
-});
+const styles = StyleSheet.create({});
 
 //make this component available to the app
 export default NewEventImageSection;

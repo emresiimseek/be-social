@@ -22,12 +22,12 @@ const PostCardPreview = (props: PostCardProps) => {
   const { data } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: props.userId } });
 
   const user = data?.usersPermissionsUser.data.attributes;
-  const url = user?.profile_photo.data.attributes.url;
+  const url = user?.profile_photo?.data?.attributes?.url;
   const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
   const uri = url ? url : defaultAvatarImage;
 
   return props.item ? (
-    <View style={{ margin: 10, flex: 1, justifyContent: 'center' }}>
+    <View style={{ marginBottom: 10, marginHorizontal: 10, flex: 1, justifyContent: 'center' }}>
       <ImageBackground borderRadius={5} style={styles.container} source={{ uri: props.image }}>
         {/* Header */}
         <View style={styles.header}>
@@ -64,7 +64,7 @@ const PostCardPreview = (props: PostCardProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    flex: 0.9,
+    flex: 1,
   },
   footer: {
     flexDirection: 'row',

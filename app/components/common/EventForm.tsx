@@ -87,6 +87,7 @@ const EventForm = (props: EventFormProps) => {
               <BsInput
                 value={values.eventDate ? moment(values.eventDate).format('LLL') : ''}
                 onTouchStart={() => setDatePickerVisibility(!isDatePickerVisible)}
+                onFocus={() => setDatePickerVisibility(!isDatePickerVisible)}
                 onBlur={() => setFieldTouched('eventDate')}
                 errorMessage={errors.eventDate}
                 label="Etkinlik Tarihi"

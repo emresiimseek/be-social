@@ -53,7 +53,7 @@ const NewEvent = (props: Props) => {
     if (result.data?.createEvent.data.id) {
       setEvent(null);
       setCurrentIndex(0);
-      props.navigation.navigate('Home');
+      props.navigation.navigate('MyTabs');
       Toast.show({
         type: 'success',
         text1: 'Başarılı',
@@ -113,7 +113,7 @@ const NewEvent = (props: Props) => {
             width: '100%',
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View>
             <Button
               disabled={!isEventFormValid || !draftImage || createLoading}
               title="Gönder"

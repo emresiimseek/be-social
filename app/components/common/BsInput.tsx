@@ -18,6 +18,7 @@ interface InputProps {
   errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[] | undefined;
   password?: boolean;
   onBlur: () => void;
+  onFocus?: () => void;
 }
 
 // create a component
@@ -40,6 +41,7 @@ const BsInput = (props: InputProps) => {
         props.onBlur();
       }}
       onFocus={() => {
+        props.onFocus && props.onFocus();
         setFocus(true);
       }}
       inputContainerStyle={{
