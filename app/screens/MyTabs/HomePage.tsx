@@ -2,11 +2,12 @@ import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { EventList } from '../../components/common/EventList';
 import { Props } from '../../types/common/props';
-import { Variables } from '../../types/strapi/base/base';
+import { Data, Variables } from '../../types/strapi/base/base';
 import { ScrollView, RefreshControl } from 'react-native';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
+import { Event } from '../../types/strapi/models/event';
 
 export const HomePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
@@ -20,14 +21,14 @@ export const HomePage = (props: Props) => {
     getUserId();
   }, []);
 
-  const [event, setEvent] = useState<FlowEventData | null>(null);
+  const [event, setEvent] = useState<Data<Event>[] | undefined>();
 
   const { loading, error, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
     variables: { userId: userId },
   });
 
   useEffect(() => {
-    setEvent(data ? data : null);
+    setEvent(data?.getEventsByUserId.data);
   }, [data]);
 
   return (
@@ -37,7 +38,7 @@ export const HomePage = (props: Props) => {
           refreshing={loading}
           onRefresh={async () => {
             const result = await refetch();
-            setEvent(result.data);
+            setEvent(result.data.getEventsByUserId.data);
           }}
         />
       }

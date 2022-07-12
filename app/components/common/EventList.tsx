@@ -5,10 +5,12 @@ import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { useState, useEffect } from 'react';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { colors } from '../../styles/colors';
+import { Data } from '../../types/strapi/base/base';
+import { Event } from '../../types/strapi/models/event';
 
 export interface EventProps extends Props {
   isMine: boolean;
-  event: FlowEventData;
+  event: Data<Event>[];
 }
 
 export const EventList = (props: EventProps) => {
@@ -25,8 +27,8 @@ export const EventList = (props: EventProps) => {
 
   return (
     <>
-      {props.event.getEventsByUserId.data.length ? (
-        props.event.getEventsByUserId.data.map(event => (
+      {props.event.length > 0 &&
+        props.event.map(event => (
           <EventCard
             key={event.id}
             item={event.attributes}
@@ -34,10 +36,7 @@ export const EventList = (props: EventProps) => {
             currentUserId={userId}
             navigation={props.navigation}
           />
-        ))
-      ) : (
-        <Text></Text>
-      )}
+        ))}
     </>
   );
 };
