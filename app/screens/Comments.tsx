@@ -120,7 +120,7 @@ export const CommentsComponent = (props: Props) => {
               backgroundColor: 'rgba(0,0,0,0.5)',
               flexDirection: 'row',
               borderRadius: 5,
-              marginBottom: 10,
+              marginTop: 10,
               padding: 8,
             }}
           >
@@ -139,7 +139,7 @@ export const CommentsComponent = (props: Props) => {
             />
           </View>
         )}
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 25, paddingTop: 10 }}>
           <Input
             value={comment}
             containerStyle={{ height: 45 }}
@@ -207,10 +207,8 @@ export const CommentsComponent = (props: Props) => {
 // define your stylesr
 const styles = StyleSheet.create({
   bottom: {
-    paddingTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
     backgroundColor: 'white',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 });
