@@ -28,7 +28,7 @@ const NewPost = (props: Props) => {
     { title: 'Gönder', icon: { name: 'checkmark-done-outline', type: 'ionicon', size: 20 } },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<number | undefined>();
   const isLastStep = currentIndex === items.length - 1;
@@ -45,6 +45,7 @@ const NewPost = (props: Props) => {
       return;
     }
     setLoading(true);
+
     const id = await useUploadImage(draftImage);
     const result = await createPost({
       variables: { data: { ...post, images: [id], users: [userId ?? 0], publishedAt: new Date() } },

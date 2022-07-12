@@ -75,7 +75,7 @@ export const CommentsComponent = (props: Props) => {
                   setSelectedComment(comment);
                   reset();
                 }}
-                buttonStyle={{ minHeight: '100%', backgroundColor: colors.fourthColor }}
+                buttonStyle={{ minHeight: '100%', backgroundColor: colors.firstColor }}
                 icon={<Icon type="entype" name="reply" color={colors.secondColor} />}
               />
             )}
@@ -89,8 +89,8 @@ export const CommentsComponent = (props: Props) => {
               }
               source={{
                 uri:
-                  comment.attributes.user_comments.data.attributes.profile_photo.data.attributes.url ??
-                  'https://randomuser.me/api/portraits/men/36.jpg',
+                  comment.attributes?.user_comments?.data?.attributes?.profile_photo?.data?.attributes?.url ??
+                  'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
               }}
               rounded
               size={35}
@@ -117,30 +117,29 @@ export const CommentsComponent = (props: Props) => {
         {selectedComment && (
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: 'rgba(0,0,0,0.5)',
               flexDirection: 'row',
-              borderRadius: 10,
-              marginHorizontal: 25,
-              marginBottom: 15,
+              borderRadius: 5,
+              marginBottom: 10,
               padding: 8,
             }}
           >
-            <Text style={{ marginRight: 5, paddingHorizontal: 15 }}>
+            <Text style={{ marginRight: 5, paddingHorizontal: 5, color: 'white' }}>
               {selectedComment?.attributes.description}
             </Text>
             <Icon
               type="metarial"
               name="close"
               size={15}
-              style={{ marginLeft: 5, marginBottom: 'auto' }}
-              color={colors.secondColor}
+              style={{ marginLeft: 5 }}
+              color={'white'}
               onPress={() => {
                 setSelectedComment(null);
               }}
             />
           </View>
         )}
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 24 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 20 }}>
           <Input
             value={comment}
             containerStyle={{ height: 45 }}
@@ -198,9 +197,6 @@ export const CommentsComponent = (props: Props) => {
               paddingLeft: 20,
             }}
             onChangeText={text => setComment(text)}
-            style={{
-              color: 'white',
-            }}
           />
         </View>
       </KeyboardAvoidingView>
@@ -212,11 +208,9 @@ export const CommentsComponent = (props: Props) => {
 const styles = StyleSheet.create({
   bottom: {
     paddingTop: 15,
-    paddingBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    paddingVertical: 10,
     backgroundColor: 'white',
   },
 });

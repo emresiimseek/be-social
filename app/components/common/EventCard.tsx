@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: '80%',
+    minHeight: 500,
     marginBottom: 15,
     borderRadius: 5,
     margin: 10,

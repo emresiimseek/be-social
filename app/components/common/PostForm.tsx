@@ -10,7 +10,6 @@ import BsDropdown from './BsDropdown';
 import { useQuery } from '@apollo/client';
 import { Variables } from '../../types/strapi/base/base';
 import { GET_EVENTS } from '../../logic/graphql/queries/getEvents';
-import { Alert } from 'react-native';
 
 interface PostFormProps {
   post: any;
@@ -31,6 +30,10 @@ const PostForm = (props: PostFormProps) => {
       },
     },
   });
+
+  console.log(props.userId);
+
+  console.log(data);
 
   const events = data?.events.data.map((event: any) => ({
     label: event.attributes.title + '-' + event.attributes.description,
