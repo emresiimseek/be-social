@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomePage from './app/screens/WelcomePage';
 import { MyTabs } from './app/screens/MyTabs';
@@ -13,6 +13,9 @@ import { VisitedProfile } from './app/screens/VisitedProfile';
 import colors from './app/styles/colors';
 import NewPost from './app/screens/NewPost';
 import NewEvent from './app/screens/NewEvent';
+import AppNotifications from './app/components/AppNotifications';
+import { Props } from './app/types/common/props';
+import { navigationRef } from './app/RootNavigation';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -29,14 +32,13 @@ const client = new ApolloClient({
   }),
 });
 
-export default function App() {
+export default function App(props: Props) {
   const Stack = createNativeStackNavigator();
-
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="WelcomePage">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}
@@ -122,6 +124,7 @@ export default function App() {
         </ApolloProvider>
       </NavigationContainer>
       <Toast />
+      <AppNotifications navigation={navigationRef} />
     </>
   );
 }

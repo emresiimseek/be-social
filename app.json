@@ -6,6 +6,14 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/bell.png",
+          "color": "#ffffff",
+          "sounds": ["./local/assets/bell.wav"]
+        }
       ]
     ],
     "name": "be-social",

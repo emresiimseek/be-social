@@ -14,6 +14,9 @@ export const HomePage = (props: Props) => {
 
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
+    const token = await getItem<number>('token');
+    console.log(token);
+
     setUserId(userId);
   };
 

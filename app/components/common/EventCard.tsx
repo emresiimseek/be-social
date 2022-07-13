@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -12,6 +12,7 @@ import { LIKE_EVENT } from '../../logic/graphql/mutations/likeEvent';
 import PostCards from './PostCards';
 import { colors } from '../../styles/colors';
 import backgroundColors from '../../styles/backgroundColors';
+import { usePushNotification } from '../../logic/helpers/usePushNotification';
 
 interface CardProps extends Props {
   item: Event;
@@ -22,6 +23,27 @@ export const EventCard = (props: CardProps) => {
   moment.locale('tr');
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
+
+  const like = async () => {
+    const result = await likeEvent({
+      variables: {
+        id: +props.eventId,
+        data: {
+          event_likes: isLiked
+            ? [...props.item.event_likes.data.map(l => +l.id).filter(l => l !== props.currentUserId)]
+            : [...props.item.event_likes.data.map(l => l.id), props.currentUserId],
+        },
+      },
+    });
+
+    if (result.data)
+      usePushNotification({
+        me: props.currentUserId ?? 0,
+        event: +props.eventId,
+        related_users: props.item.owners.data.map(o => +o.id),
+        type: 'like_event',
+      });
+  };
 
   const [visible, setVisible] = useState(true);
 
@@ -82,22 +104,7 @@ export const EventCard = (props: CardProps) => {
             {/* Icons */}
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <Icon
-                onPress={() => {
-                  likeEvent({
-                    variables: {
-                      id: +props.eventId,
-                      data: {
-                        event_likes: isLiked
-                          ? [
-                              ...props.item.event_likes.data
-                                .map(l => +l.id)
-                                .filter(l => l !== props.currentUserId),
-                            ]
-                          : [...props.item.event_likes.data.map(l => l.id), props.currentUserId],
-                      },
-                    },
-                  });
-                }}
+                onPress={() => like()}
                 type="metarial"
                 color={isLiked ? 'red' : 'black'}
                 name={isLiked ? 'favorite' : 'favorite-border'}
