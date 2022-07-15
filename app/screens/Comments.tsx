@@ -19,13 +19,18 @@ import { EVENT_COMMENTS } from '../logic/graphql/queries/eventComments';
 import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
 import CommentsReplies from './MyTabs/CommentReplies';
 import { colors } from '../styles/colors';
-import backgroundColors from '../styles/backgroundColors';
+import { usePushNotification } from '../logic/helpers/usePushNotification';
 
 export const CommentsComponent = (props: Props) => {
   const [comment, setComment] = useState('');
+  const [type, setType] = useState();
   const [selectedComment, setSelectedComment] = useState<Data<CommentAttributes> | null>(null);
   const [createComment, { loading, data }] = useMutation(CREATE_COMMENT);
   const [comments, setComments] = useState<EventComments>();
+
+  useEffect(() => {
+    setType(props.route.params.type);
+  }, []);
 
   const {
     data: queryData,
@@ -36,6 +41,60 @@ export const CommentsComponent = (props: Props) => {
       filters: { event: { id: { eq: props.route.params.eventId } }, comments: { id: { eq: null } } },
     },
   });
+
+  const sendComment = async () => {
+    let result;
+    if (selectedComment) {
+      result = await createComment({
+        variables: {
+          data: {
+            description: comment,
+            event: props.route.params.eventId,
+            post: props.route.params.postId,
+            user_comments: props.route.params.currentUserId,
+            publishedAt: new Date(),
+            comments: [selectedComment.id],
+          },
+        },
+      });
+    } else {
+      result = await createComment({
+        variables: {
+          data: {
+            description: comment,
+            event: props.route.params.eventId,
+            post: props.route.params.postId,
+            user_comments: props.route.params.currentUserId,
+            publishedAt: new Date(),
+          },
+        },
+      });
+    }
+
+    if (selectedComment) {
+      usePushNotification({
+        me: props.route.params.currentUserId,
+        related_users: [
+          +selectedComment.attributes.user_comments.data.id,
+          type === 'post' ? +props.route.params.postUserId : +props.route.params.userEventId,
+        ],
+        type: type === 'event' ? 'comment-reply_event' : 'comment-reply_post',
+      });
+    } else {
+      usePushNotification({
+        me: props.route.params.currentUserId,
+        related_users: [type === 'post' ? +props.route.params.postUserId : +props.route.params.userEventId],
+        type: type === 'event' ? 'comment_event' : 'comment_post',
+        event: type === 'event' ? props.route.params.eventId : null,
+        post: type === 'post' ? props.route.params.postId : null,
+      });
+    }
+
+    await refetch();
+    await refectPost();
+    setComment('');
+    setSelectedComment(null);
+  };
 
   const {
     data: postData,
@@ -153,39 +212,7 @@ export const CommentsComponent = (props: Props) => {
                     size={40}
                     name="arrow-up"
                     color={colors.secondColor}
-                    onPress={async () => {
-                      if (selectedComment) {
-                        await createComment({
-                          variables: {
-                            data: {
-                              description: comment,
-                              event: props.route.params.eventId,
-                              post: props.route.params.postId,
-                              user_comments: props.route.params.currentUserId,
-                              publishedAt: new Date(),
-                              comments: [selectedComment.id],
-                            },
-                          },
-                        });
-                      } else {
-                        await createComment({
-                          variables: {
-                            data: {
-                              description: comment,
-                              event: props.route.params.eventId,
-                              post: props.route.params.postId,
-                              user_comments: props.route.params.currentUserId,
-                              publishedAt: new Date(),
-                            },
-                          },
-                        });
-                      }
-
-                      await refetch();
-                      await refectPost();
-                      setComment('');
-                      setSelectedComment(null);
-                    }}
+                    onPress={() => sendComment()}
                   />
                 )}
               </View>

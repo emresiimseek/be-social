@@ -124,7 +124,7 @@ export default function App(props: Props) {
         </ApolloProvider>
       </NavigationContainer>
       <Toast />
-      <AppNotifications navigation={navigationRef} />
+      <AppNotifications navigation={navigationRef} currentUserId={props.currentUserId} />
     </>
   );
 }

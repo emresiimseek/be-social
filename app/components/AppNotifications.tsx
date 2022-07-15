@@ -18,9 +18,12 @@ import { Data, Item } from '../types/strapi/base/base';
 // create a component
 const AppNotifications = (props: Props) => {
   const [token, setToken] = useState<string>();
+  const [currentUserId, setCurrentUserId] = useState<string>();
+
   const getToken = async () => {
     const token = await getItem<string>('token');
-
+    const currentUserId = await getItem<string>('userId');
+    setCurrentUserId(currentUserId);
     setToken(token);
   };
 
@@ -41,6 +44,12 @@ const AppNotifications = (props: Props) => {
         return `${data.data.attributes.me.data.attributes.username} kullanıcısı sizi takip etti.`;
       case 'like_event':
         return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.event.data.attributes.title} etkinliğinizi beğendi.`;
+      case 'comment_event':
+        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.event.data.attributes.title} etkinliğinizi yorum yaptı.`;
+      case 'comment_post':
+        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.post.data.attributes.description} gönderinize yorum yaptı.`;
+      case 'like_post':
+        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.post.data.attributes.description} gönderinize beğendi.`;
       default:
         return '';
     }
@@ -51,6 +60,11 @@ const AppNotifications = (props: Props) => {
   });
 
   const listener = (item: Item<Notification>) => {
+    console.log(item);
+    console.log(currentUserId, 'currentUserId');
+
+    if (!item.data.attributes.related_users.data.find(item => item.id === currentUserId)) return;
+
     schedulePushNotification(getMessageByType(item.data.attributes.type, item));
     socket.removeAllListeners();
   };

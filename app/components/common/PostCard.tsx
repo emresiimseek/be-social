@@ -11,6 +11,7 @@ import { UPDATE_POST } from '../../logic/graphql/mutations/updatePost';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import backgroundColors from '../../styles/backgroundColors';
+import { usePushNotification } from '../../logic/helpers/usePushNotification';
 
 interface PostCardProps extends Props {
   item: Data<Post>;
@@ -33,8 +34,10 @@ const PostCard = (props: PostCardProps) => {
     setPost(props.item);
   }, []);
 
-  const unLike = (post: Data<Post>) => {
-    likePost({
+  const unLike = () => {
+    if (!post) return;
+
+    return likePost({
       variables: {
         id: post.id,
         data: {
@@ -44,8 +47,10 @@ const PostCard = (props: PostCardProps) => {
     });
   };
 
-  const like = (post: Data<Post>) => {
-    likePost({
+  const like = () => {
+    if (!post) return;
+
+    return likePost({
       variables: {
         id: post.id,
         data: {
@@ -55,10 +60,31 @@ const PostCard = (props: PostCardProps) => {
     });
   };
 
+  const handleLike = () => {
+    props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId);
+    const isLiked = !!props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId);
+
+    const result = isLiked ? unLike() : like();
+
+    if (result && !isLiked) {
+      usePushNotification({
+        me: props.currentUserId ?? 0,
+        related_users: [+props.item.attributes.users.data[0].id],
+        post: props.item.id,
+        type: 'like_post',
+      });
+    }
+  };
+
   const directToCommentPage = () => {
     props.navigation.navigate({
       name: 'Comments',
-      params: { postId: props.item.id, currentUserId: props.currentUserId },
+      params: {
+        postId: props.item.id,
+        currentUserId: props.currentUserId,
+        type: 'post',
+        postUserId: props.item.attributes.users.data[0].id,
+      },
       merge: true,
     });
   };
@@ -91,11 +117,7 @@ const PostCard = (props: PostCardProps) => {
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             <View style={{ flexDirection: 'row' }}>
               <Icon
-                onPress={() => {
-                  props.item.attributes.post_likes.data.find(pl => +pl.id === props.currentUserId)
-                    ? unLike(post)
-                    : like(post);
-                }}
+                onPress={() => handleLike()}
                 type="metarial"
                 color={
                   post.attributes.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'

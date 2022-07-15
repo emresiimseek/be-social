@@ -36,7 +36,7 @@ export const EventCard = (props: CardProps) => {
       },
     });
 
-    if (result.data)
+    if (result.data && !isLiked)
       usePushNotification({
         me: props.currentUserId ?? 0,
         event: +props.eventId,
@@ -115,7 +115,12 @@ export const EventCard = (props: CardProps) => {
                   onPress={() =>
                     props.navigation.navigate({
                       name: 'Comments',
-                      params: { eventId: props.eventId, currentUserId: props.currentUserId },
+                      params: {
+                        eventId: props.eventId,
+                        currentUserId: props.currentUserId,
+                        type: 'event',
+                        eventUserId: props.item.owners.data[0].id,
+                      },
                       merge: true,
                     })
                   }

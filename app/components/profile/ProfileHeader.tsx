@@ -8,6 +8,7 @@ import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
 import { useMutation } from '@apollo/client';
 import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/mutations/followUser';
 import { Variables } from '../../types/strapi/base/base';
+import { usePushNotification } from '../../logic/helpers/usePushNotification';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
@@ -30,6 +31,15 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
       props.refect();
     }
   }, [mutationData]);
+
+  const follow = async () => {
+    const result = await followUser({
+      variables: { userId: props.currentUserId, userIds: [+userId], follow: !followed },
+    });
+    if (result.data && !followed) {
+      usePushNotification({ me: props.currentUserId ?? 0, related_users: [+userId], type: 'follow_user' });
+    }
+  };
 
   return (
     <View style={{ alignItems: 'center' }}>
@@ -80,11 +90,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
           {props.currentUserId !== +props.user.usersPermissionsUser.data.id && (
             <View style={styles.bottom}>
               <Button
-                onPress={() => {
-                  followUser({
-                    variables: { userId: props.currentUserId, userIds: [+userId], follow: !followed },
-                  });
-                }}
+                onPress={() => follow()}
                 titleStyle={styles.buttonTitle}
                 style={styles.button}
                 size="sm"
