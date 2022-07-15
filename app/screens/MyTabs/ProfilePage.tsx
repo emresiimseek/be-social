@@ -36,6 +36,8 @@ export const ProfilePage = (props: Props) => {
     variables: { filters: { owners: { id: { eq: userId } } }, sort: ['publishedAt:desc'] },
   });
 
+  const event = eventData?.events.data;
+
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
       {data && (
@@ -46,15 +48,8 @@ export const ProfilePage = (props: Props) => {
             navigation={props.navigation}
             currentUserId={userId}
           />
-          {eventData?.events.data.length > 0 && (
-            <EventList
-              event={{
-                getEventsByUserId: { ...eventData.events },
-              }}
-              isMine
-              currentUserId={userId}
-              navigation={props.navigation}
-            />
+          {event?.length > 0 && (
+            <EventList event={event} isMine currentUserId={userId} navigation={props.navigation} />
           )}
         </View>
       )}

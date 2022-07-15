@@ -40,7 +40,7 @@ export const VisitedProfile = (props: Props) => {
           />
           <EventList
             event={{
-              getEventsByUserId: { data: [...data.usersPermissionsUser.data.attributes.events.data] },
+              ...data.usersPermissionsUser.data.attributes.owner_events.data,
             }}
             isMine
             navigation={props.navigation}
