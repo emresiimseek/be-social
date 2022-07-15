@@ -49,24 +49,12 @@ const AppNotifications = (props: Props) => {
 
   socket.on('connect', () => {
     console.log(socket.active, 'STATUS');
+  });
 
-    socket.on('notification:create', (notification: Item<Notification>) => {
-      console.log(notification, 'notification');
-
-      if (notification)
-        schedulePushNotification(getMessageByType(notification.data.attributes.type, notification));
-
-      // Toast.show({
-      //   type: 'success',
-      //   text1: '1 yeni bildirim',
-      //   text2: getMessageByType(notification.data.attributes.type, notification),
-      //   onPress: () => {
-      //     navigate('VisitedProfile', {
-      //       userId: notification.data.attributes.me.data.id,
-      //     });
-      //   },
-      // });
-    });
+  socket.off('notification:create').on('notification:create', (notification: Item<Notification>) => {
+    if (notification)
+      schedulePushNotification(getMessageByType(notification.data.attributes.type, notification));
+    socket.removeAllListeners();
   });
 
   async function registerForPushNotificationsAsync() {
@@ -135,10 +123,10 @@ const AppNotifications = (props: Props) => {
       console.log(response);
     });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
+    // return () => {
+    //   Notifications.removeNotificationSubscription(notificationListener.current);
+    //   Notifications.removeNotificationSubscription(responseListener.current);
+    // };
   }, []);
 
   return <></>;
