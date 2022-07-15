@@ -14,6 +14,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { Notification } from '../types/strapi/models/notification';
 import { Data, Item } from '../types/strapi/base/base';
+import { getMessageByType } from '../logic/helpers/getNotificationMessage';
 
 // create a component
 const AppNotifications = (props: Props) => {
@@ -37,23 +38,6 @@ const AppNotifications = (props: Props) => {
       token,
     },
   });
-
-  const getMessageByType = (type: NotificationType, data: Item<Notification>) => {
-    switch (type) {
-      case 'follow_user':
-        return `${data.data.attributes.me.data.attributes.username} kullanıcısı sizi takip etti.`;
-      case 'like_event':
-        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.event.data.attributes.title} etkinliğinizi beğendi.`;
-      case 'comment_event':
-        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.event.data.attributes.title} etkinliğinizi yorum yaptı.`;
-      case 'comment_post':
-        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.post.data.attributes.description} gönderinize yorum yaptı.`;
-      case 'like_post':
-        return `${data.data.attributes.me.data.attributes.username} kullanıcısı ${data.data.attributes.post.data.attributes.description} gönderinize beğendi.`;
-      default:
-        return '';
-    }
-  };
 
   socket.on('connect', () => {
     console.log(socket.active, 'STATUS');
@@ -86,7 +70,7 @@ const AppNotifications = (props: Props) => {
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
     } else {
-      Alert.alert('Must use physical device for Push Notifications');
+      // Alert.alert('Must use physical device for Push Notifications');
     }
 
     if (Platform.OS === 'android') {

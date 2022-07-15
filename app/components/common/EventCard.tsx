@@ -21,6 +21,7 @@ interface CardProps extends Props {
 
 export const EventCard = (props: CardProps) => {
   moment.locale('tr');
+
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
 

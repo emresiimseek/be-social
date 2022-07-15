@@ -7,6 +7,8 @@ import { useState } from 'react';
 import colors from '../styles/colors';
 import NewButtons from '../components/common/NewButtons';
 import NewItem from './NewItem';
+import Notofications from './Notifications';
+import Search from './Search';
 
 const Tab = createBottomTabNavigator();
 interface MyTabsProps extends Props {}
@@ -15,7 +17,7 @@ export function MyTabs(baseProps: MyTabsProps) {
   const [focus, setFocus] = useState(false);
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Notifications"
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')
@@ -26,18 +28,17 @@ export function MyTabs(baseProps: MyTabsProps) {
             return (
               <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
+          else if (route.name == 'Notifications')
+            return (
+              <Icon name="bell" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
+            );
           else if (route.name == 'NewPost')
             return (
               <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
           else if (route.name == 'Search')
             return (
-              <Icon
-                name="control-point"
-                type="metarial"
-                size={40}
-                color={focused ? colors.secondColor : 'gray'}
-              />
+              <Icon name="search" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
             );
         },
 
@@ -56,6 +57,12 @@ export function MyTabs(baseProps: MyTabsProps) {
         listeners={() => ({ tabPress: () => setFocus(false) })}
       />
       <Tab.Screen
+        name="Search"
+        options={{ headerTitle: 'Arama' }}
+        component={Search}
+        listeners={() => ({ tabPress: () => setFocus(false) })}
+      />
+      <Tab.Screen
         name="NewItem"
         component={NewItem}
         options={{
@@ -66,6 +73,12 @@ export function MyTabs(baseProps: MyTabsProps) {
         listeners={() => ({ tabPress: () => setFocus(false) })}
       />
 
+      <Tab.Screen
+        name="Notifications"
+        component={Notofications}
+        options={{ headerTitle: 'Bildirimler' }}
+        listeners={() => ({ tabPress: () => setFocus(false) })}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfilePage}
