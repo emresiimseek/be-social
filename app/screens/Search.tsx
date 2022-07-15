@@ -1,24 +1,30 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { SearchBar } from '@rneui/themed';
+import React, { Component, useState } from 'react';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import { Icon } from '@rneui/themed';
 
 // create a component
 const Search = () => {
+  const [search, setSearch] = useState('');
   return (
-    <View style={styles.container}>
-      <Text>Search</Text>
-    </View>
+    <>
+      <SearchBar
+        placeholder="Type Here..."
+        onChangeText={text => setSearch(text)}
+        platform={Platform.OS == 'ios' ? 'ios' : 'android'}
+        value={search}
+        showLoading={false}
+        showCancel={false}
+        cancelButtonTitle=""
+      />
+    </>
   );
 };
 
 // define your styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
-  },
+  container: {},
 });
 
 //make this component available to the app
