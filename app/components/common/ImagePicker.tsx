@@ -55,7 +55,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       <BsModal visible={modalVisible} onClose={() => setModalVisible(false)}>
         <View style={{ padding: 10, minWidth: '100%' }}>
           <Button
-            color="rgba(0,0,0,0.5)"
+            color={colors.secondColor}
             onPress={() => {
               launchCamera();
             }}
@@ -67,7 +67,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
           />
 
           <Button
-            color="rgba(0,0,0,0.5)"
+            color={colors.secondColor}
             onPress={() => {
               pickImage();
             }}
@@ -95,8 +95,13 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
           }}
         >
           <ImageBackground
-            source={{ uri: 'https://img.icons8.com/ios/100/000000/add-camera.png' }}
-            style={{ width: 80, height: 80, padding: 40 }}
+            source={{
+              uri: `https://img.icons8.com/ios-glyphs/90/${colors.secondColor.replace(
+                '#',
+                ''
+              )}/add-camera.png`,
+            }}
+            style={{ width: 80, height: 80 }}
           />
           <Text style={{ color: 'gray', fontSize: 13 }}>Bir görsel seçmek için tıklayınız.</Text>
         </Pressable>

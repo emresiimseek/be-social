@@ -1,11 +1,11 @@
 export const colors = {
   firstColor: '#606060',
-  secondColor: '#FF7171',
+  secondColor: '#8675A9',
   headerTitleColor: '#FFFFFF',
-  focusColor: '#F5C0C0',
+  focusColor: '#8675A9',
   thirdColor: '#2c3e50',
   fourthColor: 'white',
-  secondColorOpacity: '#FF717199',
+  secondColorOpacity: '#8675A999',
 
   dropdownSelectedTextColor: '#86939e',
 
