@@ -31,10 +31,6 @@ const PostForm = (props: PostFormProps) => {
     },
   });
 
-  console.log(props.userId);
-
-  console.log(data);
-
   const events = data?.events.data.map((event: any) => ({
     label: event.attributes.title + '-' + event.attributes.description,
     value: event.id,

@@ -20,7 +20,6 @@ const AppNotifications = (props: Props) => {
   const [token, setToken] = useState<string>();
   const getToken = async () => {
     const token = await getItem<string>('token');
-    console.log('token', token);
 
     setToken(token);
   };
@@ -51,11 +50,12 @@ const AppNotifications = (props: Props) => {
     console.log(socket.active, 'STATUS');
   });
 
-  socket.off('notification:create').on('notification:create', (notification: Item<Notification>) => {
-    if (notification)
-      schedulePushNotification(getMessageByType(notification.data.attributes.type, notification));
+  const listener = (item: Item<Notification>) => {
+    schedulePushNotification(getMessageByType(item.data.attributes.type, item));
     socket.removeAllListeners();
-  });
+  };
+
+  socket.off('notification:create').on('notification:create', listener);
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -71,7 +71,6 @@ const AppNotifications = (props: Props) => {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
       Alert.alert('Must use physical device for Push Notifications');
     }
@@ -119,9 +118,7 @@ const AppNotifications = (props: Props) => {
       setNotification(notification);
     });
 
-    notificationListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    notificationListener.current = Notifications.addNotificationResponseReceivedListener(response => {});
 
     // return () => {
     //   Notifications.removeNotificationSubscription(notificationListener.current);
