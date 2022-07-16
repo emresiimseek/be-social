@@ -17,6 +17,7 @@ import AppNotifications from './app/components/AppNotifications';
 import { Props } from './app/types/common/props';
 import { navigationRef } from './app/RootNavigation';
 import Notofications from './app/screens/Notifications';
+import EventDetail from './app/screens/EventDetail';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -116,6 +117,15 @@ export default function App(props: Props) {
             <Stack.Screen
               name="NewEvent"
               component={NewEvent}
+              options={{
+                headerTintColor: 'white',
+                title: 'Etkinlik',
+                headerStyle: { backgroundColor: colors.secondColor },
+              }}
+            />
+            <Stack.Screen
+              name="EventDetail"
+              component={EventDetail}
               options={{
                 headerTintColor: 'white',
                 title: 'Etkinlik',

@@ -10,6 +10,7 @@ import { Variables } from '../../types/strapi/base/base';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { GET_EVENTS_BY_USER_ID } from '../../logic/graphql/queries/getEventsById';
 import { EventData } from '../../types/strapi/models/event';
+import GridList from '../../components/common/GridList';
 
 export const ProfilePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
@@ -37,6 +38,7 @@ export const ProfilePage = (props: Props) => {
   });
 
   const event = eventData?.events.data;
+  const [viewType, setViewType] = useState<'list' | 'grid'>('grid');
 
   return (
     <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
@@ -47,9 +49,15 @@ export const ProfilePage = (props: Props) => {
             user={data}
             navigation={props.navigation}
             currentUserId={userId}
+            onWiewChange={type => setViewType(type)}
+            view={viewType}
           />
-          {event?.length > 0 && (
+          {viewType === 'list' && event?.length > 0 && (
             <EventList event={event} isMine currentUserId={userId} navigation={props.navigation} />
+          )}
+
+          {viewType === 'grid' && event?.length > 0 && (
+            <GridList items={event} navigation={props.navigation} />
           )}
         </View>
       )}

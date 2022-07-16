@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Dimensions, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -17,6 +17,7 @@ import { usePushNotification } from '../../logic/helpers/usePushNotification';
 interface CardProps extends Props {
   item: Event;
   eventId: string;
+  isFullPage?: boolean;
 }
 
 export const EventCard = (props: CardProps) => {
@@ -49,7 +50,7 @@ export const EventCard = (props: CardProps) => {
   const [visible, setVisible] = useState(true);
 
   return (
-    <View style={styles.cardContainer}>
+    <View style={props.isFullPage ? styles.fullPageContainer : styles.cardContainer}>
       {/* Header */}
       {visible && (
         <View style={styles.header}>
@@ -79,7 +80,7 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <View style={styles.body}>
+      <View style={props.isFullPage ? styles.fullPageBody : styles.body}>
         {props.item.posts?.data.length > 0 ? (
           <PostCards
             emitIndex={(value: boolean) => {
@@ -100,7 +101,7 @@ export const EventCard = (props: CardProps) => {
       {/* Footer */}
 
       {visible && (
-        <View style={styles.footer}>
+        <View style={props.isFullPage ? styles.fullPageFooter : styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* Icons */}
             <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -198,10 +199,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: 500,
-    marginBottom: 15,
+    minHeight: Dimensions.get('window').height / 1.5,
     borderRadius: 5,
     margin: 10,
+  },
+  fullPageContainer: {
+    backgroundColor: 'white',
+    minHeight: '100%',
+    width: '100%',
   },
   header: {
     flex: 0.2,
@@ -220,9 +225,21 @@ const styles = StyleSheet.create({
     flex: 3,
     borderRadius: 5,
   },
+
+  fullPageBody: {
+    flex: 2,
+    borderRadius: 5,
+  },
+
   footer: {
     flexDirection: 'column',
     backgroundColor: backgroundColors.cardBackgroundColorOpacity,
     padding: 10,
+  },
+  fullPageFooter: {
+    flexDirection: 'column',
+    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
+    padding: 10,
+    flex: 0.4,
   },
 });

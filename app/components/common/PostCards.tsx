@@ -32,7 +32,6 @@ const PostCards = (props: PostCardProps) => {
         data={props.posts.data}
         sliderWidth={360}
         itemWidth={360}
-        onMomentumScrollBegin={() => props.emitIndex(false)}
         renderItem={item => (
           <PostCard
             item={item.item}

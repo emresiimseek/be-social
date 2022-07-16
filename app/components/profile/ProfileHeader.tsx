@@ -9,12 +9,15 @@ import { useMutation } from '@apollo/client';
 import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/mutations/followUser';
 import { Variables } from '../../types/strapi/base/base';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
+import colors from '../../styles/colors';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
   isMe: boolean;
   currentUserId?: number;
   refect?: any;
+  onWiewChange: (view: 'grid' | 'list') => void;
+  view: 'grid' | 'list';
 }
 
 export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
@@ -109,16 +112,25 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
           )}
         </View>
       )}
+      <View style={{ position: 'absolute', zIndex: 10, right: 0, bottom: 0 }}>
+        <Button
+          icon={{
+            type: 'ionicon',
+            name: props.view === 'grid' ? 'list' : 'ios-grid',
+            size: props.view === 'grid' ? 22 : 20,
+            color: colors.secondColor,
+          }}
+          size="sm"
+          color="transparent"
+          onPress={() => props.onWiewChange(props.view === 'grid' ? 'list' : 'grid')}
+        ></Button>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    minHeight: 150,
-    width: '90%',
-    borderRadius: 5,
-    marginHorizontal: 10,
-    marginTop: 10,
+    width: '100%',
     padding: 20,
     backgroundColor: 'white',
   },
