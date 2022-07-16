@@ -9,7 +9,7 @@ class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#FF4C29" />
+        <ActivityIndicator size="large" color={colors.secondColor} />
       </View>
     );
   }

@@ -62,7 +62,7 @@ const DropdownComponent = (props: DropdownProps) => {
         selectedTextProps={{ style: { color: colors.dropdownSelectedTextColor, fontSize: 16 } }}
         renderRightIcon={() =>
           props.loading ? (
-            <ActivityIndicator size="small" color="#FF4C29" />
+            <ActivityIndicator size="small" color={colors.secondColor} />
           ) : value ? (
             <Icon
               onPress={() => {
