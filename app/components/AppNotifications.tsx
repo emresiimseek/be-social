@@ -115,10 +115,10 @@ const AppNotifications = (props: Props) => {
 
     notificationListener.current = Notifications.addNotificationResponseReceivedListener(response => {});
 
-    // return () => {
-    //   Notifications.removeNotificationSubscription(notificationListener.current);
-    //   Notifications.removeNotificationSubscription(responseListener.current);
-    // };
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
 
   return <></>;

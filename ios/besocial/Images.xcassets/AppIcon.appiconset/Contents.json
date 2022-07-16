@@ -1,62 +1,38 @@
 {
   "images" : [
     {
-      "filename" : "Be Social-20@2x.png",
       "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "20x20"
+      "size" : "29x29",
+      "scale" : "2x"
     },
     {
-      "filename" : "Be Social-20@3x.png",
       "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "20x20"
+      "size" : "29x29",
+      "scale" : "3x"
     },
     {
-      "filename" : "Be Social-29@2x.png",
       "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "29x29"
+      "size" : "40x40",
+      "scale" : "2x"
     },
     {
-      "filename" : "Be Social-29@3x.png",
       "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "29x29"
+      "size" : "40x40",
+      "scale" : "3x"
     },
     {
-      "filename" : "Be Social-40@2x.png",
       "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "40x40"
+      "size" : "60x60",
+      "scale" : "2x"
     },
     {
-      "filename" : "Be Social-40@3x.png",
       "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "40x40"
-    },
-    {
-      "filename" : "Be Social-60@2x.png",
-      "idiom" : "iphone",
-      "scale" : "2x",
-      "size" : "60x60"
-    },
-    {
-      "filename" : "Be Social-60@3x.png",
-      "idiom" : "iphone",
-      "scale" : "3x",
-      "size" : "60x60"
-    },
-    {
-      "filename" : "Be Social-1024.png",
-      "idiom" : "ios-marketing",
-      "scale" : "1x",
-      "size" : "1024x1024"
+      "size" : "60x60",
+      "scale" : "3x"
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "expo"
   }
 }

@@ -6,7 +6,6 @@ export const getMessageByType = (item: Notification) => {
   const username = item.me.data.attributes.username;
   const eventTitle = item?.event?.data?.attributes?.title;
   const postDescription = item?.post?.data?.attributes?.description;
-  console.log(item.post);
 
   switch (item.type) {
     case 'follow_user':

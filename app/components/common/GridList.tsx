@@ -19,6 +19,7 @@ const GridList = (props: GridListProps) => {
       {props.items?.length > 0 &&
         props.items.map((item, index) => (
           <Pressable
+            key={index}
             onPress={() =>
               props.navigation.navigate('EventDetail', {
                 eventId: item.id,
@@ -27,7 +28,6 @@ const GridList = (props: GridListProps) => {
           >
             <ImageBackground
               source={{ uri: item.attributes.images.data[0].attributes.url }}
-              key={index}
               style={{
                 borderRightWidth: 1,
                 borderRightColor: '#e6e6e6',

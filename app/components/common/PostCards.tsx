@@ -27,7 +27,7 @@ const PostCards = (props: PostCardProps) => {
       }}
     >
       <Carousel
-        loop={true}
+        loop={false}
         layout={'stack'}
         layoutCardOffset={18}
         apparitionDelay={0}
