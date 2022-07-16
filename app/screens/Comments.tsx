@@ -20,6 +20,7 @@ import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
 import CommentsReplies from './MyTabs/CommentReplies';
 import { colors } from '../styles/colors';
 import { usePushNotification } from '../logic/helpers/usePushNotification';
+import { navigate } from '../RootNavigation';
 
 export const CommentsComponent = (props: Props) => {
   const [comment, setComment] = useState('');
@@ -123,57 +124,57 @@ export const CommentsComponent = (props: Props) => {
           />
         }
       >
-        {comments?.comments.data.length ?? 0 > 0 ? (
-          comments?.comments.data.flatMap((comment, i) => (
-            <ListItem.Swipeable
-              key={i}
-              bottomDivider
-              rightContent={reset => (
-                <Button
-                  onPress={() => {
-                    setSelectedComment(comment);
-                    reset();
+        {comments?.comments.data.length ?? 0 > 0
+          ? comments?.comments.data.flatMap((comment, i) => (
+              <ListItem.Swipeable
+                key={i}
+                bottomDivider
+                rightContent={reset => (
+                  <Button
+                    onPress={() => {
+                      setSelectedComment(comment);
+                      reset();
+                    }}
+                    buttonStyle={{ minHeight: '100%', backgroundColor: colors.firstColor }}
+                    icon={<Icon type="entype" name="reply" color={colors.secondColor} />}
+                  />
+                )}
+              >
+                <Avatar
+                  containerStyle={{ marginBottom: 'auto' }}
+                  onPress={() =>
+                    navigate('VisitedProfile', {
+                      userId: comment.attributes.user_comments.data.id,
+                    })
+                  }
+                  source={{
+                    uri:
+                      comment.attributes?.user_comments?.data?.attributes?.profile_photo?.data?.attributes
+                        ?.url ?? 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
                   }}
-                  buttonStyle={{ minHeight: '100%', backgroundColor: colors.firstColor }}
-                  icon={<Icon type="entype" name="reply" color={colors.secondColor} />}
+                  rounded
+                  size={35}
                 />
-              )}
-            >
-              <Avatar
-                containerStyle={{ marginBottom: 'auto' }}
-                onPress={() =>
-                  props.navigation.navigate('VisitedProfile', {
-                    userId: comment.attributes.user_comments.data.id,
-                  })
-                }
-                source={{
-                  uri:
-                    comment.attributes?.user_comments?.data?.attributes?.profile_photo?.data?.attributes
-                      ?.url ?? 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-                }}
-                rounded
-                size={35}
-              />
-              <ListItem.Content>
-                <ListItem.Title>{comment.attributes.user_comments.data.attributes.username}</ListItem.Title>
-                <ListItem.Subtitle>
-                  <View>
-                    <Text> {comment.attributes.description}</Text>
-                  </View>
-                </ListItem.Subtitle>
-                {/* comment replies */}
-                <CommentsReplies replies={comment.attributes.replies} navigation={props.navigation} />
-              </ListItem.Content>
-            </ListItem.Swipeable>
-          ))
-        ) : (
-          <View style={styles.container}>
-            <Icon type="font-awesome-5" name="comment" size={50} color={colors.textGrayColor} />
-            <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
-              Hiç yorum yok.
-            </Text>
-          </View>
-        )}
+                <ListItem.Content>
+                  <ListItem.Title>{comment.attributes.user_comments.data.attributes.username}</ListItem.Title>
+                  <ListItem.Subtitle>
+                    <View>
+                      <Text> {comment.attributes.description}</Text>
+                    </View>
+                  </ListItem.Subtitle>
+                  {/* comment replies */}
+                  <CommentsReplies replies={comment.attributes.replies} />
+                </ListItem.Content>
+              </ListItem.Swipeable>
+            ))
+          : !queryLoading && (
+              <View style={styles.container}>
+                <Icon type="font-awesome-5" name="comment" size={50} color={colors.textGrayColor} />
+                <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
+                  Hiç yorum yok.
+                </Text>
+              </View>
+            )}
       </ScrollView>
 
       <KeyboardAvoidingView
@@ -217,9 +218,11 @@ export const CommentsComponent = (props: Props) => {
                 ) : (
                   <Icon
                     type="evilicon"
-                    size={40}
+                    disabled={comment.length === 0}
+                    disabledStyle={{ backgroundColor: 'tranparent' }}
+                    size={50}
                     name="arrow-up"
-                    color={colors.secondColor}
+                    color={comment.length > 0 ? colors.secondColor : 'rgba(0,0,0,0.5)'}
                     onPress={() => sendComment()}
                   />
                 )}

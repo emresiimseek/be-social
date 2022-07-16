@@ -9,6 +9,7 @@ import { Avatar } from '@rneui/themed';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
 import { USERS_QUERY } from '../logic/graphql/queries/getUser';
 import colors from '../styles/colors';
+import { navigate } from '../RootNavigation';
 
 // create a component
 class UserList extends Component<Props> {
@@ -27,21 +28,25 @@ class UserList extends Component<Props> {
                       key={user.id}
                       bottomDivider
                       onPress={() =>
-                        this.props.navigation.navigate('VisitedProfile', {
+                        navigate('VisitedProfile', {
                           userId: user.id,
                         })
                       }
                     >
                       <Avatar
-                        source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
+                        source={{
+                          uri:
+                            user?.attributes?.profile_photo?.data?.attributes?.url ??
+                            'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
+                        }}
                         rounded
                         size={40}
                       />
                       <ListItem.Content>
                         <ListItem.Title>
-                          {user.attributes.firstname + '  ' + user.attributes.lastname}
+                          {user.attributes.firstname + ' ' + user.attributes.lastname}
                         </ListItem.Title>
-                        <ListItem.Subtitle>{user.attributes.username}</ListItem.Subtitle>
+                        <ListItem.Subtitle>@{user.attributes.username}</ListItem.Subtitle>
                       </ListItem.Content>
                     </ListItem>
                   ))
@@ -50,21 +55,25 @@ class UserList extends Component<Props> {
                       key={user.id}
                       bottomDivider
                       onPress={() =>
-                        this.props.navigation.navigate('VisitedProfile', {
+                        navigate('VisitedProfile', {
                           userId: user.id,
                         })
                       }
                     >
                       <Avatar
-                        source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
+                        source={{
+                          uri:
+                            user?.attributes?.profile_photo?.data?.attributes?.url ??
+                            'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
+                        }}
                         rounded
                         size={40}
                       />
                       <ListItem.Content>
-                        <ListItem.Title>{user.attributes.username}</ListItem.Title>
-                        <ListItem.Subtitle>
-                          {user.attributes.firstname + '  ' + user.attributes.lastname}
-                        </ListItem.Subtitle>
+                        <ListItem.Title>
+                          {user.attributes.firstname + ' ' + user.attributes.lastname}
+                        </ListItem.Title>
+                        <ListItem.Subtitle>@{user.attributes.username}</ListItem.Subtitle>
                       </ListItem.Content>
                     </ListItem>
                   ))}

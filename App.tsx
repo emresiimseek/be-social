@@ -21,7 +21,7 @@ import { io } from 'socket.io-client';
 import { Alert } from 'react-native';
 import { Notification } from './app/types/strapi/models/notification';
 import { Item } from './app/types/strapi/base/base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -61,7 +61,9 @@ export default function App(props: Props) {
     socket.removeAllListeners();
   };
 
-  socket.off('notification:create').on('notification:create', listener);
+  useEffect(() => {
+    socket.off('notification:create').on('notification:create', listener);
+  }, []);
 
   const Stack = createNativeStackNavigator();
   return (

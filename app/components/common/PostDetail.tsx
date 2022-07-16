@@ -15,11 +15,7 @@ const PostDetail = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      {post ? (
-        <PostCard item={post} currentUserId={props.currentUserId} navigation={props.navigation} />
-      ) : (
-        <Loading />
-      )}
+      {post ? <PostCard item={post} currentUserId={props.currentUserId} /> : <Loading />}
     </View>
   );
 };

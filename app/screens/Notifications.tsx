@@ -15,6 +15,7 @@ import { colors } from '../styles/colors';
 import { ScrollView } from 'react-native';
 import { Props } from '../types/common/props';
 import { Icon } from '@rneui/themed';
+import { navigate } from '../RootNavigation';
 
 // create a component
 const Notofications = (props: Props) => {
@@ -39,13 +40,13 @@ const Notofications = (props: Props) => {
 
   const handlePress = (notification: Notification) => {
     if (notification.type === 'follow_user') {
-      props.navigation.navigate('VisitedProfile', { userId: notification.me.data.id });
+      navigate('VisitedProfile', { userId: notification.me.data.id });
     } else if (notification.type === 'like_event') {
-      props.navigation.navigate('EventDetail', { eventId: notification?.event?.data.id });
+      navigate('EventDetail', { eventId: notification?.event?.data.id });
     } else if (notification.type === 'like_post') {
-      props.navigation.navigate('PostDetail', { postId: notification?.post?.data.id });
+      navigate('PostDetail', { postId: notification?.post?.data.id });
     } else if (notification.type === 'comment_event' || notification.type === 'comment-reply_event') {
-      props.navigation.navigate({
+      navigate({
         name: 'Comments',
         params: {
           eventId: notification?.event?.data.id,
@@ -56,7 +57,7 @@ const Notofications = (props: Props) => {
         merge: true,
       });
     } else if (notification.type === 'comment_post' || notification.type === 'comment-reply_post') {
-      props.navigation.navigate({
+      navigate({
         name: 'Comments',
         params: {
           postId: notification?.post?.data.id,
@@ -96,7 +97,7 @@ const Notofications = (props: Props) => {
               />
               <ListItem.Content>
                 <ListItem.Subtitle>{getMessageByType(l.attributes)}</ListItem.Subtitle>
-                <View style={{ position: 'absolute', right: 0, bottom: -15 }}>
+                <View style={{ position: 'absolute', right: 0, bottom: -13 }}>
                   <Text style={{ fontSize: 10, color: colors.textGrayColor }}>
                     {moment(l.attributes.createdAt).format('LLL')}
                   </Text>
@@ -106,12 +107,14 @@ const Notofications = (props: Props) => {
           ))}
         </View>
       ) : (
-        <View style={styles.container}>
-          <Icon name="notifications" size={50} color={colors.textGrayColor} />
-          <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
-            Hiç bildiriminiz yok.
-          </Text>
-        </View>
+        !loading && (
+          <View style={styles.container}>
+            <Icon name="notifications" size={50} color={colors.textGrayColor} />
+            <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
+              Hiç bildiriminiz yok.
+            </Text>
+          </View>
+        )
       )}
     </ScrollView>
   );

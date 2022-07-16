@@ -41,7 +41,6 @@ const PostCards = (props: PostCardProps) => {
             item={item.item}
             emitIndex={() => props.emitIndex(true)}
             currentUserId={props.currentUserId}
-            navigation={props.navigation}
           />
         )}
         onSnapToItem={index => 0}

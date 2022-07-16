@@ -19,6 +19,7 @@ import { Variables } from '../types/strapi/base/base';
 import PostCardPreview from '../components/common/PostCardPreview';
 import { Props } from '../types/common/props';
 import Loading from '../components/common/Loading';
+import { navigate } from '../RootNavigation';
 
 // create a component
 const NewPost = (props: Props) => {
@@ -53,7 +54,7 @@ const NewPost = (props: Props) => {
     if (result.data?.createPost.data.id) {
       setPost(null);
       setImage(null);
-      props.navigation.navigate('Home');
+      navigate('Home');
     }
     setLoading(false);
   };

@@ -10,6 +10,7 @@ import { FOLLOW_USER, UPDATE_USER } from '../../logic/graphql/mutations/followUs
 import { Variables } from '../../types/strapi/base/base';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import colors from '../../styles/colors';
+import { navigate } from '../../RootNavigation';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
@@ -67,7 +68,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
             <Text style={styles.countText}>{user?.owner_events.data.length} Etkinlik</Text>
             <Text
               onPress={() =>
-                props.navigation.navigate({
+                navigate({
                   name: 'Follow',
                   params: { userId, follow: true },
                   merge: true,
@@ -79,7 +80,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
             </Text>
             <Text
               onPress={() =>
-                props.navigation.navigate({
+                navigate({
                   name: 'Follow',
                   params: { userId },
                   merge: true,

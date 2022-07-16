@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import backgroundColors from '../../styles/backgroundColors';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
+import { navigate } from '../../RootNavigation';
 
 interface PostCardProps extends Props {
   item: Data<Post>;
@@ -79,7 +80,7 @@ const PostCard = (props: PostCardProps) => {
   };
 
   const directToCommentPage = () => {
-    props.navigation.navigate({
+    navigate({
       name: 'Comments',
       params: {
         postId: props.item.id,
@@ -99,7 +100,10 @@ const PostCard = (props: PostCardProps) => {
         source={{ uri: post.attributes.images.data[0].attributes.url }}
       >
         {/* Header */}
-        <View style={styles.header}>
+        <Pressable
+          onPress={() => navigate('VisitedProfile', { userId: props.item.attributes.users.data[0].id })}
+          style={styles.header}
+        >
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             <Avatar
               size={30}
@@ -113,7 +117,7 @@ const PostCard = (props: PostCardProps) => {
             <Text style={{ marginLeft: 5 }}>{post.attributes.users.data[0].attributes.username}</Text>
           </View>
           <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
-        </View>
+        </Pressable>
         {/* Footer */}
         <View style={styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
@@ -139,7 +143,11 @@ const PostCard = (props: PostCardProps) => {
           </View>
 
           {props.item.attributes.comments.data.length > 0 && (
-            <Text style={{ fontSize: 10 }}>{props.item.attributes.comments.data.length} yorumun gör...</Text>
+            <Pressable onPress={() => directToCommentPage()}>
+              <Text style={{ fontSize: 10 }}>
+                {props.item.attributes.comments.data.length} yorumun gör...
+              </Text>
+            </Pressable>
           )}
         </View>
       </ImageBackground>

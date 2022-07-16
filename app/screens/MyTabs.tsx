@@ -62,9 +62,7 @@ export function MyTabs(baseProps: MyTabsProps) {
         name="NewItem"
         component={NewItem}
         options={{
-          tabBarButton: props => (
-            <NewButtons focused={focus} setFocus={setFocus} navigation={baseProps.navigation} />
-          ),
+          tabBarButton: props => <NewButtons focused={focus} setFocus={setFocus} />,
         }}
         listeners={() => ({ tabPress: () => setFocus(false) })}
       />

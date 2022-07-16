@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import colors from '../../styles/colors';
 import { Icon } from '@rneui/themed';
 import { Button } from '@rneui/base';
+import { navigate } from '../../RootNavigation';
 
 interface NewButtonProps extends Props {
   focused: boolean;
@@ -52,7 +53,7 @@ const NewButtons = (props: NewButtonProps) => {
               color="rgba(255,255,255,255.5)"
               onPress={() => {
                 props.setFocus(false);
-                props.navigation.navigate('NewPost');
+                navigate('NewPost');
               }}
               iconPosition="right"
               title="Gönderi Paylaş"
@@ -81,7 +82,7 @@ const NewButtons = (props: NewButtonProps) => {
               color="rgba(255,255,255,255.5)"
               onPress={() => {
                 props.setFocus(false);
-                props.navigation.navigate('NewEvent');
+                navigate('NewEvent');
               }}
               icon={{
                 name: 'calendar',

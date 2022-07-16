@@ -29,6 +29,14 @@ export const USERS_QUERY = gql`
                 email
                 firstname
                 lastname
+                profile_photo {
+                  data {
+                    id
+                    attributes {
+                      url
+                    }
+                  }
+                }
               }
             }
           }
@@ -40,6 +48,14 @@ export const USERS_QUERY = gql`
                 lastname
                 firstname
                 lastname
+                profile_photo {
+                  data {
+                    id
+                    attributes {
+                      url
+                    }
+                  }
+                }
               }
             }
           }

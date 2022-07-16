@@ -44,10 +44,12 @@ export default function AppNotifications(props: AppNotificationsProps) {
   useEffect(() => {
     if (!props.notification) return;
 
+    const user = props.notification.me.data.attributes;
+
     const message = {
       to: expoPushToken,
       sound: 'default',
-      title: '1 yeni bildirim',
+      title: `${user.firstname} ${user.lastname}`.toUpperCase(),
       body: getMessageByType(props.notification),
       data: { someData: 'goes here' },
     };

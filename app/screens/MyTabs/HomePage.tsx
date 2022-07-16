@@ -46,7 +46,7 @@ export const HomePage = (props: Props) => {
         />
       }
     >
-      {event && <EventList navigation={props.navigation} event={event} isMine />}
+      {event && <EventList event={event} isMine />}
     </ScrollView>
   );
 };

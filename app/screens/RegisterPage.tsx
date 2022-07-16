@@ -11,6 +11,7 @@ import BsInput from '../components/common/BsInput';
 import colors from '../styles/colors';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { navigate } from '../RootNavigation';
 
 export interface RegisterPageStates extends BaseState {
   user: User | null;
@@ -43,7 +44,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
         position: 'top',
       });
       this.setState({ user: null });
-      this.props.navigation.navigate('Login');
+      navigate('Login');
     }
   };
 

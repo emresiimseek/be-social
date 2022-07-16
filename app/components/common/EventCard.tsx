@@ -10,9 +10,9 @@ import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { Variables } from '../../types/strapi/base/base';
 import { LIKE_EVENT } from '../../logic/graphql/mutations/likeEvent';
 import PostCards from './PostCards';
-import { colors } from '../../styles/colors';
 import backgroundColors from '../../styles/backgroundColors';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
+import { navigate } from '../../RootNavigation';
 
 interface CardProps extends Props {
   item: Event;
@@ -56,7 +56,7 @@ export const EventCard = (props: CardProps) => {
         <View style={styles.header}>
           <Pressable
             onPress={() =>
-              props.navigation.navigate('VisitedProfile', {
+              navigate('VisitedProfile', {
                 userId: props.item.owners.data[0].id,
               })
             }
@@ -89,7 +89,6 @@ export const EventCard = (props: CardProps) => {
             isFullScreen={props.isFullPage}
             posts={props.item.posts}
             currentUserId={props.currentUserId}
-            navigation={props.navigation}
           />
         ) : (
           <ImageBackground
@@ -116,7 +115,7 @@ export const EventCard = (props: CardProps) => {
               <View style={{ marginHorizontal: 10 }}>
                 <Icon
                   onPress={() =>
-                    props.navigation.navigate({
+                    navigate({
                       name: 'Comments',
                       params: {
                         eventId: props.eventId,
@@ -179,7 +178,7 @@ export const EventCard = (props: CardProps) => {
           <View>
             <Text
               onPress={() =>
-                props.navigation.navigate({
+                navigate({
                   name: 'Comments',
                   params: { eventId: props.eventId, currentUserId: props.currentUserId },
                   merge: true,

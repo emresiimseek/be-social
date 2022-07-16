@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native';
 import { EventCard } from './EventCard';
 import { Props } from '../../types/common/props';
-import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { useState, useEffect } from 'react';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
-import { colors } from '../../styles/colors';
 import { Data } from '../../types/strapi/base/base';
 import { Event } from '../../types/strapi/models/event';
 
@@ -34,7 +31,6 @@ export const EventList = (props: EventProps) => {
             item={event.attributes}
             eventId={event.id}
             currentUserId={userId}
-            navigation={props.navigation}
           />
         ))}
     </>

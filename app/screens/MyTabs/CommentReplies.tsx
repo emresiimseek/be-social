@@ -8,6 +8,7 @@ import { Avatar } from '@rneui/themed';
 import { Props } from '../../types/common/props';
 import { useState } from 'react';
 import colors from '../../styles/colors';
+import { navigate } from '../../RootNavigation';
 
 interface CommentRepliesProps extends Props {
   replies: Items<CommentAttributes>;
@@ -39,7 +40,7 @@ const CommentsReplies = (props: CommentRepliesProps) => {
             <Avatar
               containerStyle={{ marginBottom: 'auto' }}
               onPress={() =>
-                props.navigation.navigate('VisitedProfile', {
+                navigate('VisitedProfile', {
                   userId: r.attributes.user_comments.data.id,
                 })
               }

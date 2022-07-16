@@ -13,7 +13,7 @@ const EventDetail = (props: Props) => {
   const [eventId, setEventId] = useState<number | undefined>();
 
   useEffect(() => {
-    props.route.params.id && setEventId(props.route.params.id);
+    props.route.params.eventId && setEventId(props.route.params.eventId);
   }, []);
 
   const { data, refetch, loading } = useQuery(GET_EVENTS_BY_USER_ID, {
@@ -23,7 +23,7 @@ const EventDetail = (props: Props) => {
 
   return (
     <View>
-      {data && <EventCard   eventId={props.route.params.eventId} item={event} isFullPage></EventCard>}
+      {data && <EventCard eventId={props.route.params.eventId} item={event} isFullPage></EventCard>}
     </View>
   );
 };

@@ -47,18 +47,15 @@ export const ProfilePage = (props: Props) => {
           <ProfileHeaderComponent
             isMe={true}
             user={data}
-            navigation={props.navigation}
             currentUserId={userId}
             onWiewChange={type => setViewType(type)}
             view={viewType}
           />
           {viewType === 'list' && event?.length > 0 && (
-            <EventList event={event} isMine currentUserId={userId} navigation={props.navigation} />
+            <EventList event={event} isMine currentUserId={userId} />
           )}
 
-          {viewType === 'grid' && event?.length > 0 && (
-            <GridList items={event} navigation={props.navigation} />
-          )}
+          {viewType === 'grid' && event?.length > 0 && <GridList items={event} />}
         </View>
       )}
     </ScrollView>

@@ -48,23 +48,15 @@ export const VisitedProfile = (props: Props) => {
           <ProfileHeaderComponent
             isMe={false}
             user={data}
-            navigation={props.navigation}
             currentUserId={currentUserId}
             onWiewChange={type => setViewType(type)}
             view={viewType}
           />
           {viewType === 'list' && event?.length > 0 && (
-            <EventList
-              event={event}
-              isMine={false}
-              currentUserId={currentUserId}
-              navigation={props.navigation}
-            />
+            <EventList event={event} isMine={false} currentUserId={currentUserId} />
           )}
 
-          {viewType === 'grid' && event?.length > 0 && (
-            <GridList items={event} navigation={props.navigation} />
-          )}
+          {viewType === 'grid' && event?.length > 0 && <GridList items={event} />}
         </View>
       )}
     </ScrollView>

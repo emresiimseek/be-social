@@ -8,6 +8,7 @@ import Loading from '../components/common/Loading';
 import Toast from 'react-native-toast-message';
 import colors from '../styles/colors';
 import backgroundColors from '../styles/backgroundColors';
+import { navigate } from '../RootNavigation';
 
 const welcome = gql`
   query GetWelcomePage {
@@ -56,7 +57,7 @@ function WelcomePage(props: Props) {
         </View>
         <View style={styles.bottom}>
           <Button
-            onPress={() => props.navigation.navigate('Login')}
+            onPress={() => navigate('Login')}
             buttonStyle={styles.bottomButton}
             size="lg"
             title="Giriş Yap"
@@ -64,7 +65,7 @@ function WelcomePage(props: Props) {
           />
           {/* <Input value={errorMessage} onChangeText={value => setError(value)}></Input> */}
           <Button
-            onPress={() => props.navigation.navigate('Register')}
+            onPress={() => navigate('Register')}
             buttonStyle={styles.bottomButton}
             size="lg"
             title="Kayıt Ol"

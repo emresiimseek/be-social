@@ -18,8 +18,8 @@ export interface UserAttributes {
   lastname: string;
   email: string;
   username: string;
-  users_follow: Items<User>;
-  users_follow_me: Items<User>;
+  users_follow: Items<UserAttributes>;
+  users_follow_me: Items<UserAttributes>;
   owner_events: Items<Event>;
   profile_photo: Item<Image>;
 }

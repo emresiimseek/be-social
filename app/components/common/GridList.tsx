@@ -7,6 +7,7 @@ import { Event } from '../../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Pressable } from 'react-native';
+import { navigate } from '../../RootNavigation';
 
 interface GridListProps extends Props {
   items: Data<Event>[];
@@ -21,7 +22,7 @@ const GridList = (props: GridListProps) => {
           <Pressable
             key={index}
             onPress={() =>
-              props.navigation.navigate('EventDetail', {
+              navigate('EventDetail', {
                 eventId: item.id,
               })
             }

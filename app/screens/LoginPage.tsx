@@ -10,6 +10,7 @@ import BsInput from '../components/common/BsInput';
 import colors from '../styles/colors';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { navigate } from '../RootNavigation';
 
 export interface LoginState extends BaseState {
   identifier: string;
@@ -24,7 +25,7 @@ class LoginPage extends BaseComponent<Props> {
       login(this.state.identifier, this.state.password)
     );
 
-    if (result?.data?.jwt) this.props.navigation.navigate('MyTabs');
+    if (result?.data?.jwt) navigate('MyTabs');
   };
 
   render() {

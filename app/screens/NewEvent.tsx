@@ -17,6 +17,7 @@ import { Props } from '../types/common/props';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
 import { useUploadImage } from '../logic/helpers/useImageUpload';
+import { navigate } from '../RootNavigation';
 
 // create a component
 const NewEvent = (props: Props) => {
@@ -53,7 +54,7 @@ const NewEvent = (props: Props) => {
     if (result.data?.createEvent.data.id) {
       setEvent(null);
       setCurrentIndex(0);
-      props.navigation.navigate('MyTabs');
+      navigate('MyTabs');
       Toast.show({
         type: 'success',
         text1: 'Başarılı',
