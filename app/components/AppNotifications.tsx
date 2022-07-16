@@ -39,17 +39,14 @@ const AppNotifications = (props: Props) => {
     },
   });
 
-  socket.on('connect', () => {
+  socket.off('connect').on('connect', () => {
     console.log(socket.active, 'STATUS');
   });
 
   const listener = (item: Item<Notification>) => {
-    console.log(item);
-    console.log(currentUserId, 'currentUserId');
-
-    if (!item.data.attributes.related_users.data.find(item => item.id === currentUserId)) return;
-
-    schedulePushNotification(getMessageByType(item.data.attributes.type, item));
+    if (item.data.attributes.related_users.data.find(item => item.id === currentUserId)) {
+      schedulePushNotification(getMessageByType(item.data.attributes));
+    }
     socket.removeAllListeners();
   };
 

@@ -18,6 +18,7 @@ import { Props } from './app/types/common/props';
 import { navigationRef } from './app/RootNavigation';
 import Notofications from './app/screens/Notifications';
 import EventDetail from './app/screens/EventDetail';
+import PostDetail from './app/components/common/PostDetail';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -129,6 +130,15 @@ export default function App(props: Props) {
               options={{
                 headerTintColor: 'white',
                 title: 'Etkinlik',
+                headerStyle: { backgroundColor: colors.secondColor },
+              }}
+            />
+            <Stack.Screen
+              name="PostDetail"
+              component={PostDetail}
+              options={{
+                headerTintColor: 'white',
+                title: 'Gönderi',
                 headerStyle: { backgroundColor: colors.secondColor },
               }}
             />

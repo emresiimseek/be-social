@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 import { EVENTS_FIELDS } from '../fragments/event-fragments';
+import { POST_FIELDS } from '../fragments/post-fragment';
 
 export const GET_NOTIFICATIONS = gql`
+  ${EVENTS_FIELDS}
+  ${POST_FIELDS}
   query GetNotifications($filters: NotificationFiltersInput) {
     notifications(filters: $filters) {
       data {
@@ -43,12 +46,12 @@ export const GET_NOTIFICATIONS = gql`
           }
           event {
             data {
-              id
+              ...EventFields
             }
           }
           post {
             data {
-              id
+              ...PostFields
             }
           }
           type

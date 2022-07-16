@@ -12,6 +12,7 @@ export const colors = {
   eventCardBackgroundColor: '#EEEEEE',
   loadingColor: '#334756',
   shadowColor: '#000',
+  textGrayColor: '#86939e',
 };
 
 export default colors;

@@ -15,7 +15,7 @@ import { usePushNotification } from '../../logic/helpers/usePushNotification';
 
 interface PostCardProps extends Props {
   item: Data<Post>;
-  emitIndex: any;
+  emitIndex?: any;
 }
 
 // create a component

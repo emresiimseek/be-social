@@ -15,8 +15,8 @@ export interface CreateNotification {
 export interface Notification {
   me: Item<UserAttributes>;
   related_users: Items<User>;
-  event: Item<Event>;
-  post: Item<Post>;
+  event?: Item<Event>;
+  post?: Item<Post>;
   type: NotificationType;
   createdAt: string;
 }
