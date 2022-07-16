@@ -8,10 +8,12 @@ import { Post } from '../../types/strapi/models/event';
 import PostCard from './PostCard';
 import { Alert } from 'react-native';
 import { Pressable } from 'react-native';
+import { Dimensions } from 'react-native';
 
 interface PostCardProps extends Props {
   posts: Items<Post>;
   emitIndex: any;
+  isFullScreen?: boolean;
 }
 
 // create a component
@@ -31,7 +33,9 @@ const PostCards = (props: PostCardProps) => {
         apparitionDelay={0}
         data={props.posts.data}
         sliderWidth={360}
-        itemWidth={360}
+        itemWidth={
+          props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 370) : 360
+        }
         renderItem={item => (
           <PostCard
             item={item.item}

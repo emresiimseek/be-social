@@ -86,6 +86,7 @@ export const EventCard = (props: CardProps) => {
             emitIndex={(value: boolean) => {
               value ? setVisible(!visible) : setVisible(value);
             }}
+            isFullScreen={props.isFullPage}
             posts={props.item.posts}
             currentUserId={props.currentUserId}
             navigation={props.navigation}
