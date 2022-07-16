@@ -17,28 +17,24 @@ export function MyTabs(baseProps: MyTabsProps) {
   const [focus, setFocus] = useState(false);
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="Home"
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')
             return (
-              <Icon name="home" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
-            );
-          else if (route.name == 'Profile')
-            return (
-              <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
-            );
-          else if (route.name == 'Notifications')
-            return (
-              <Icon name="bell" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
-            );
-          else if (route.name == 'NewPost')
-            return (
-              <Icon name="user" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
+              <Icon name="home" size={30} type="octicon" color={focused ? colors.secondColor : 'gray'} />
             );
           else if (route.name == 'Search')
             return (
-              <Icon name="search" size={30} type="feather" color={focused ? colors.secondColor : 'gray'} />
+              <Icon name="search" size={30} type="octicon" color={focused ? colors.secondColor : 'gray'} />
+            );
+          else if (route.name == 'Notifications')
+            return (
+              <Icon name="bell" size={30} type="octicon" color={focused ? colors.secondColor : 'gray'} />
+            );
+          else if (route.name == 'Profile')
+            return (
+              <Icon name="person" size={30} type="octicon" color={focused ? colors.secondColor : 'gray'} />
             );
         },
 

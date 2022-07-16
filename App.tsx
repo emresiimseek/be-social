@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomePage from './app/screens/WelcomePage';
@@ -16,9 +15,13 @@ import NewEvent from './app/screens/NewEvent';
 import AppNotifications from './app/components/AppNotifications';
 import { Props } from './app/types/common/props';
 import { navigationRef } from './app/RootNavigation';
-import Notofications from './app/screens/Notifications';
 import EventDetail from './app/screens/EventDetail';
 import PostDetail from './app/components/common/PostDetail';
+import { io } from 'socket.io-client';
+import { Alert } from 'react-native';
+import { Notification } from './app/types/strapi/models/notification';
+import { Item } from './app/types/strapi/base/base';
+import { useState } from 'react';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -31,17 +34,41 @@ const client = new ApolloClient({
       UsersPermissionsUser: { merge: true },
       Event: { merge: true },
       Comment: { merge: true },
+      Post: { merge: true },
     },
   }),
 });
 
 export default function App(props: Props) {
+  ///////Socket.io///////
+
+  const [notification, setNotification] = useState<Notification | undefined>();
+
+  const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
+  const socket = io(SERVER_URL, {
+    auth: {
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjU3OTkzMDYxLCJleHAiOjE2NjA1ODUwNjF9.R-yQc4joPJ6r8UPOwBM1o496VJZJDR9X1dQtKkdwT7Y',
+    },
+  });
+
+  socket.on('connect', () => {
+    console.log(socket.active, 'STATUS');
+  });
+
+  const listener = (item: Item<Notification>) => {
+    setNotification(item.data.attributes);
+    socket.removeAllListeners();
+  };
+
+  socket.off('notification:create').on('notification:create', listener);
+
   const Stack = createNativeStackNavigator();
   return (
     <>
       <NavigationContainer ref={navigationRef}>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="WelcomePage">
+          <Stack.Navigator initialRouteName="MyTabs">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}
@@ -146,7 +173,7 @@ export default function App(props: Props) {
         </ApolloProvider>
       </NavigationContainer>
       <Toast />
-      <AppNotifications navigation={navigationRef} currentUserId={props.currentUserId} />
+      <AppNotifications notification={notification} />
     </>
   );
 }

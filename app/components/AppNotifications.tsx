@@ -1,119 +1,39 @@
-//import liraries
-import React, { Component, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Platform, Alert } from 'react-native';
-import Toast from 'react-native-toast-message';
-import { io } from 'socket.io-client';
-import { getItem } from '../logic/helpers/useAsyncStorage';
-import { useEffect } from 'react';
-import { Props } from '../types/common/props';
-import { navigate, navigationRef } from '../RootNavigation';
-import { NotificationType } from '../types/common/notification-type';
-import { Subscription } from 'expo-modules-core';
-
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { Subscription } from 'expo-modules-core/src/EventEmitter';
+import React, { useState, useEffect, useRef } from 'react';
+import { Platform } from 'react-native';
 import { Notification } from '../types/strapi/models/notification';
-import { Data, Item } from '../types/strapi/base/base';
 import { getMessageByType } from '../logic/helpers/getNotificationMessage';
 
-// create a component
-const AppNotifications = (props: Props) => {
-  const [token, setToken] = useState<string>();
-  const [currentUserId, setCurrentUserId] = useState<string>();
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
-  const getToken = async () => {
-    const token = await getItem<string>('token');
-    const currentUserId = await getItem<string>('userId');
-    setCurrentUserId(currentUserId);
-    setToken(token);
-  };
+interface AppNotificationsProps {
+  notification: Notification | undefined;
+}
 
-  useEffect(() => {
-    getToken();
-  }, []);
-
-  const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
-  const socket = io(SERVER_URL, {
-    auth: {
-      token,
-    },
-  });
-
-  socket.off('connect').on('connect', () => {
-    console.log(socket.active, 'STATUS');
-  });
-
-  const listener = (item: Item<Notification>) => {
-    if (item.data.attributes.related_users.data.find(item => item.id === currentUserId)) {
-      schedulePushNotification(getMessageByType(item.data.attributes));
-    }
-    socket.removeAllListeners();
-  };
-
-  socket.off('notification:create').on('notification:create', listener);
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        Alert.alert('Failed to get push token for push notification!');
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-    } else {
-      // Alert.alert('Must use physical device for Push Notifications');
-    }
-
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-
-    return token;
-  }
-
-  async function schedulePushNotification(body: string) {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Be Social',
-        body: body,
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
-
+export default function AppNotifications(props: AppNotificationsProps) {
   const [expoPushToken, setExpoPushToken] = useState<string | undefined>('');
   const [notification, setNotification] = useState(false);
-  const notificationListener = useRef<Subscription | undefined>();
-  const responseListener = useRef();
-
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
+  const notificationListener = useRef<Subscription>({ remove: () => {} });
+  const responseListener = useRef<Subscription>({ remove: () => {} });
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    const data = Notifications.addNotificationReceivedListener((notification: any) => {
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification: any) => {
       setNotification(notification);
     });
 
-    notificationListener.current = Notifications.addNotificationResponseReceivedListener(response => {});
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
@@ -121,11 +41,63 @@ const AppNotifications = (props: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!props.notification) return;
+
+    const message = {
+      to: expoPushToken,
+      sound: 'default',
+      title: '1 yeni bildirim',
+      body: getMessageByType(props.notification),
+      data: { someData: 'goes here' },
+    };
+
+    sendPushNotification(expoPushToken, message);
+  }, [props.notification]);
+
   return <></>;
-};
+}
 
-// define your styles
-const styles = StyleSheet.create({});
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
+async function sendPushNotification(expoPushToken: string | undefined, message: any) {
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
 
-//make this component available to the app
-export default AppNotifications;
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      console.log('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    console.log('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+}

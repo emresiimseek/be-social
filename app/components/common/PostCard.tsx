@@ -41,7 +41,9 @@ const PostCard = (props: PostCardProps) => {
       variables: {
         id: post.id,
         data: {
-          post_likes: post.attributes.post_likes.data.filter(pl => +pl.id !== props.currentUserId),
+          post_likes: post.attributes.post_likes.data
+            .filter(pl => +pl.id !== props.currentUserId)
+            .map(pl => +pl.id),
         },
       },
     });

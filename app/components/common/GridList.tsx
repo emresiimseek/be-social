@@ -38,7 +38,7 @@ const GridList = (props: GridListProps) => {
             >
               <View style={{ position: 'absolute', right: 2, zIndex: 1 }}>
                 <Icon type="ionicon" name="albums" size={22} />
-                <Text style={{ position: 'absolute', color: 'white', fontSize: 10, right: 9, top: 8 }}>
+                <Text style={{ position: 'absolute', color: 'white', fontSize: 10, right: 9, top: 9 }}>
                   {item.attributes.posts.data.length}
                 </Text>
               </View>

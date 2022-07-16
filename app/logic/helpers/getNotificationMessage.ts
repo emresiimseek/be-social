@@ -1,5 +1,3 @@
-import { NotificationType } from '../../types/common/notification-type';
-import { Item } from '../../types/strapi/base/base';
 import { Notification } from '../../types/strapi/models/notification';
 
 export const getMessageByType = (item: Notification) => {
