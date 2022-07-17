@@ -17,7 +17,7 @@ export function MyTabs(baseProps: MyTabsProps) {
   const [focus, setFocus] = useState(false);
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Search"
       screenOptions={({ route, navigation }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name == 'Home')

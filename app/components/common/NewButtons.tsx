@@ -106,7 +106,7 @@ const NewButtons = (props: NewButtonProps) => {
       )}
 
       <TouchableOpacity onPress={() => props.setFocus(!props.focused)}>
-        <Icon type="feather" name="plus-circle" size={50} color={colors.secondColor} />
+        <Icon type="feather" name="plus-circle" size={45} color={colors.secondColor} />
       </TouchableOpacity>
     </View>
   );
