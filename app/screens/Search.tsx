@@ -83,12 +83,13 @@ const Search = () => {
     </View>
   );
 
-  const SecondRoute = () => <View style={{ flex: 1, backgroundColor: '#673ab7' }} />;
+  const SecondRoute = () => <View style={{ flex: 1 }} />;
+  const ThirdRoute = () => <View style={{ flex: 1 }} />;
 
   const renderScene = SceneMap({
     first: FirstRoute,
     second: SecondRoute,
-    third: SecondRoute,
+    third: ThirdRoute,
   });
 
   const renderTabBar = (
@@ -113,6 +114,7 @@ const Search = () => {
 
           return (
             <TouchableOpacity
+              key={i}
               style={[
                 styles.tabItem,
                 i == index && { borderBottomWidth: 1, borderBottomColor: colors.secondColor },

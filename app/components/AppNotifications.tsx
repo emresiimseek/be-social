@@ -49,7 +49,7 @@ export default function AppNotifications(props: AppNotificationsProps) {
     const message = {
       to: expoPushToken,
       sound: 'default',
-      title: `${user.firstname} ${user.lastname}`.toUpperCase(),
+      title: `${user.firstname} ${user.lastname}`,
       body: getMessageByType(props.notification),
       data: { someData: 'goes here' },
     };
