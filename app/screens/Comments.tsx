@@ -168,12 +168,18 @@ export const CommentsComponent = (props: Props) => {
               </ListItem.Swipeable>
             ))
           : !queryLoading && (
-              <View style={styles.container}>
-                <Icon type="font-awesome-5" name="comment" size={50} color={colors.textGrayColor} />
-                <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
-                  Hiç yorum yok.
-                </Text>
-              </View>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={100}
+                style={[styles.container, styles.bottom]}
+              >
+                <View>
+                  <Icon type="font-awesome-5" name="comment" size={50} color={colors.secondColor} />
+                  <Text style={{ textAlign: 'center', fontSize: 12, color: colors.secondColor, padding: 5 }}>
+                    Hiç yorum yok.
+                  </Text>
+                </View>
+              </KeyboardAvoidingView>
             )}
       </ScrollView>
 
@@ -220,7 +226,7 @@ export const CommentsComponent = (props: Props) => {
                     type="evilicon"
                     disabled={comment.length === 0}
                     disabledStyle={{ backgroundColor: 'tranparent' }}
-                    size={50}
+                    size={40}
                     name="arrow-up"
                     color={comment.length > 0 ? colors.secondColor : 'rgba(0,0,0,0.5)'}
                     onPress={() => sendComment()}

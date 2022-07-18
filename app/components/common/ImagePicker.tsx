@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, Pressable } from 'react-native';
+import { View, Text, ImageBackground, Pressable, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { BackgroundImage, Button, ButtonGroup } from '@rneui/base';
 import { Icon } from '@rneui/themed';
@@ -15,6 +15,12 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const launchCamera = async () => {
+    const permissionsResult = await ImagePicker.getCameraPermissionsAsync();
+    if ((await permissionsResult.granted) === false) {
+      const res = await ImagePicker.requestCameraPermissionsAsync();
+      // Alert.alert('No permissions!');
+      return;
+    }
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -34,7 +40,6 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    ImagePicker.launchImageLibraryAsync;
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,

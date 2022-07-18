@@ -2,40 +2,21 @@
 import { SearchBar } from '@rneui/themed';
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Platform, useWindowDimensions } from 'react-native';
-import { useQuery } from '@apollo/client';
-import { GET_USERS_ONLY } from '../logic/graphql/queries/getUsers';
-import { UserAttributes } from '../types/strapi/models/user-events';
-import { Items, Variables } from '../types/strapi/base/base';
-import { Avatar, ButtonGroup, Icon, ListItem, Tab } from '@rneui/base';
 import { useEffect } from 'react';
 import { colors } from '../styles/colors';
 import { TabView, SceneMap, SceneRendererProps, NavigationState } from 'react-native-tab-view';
-import Constants from 'expo-constants';
 import { TouchableOpacity } from 'react-native';
 import { Animated } from 'react-native';
+import UserSearch from '../components/common/UserSearch';
+import EventSearch from '../components/common/EventSearch';
+import PostSearch from '../components/common/PostSearch';
+import { Icon } from '@rneui/themed';
 
 // create a component
 const Search = () => {
   const [term, setTerm] = useState('');
 
-  useEffect(() => {
-    refetch();
-  }, [term]);
-
-  const { data, refetch, error, loading } = useQuery<
-    { usersPermissionsUsers: Items<UserAttributes> },
-    Variables
-  >(GET_USERS_ONLY, {
-    variables: {
-      filters: {
-        or: [
-          { username: { contains: term } },
-          { lastname: { contains: term } },
-          { firstname: { contains: term } },
-        ],
-      },
-    },
-  });
+  useEffect(() => {}, [term]);
 
   const layout = useWindowDimensions();
 
@@ -47,44 +28,9 @@ const Search = () => {
     { key: 'third', title: 'Gönderiler', icon: 'albums-outline', iconName: 'ionicon' },
   ]);
 
-  const FirstRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#ff4081' }}>
-      <View style={{ width: '100%', minHeight: '100%', backgroundColor: 'white' }}>
-        {data &&
-          data?.usersPermissionsUsers.data.map((user, index) => (
-            <ListItem bottomDivider key={index}>
-              <Avatar
-                source={{
-                  uri:
-                    user?.attributes?.profile_photo?.data?.attributes?.url ??
-                    'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-                }}
-                rounded
-                size={40}
-              />
-              <ListItem.Content>
-                <ListItem.Title>{user.attributes.firstname + ' ' + user.attributes.lastname}</ListItem.Title>
-                <ListItem.Subtitle>@{user.attributes.username}</ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          ))}
-        <Text
-          style={{
-            textAlign: 'center',
-            padding: 10,
-            fontSize: 10,
-            color: colors.secondColor,
-            fontWeight: 'bold',
-          }}
-        >
-          Tüm sonuçlar için tıklayınız
-        </Text>
-      </View>
-    </View>
-  );
-
-  const SecondRoute = () => <View style={{ flex: 1 }} />;
-  const ThirdRoute = () => <View style={{ flex: 1 }} />;
+  const FirstRoute = () => (index === 0 ? <UserSearch term={term} /> : <View style={{ flex: 1 }} />);
+  const SecondRoute = () => (index === 1 ? <EventSearch term={term} /> : <View style={{ flex: 1 }} />);
+  const ThirdRoute = () => (index === 2 ? <PostSearch term={term} /> : <View style={{ flex: 1 }} />);
 
   const renderScene = SceneMap({
     first: FirstRoute,
@@ -148,7 +94,7 @@ const Search = () => {
         onChangeText={text => setTerm(text)}
         platform={Platform.OS == 'ios' ? 'ios' : 'android'}
         value={term}
-        showLoading={loading}
+        showLoading={false}
         showCancel={false}
         cancelButtonTitle=""
       />

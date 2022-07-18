@@ -58,7 +58,7 @@ export default function App(props: Props) {
 
   const listener = (item: Item<Notification>) => {
     setNotification(item.data.attributes);
-    socket.removeAllListeners();
+    // socket.removeAllListeners();
   };
 
   useEffect(() => {
