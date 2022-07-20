@@ -16,9 +16,10 @@ interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
   isMe: boolean;
   currentUserId?: number;
-  refect?: any;
+  refecth?: any;
   onWiewChange: (view: 'grid' | 'list') => void;
   view: 'grid' | 'list';
+  loading?: boolean;
 }
 
 export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
@@ -32,7 +33,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
 
   useEffect(() => {
     if (mutationData) {
-      props.refect();
+      props.refecth();
     }
   }, [mutationData]);
 
@@ -95,18 +96,26 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
             <View style={styles.bottom}>
               <Button
                 onPress={() => follow()}
-                titleStyle={styles.buttonTitle}
+                titleStyle={{ color: colors.secondColor, fontSize: 12 }}
                 style={styles.button}
+                loading={props.loading || mutationLoading}
+                type="outline"
+                buttonStyle={{
+                  borderColor: colors.secondColor,
+                }}
+                loadingProps={{
+                  size: 'small',
+                  color: colors.secondColor,
+                }}
                 size="sm"
-                color="#334756"
               >
                 {followed ? 'Takipten Çık' : 'Takip Et'}
                 <Icon
-                  name={followed ? 'person-remove' : 'person-add'}
-                  type="metarial"
+                  name={followed ? 'user-minus' : 'user-plus'}
+                  type="feather"
                   size={12}
                   style={{ marginHorizontal: 5 }}
-                  color="#FF4C29"
+                  color={colors.secondColor}
                 />
               </Button>
             </View>
@@ -146,6 +155,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 5,
+    minWidth: '30%',
   },
   buttonTitle: {
     fontSize: 12,

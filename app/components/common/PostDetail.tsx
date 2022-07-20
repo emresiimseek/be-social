@@ -10,7 +10,6 @@ import Loading from './Loading';
 // create a component
 const PostDetail = (props: Props) => {
   const { data, refetch } = useQuery(GET_POST_BY_ID, { variables: { id: props.route.params.postId } });
-  console.log();
   const post = data?.post?.data;
 
   return (

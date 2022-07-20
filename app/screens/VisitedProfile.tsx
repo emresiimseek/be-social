@@ -51,6 +51,8 @@ export const VisitedProfile = (props: Props) => {
             currentUserId={currentUserId}
             onWiewChange={type => setViewType(type)}
             view={viewType}
+            loading={loading}
+            refecth={() => refetch()}
           />
           {viewType === 'list' && event?.length > 0 && (
             <EventList event={event} isMine={false} currentUserId={currentUserId} />

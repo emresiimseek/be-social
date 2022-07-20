@@ -33,13 +33,9 @@ const EventRequestModal = (props: ModalProps) => {
     setModel({ ...model, user: props.currentUserId ?? 0, event: props.eventId });
   }, [props.currentUserId]);
 
-  console.log(props.currentUserId, 'klandlkasndlkandlka');
-
   const [createRequest, { data, loading, error }] = useMutation<CreateEventRequest, Variables>(
     CREATE_EVENT_REQUEST
   );
-
-  console.log(error);
 
   return (
     <BsModal visible={props.visible} minHeight="26%" onClose={props.onClose}>
@@ -80,8 +76,6 @@ const EventRequestModal = (props: ModalProps) => {
           size="lg"
           onPress={async () => {
             setLoading(true);
-            console.log(model);
-
             await createRequest({ variables: { data: model } });
             await usePushNotification({
               me: props.currentUserId ?? 0,

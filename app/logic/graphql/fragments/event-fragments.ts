@@ -4,6 +4,20 @@ export const EVENTS_FIELDS = gql`
   fragment EventFields on EventEntity {
     id
     attributes {
+      event_requests {
+        data {
+          id
+          attributes {
+            message
+            status
+            user {
+              data {
+                id
+              }
+            }
+          }
+        }
+      }
       posts {
         data {
           id
