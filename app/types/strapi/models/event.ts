@@ -2,6 +2,7 @@ import { Image, Item } from '../base/base';
 import { Items } from '../base/base';
 import { Category } from './category';
 import { Comment, UserCommentsAttributes } from './comment';
+import { EventRequestAttributes } from './event-request';
 
 import { User } from './user';
 import { UserAttributes } from './user-events';
@@ -24,6 +25,7 @@ export interface Event {
   description: string;
   eventDate: Date;
   comments: Items<Comment>;
+  event_requests: Items<EventRequestAttributes>;
   images: Items<Image>;
   owners: Items<UserAttributes>;
   attendees: Items<UserAttributes>;

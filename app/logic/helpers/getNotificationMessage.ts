@@ -16,6 +16,8 @@ export const getMessageByType = (item: Notification) => {
       return `@${username} kullanıcısı ${postDescription} gönderinize yorum yaptı.`;
     case 'like_post':
       return `@${username} kullanıcısı ${postDescription} gönderinizi beğendi.`;
+    case 'request_to_join_event':
+      return `@${username} kullanıcısı ${eventTitle} etkinliğinize katılmak istiyor.`;
     default:
       return '';
   }

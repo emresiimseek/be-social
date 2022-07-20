@@ -10,6 +10,14 @@ export const USERS_QUERY = gql`
         id
         attributes {
           firstname
+          event_request{
+            data{
+              id
+              attributes{
+                status
+                message
+            }
+          }
           profile_photo {
             data {
               id

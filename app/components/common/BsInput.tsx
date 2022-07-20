@@ -17,8 +17,9 @@ interface InputProps {
   disabled?: boolean;
   errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[] | undefined;
   password?: boolean;
-  onBlur: () => void;
+  onBlur?: () => void;
   onFocus?: () => void;
+  multiline?: boolean;
 }
 
 // create a component
@@ -31,6 +32,9 @@ const BsInput = (props: InputProps) => {
       label={props.label}
       containerStyle={{ marginVertical: 5 }}
       inputStyle={styles.input}
+      style={{ height: props?.multiline ? 90 : 'auto' }}
+      multiline={props.multiline}
+      numberOfLines={props?.multiline ? 2 : 1}
       labelStyle={
         focus || props.value
           ? { ...styles.label, color: focus ? colors.secondColor : colors.focusColor }
@@ -38,7 +42,7 @@ const BsInput = (props: InputProps) => {
       }
       onBlur={() => {
         setFocus(false);
-        props.onBlur();
+        props.onBlur && props.onBlur();
       }}
       onFocus={() => {
         props.onFocus && props.onFocus();
@@ -63,7 +67,7 @@ const BsInput = (props: InputProps) => {
 
 // define your styles
 const styles = StyleSheet.create({
-  input: { fontSize: 16 },
+  input: { fontSize: 14 },
   inputContainer: {
     borderWidth: 1,
     borderColor: colors.focusColor,
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   label: {
-    paddingBottom: 5,
     position: 'absolute',
     backgroundColor: 'white',
     left: 25,

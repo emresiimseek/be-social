@@ -10,6 +10,20 @@ export const FLOW_EVENTS = gql`
       data {
         id
         attributes {
+          event_requests {
+            data {
+              id
+              attributes {
+                message
+                status
+                user {
+                  data {
+                    id
+                  }
+                }
+              }
+            }
+          }
           posts {
             data {
               ...PostFields

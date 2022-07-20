@@ -63,7 +63,10 @@ const Search = () => {
               key={i}
               style={[
                 styles.tabItem,
-                i == index && { borderBottomWidth: 1, borderBottomColor: colors.secondColor },
+                i == index && {
+                  borderBottomWidth: 2,
+                  borderBottomColor: colors.secondColor,
+                },
               ]}
               onPress={() => setIndex(i)}
             >
@@ -76,8 +79,15 @@ const Search = () => {
                 <View
                   style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-evenly' }}
                 >
-                  <Icon name={route.icon} type={route.iconName ? route.iconName : 'feather'} size={15} />
-                  <Text style={{ paddingLeft: 5 }}>{route.title}</Text>
+                  <Icon
+                    name={route.icon}
+                    color={index == i ? colors.secondColor : ''}
+                    type={route.iconName ? route.iconName : 'feather'}
+                    size={15}
+                  />
+                  <Text style={[{ paddingLeft: 5 }, index == i && { color: colors.secondColor }]}>
+                    {route.title}
+                  </Text>
                 </View>
               </Animated.Text>
             </TouchableOpacity>
@@ -119,7 +129,8 @@ const styles = StyleSheet.create({
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    padding: 16,
+    paddingTop: 16,
+    paddingBottom: 6,
   },
 });
 

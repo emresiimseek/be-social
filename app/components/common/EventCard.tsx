@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Alert, Dimensions, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -13,15 +21,20 @@ import PostCards from './PostCards';
 import backgroundColors from '../../styles/backgroundColors';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
+import EventRequestModal from './EventRequestModal';
+import EventRequestStatus from './EventRequestStatus';
 
 interface CardProps extends Props {
   item: Event;
   eventId: string;
   isFullPage?: boolean;
+  onChange?: () => void;
 }
 
 export const EventCard = (props: CardProps) => {
   moment.locale('tr');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
@@ -104,35 +117,46 @@ export const EventCard = (props: CardProps) => {
         <View style={props.isFullPage ? styles.fullPageFooter : styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* Icons */}
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Icon
-                onPress={() => like()}
-                type="metarial"
-                color={isLiked ? 'red' : 'black'}
-                name={isLiked ? 'favorite' : 'favorite-border'}
-                size={20}
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+              <EventRequestStatus
+                requests={props.item.event_requests}
+                currentUserId={props.currentUserId}
+                onModal={() => setIsModalVisible(true)}
               />
-              <View style={{ marginHorizontal: 10 }}>
-                <Icon
-                  onPress={() =>
-                    navigate({
-                      name: 'Comments',
-                      params: {
-                        eventId: props.eventId,
-                        currentUserId: props.currentUserId,
-                        type: 'event',
-                        eventUserId: props.item.owners.data[0].id,
-                      },
-                      merge: true,
-                    })
-                  }
-                  type="font-awesome-5"
-                  name="comment"
-                  size={18}
-                />
-              </View>
 
-              {/* <Icon name="paper-plane-o" type="font-awesome" size={20} /> */}
+              <EventRequestModal
+                currentUserId={props.currentUserId}
+                eventUserIds={props.item.owners.data.map(o => +o.id)}
+                eventId={+props.eventId}
+                visible={isModalVisible}
+                onClose={() => setIsModalVisible(false)}
+                onChange={props.onChange}
+              />
+
+              <TouchableOpacity onPress={() => like()} style={{ marginLeft: 6, marginRight: 10 }}>
+                <Icon
+                  type="metarial"
+                  color={isLiked ? 'red' : 'black'}
+                  name={isLiked ? 'favorite' : 'favorite-border'}
+                  size={20}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigate({
+                    name: 'Comments',
+                    params: {
+                      eventId: props.eventId,
+                      currentUserId: props.currentUserId,
+                      type: 'event',
+                      eventUserId: props.item.owners.data[0].id,
+                    },
+                    merge: true,
+                  })
+                }
+              >
+                <Icon type="font-awesome-5" name="comment" size={18} />
+              </TouchableOpacity>
             </View>
             {/* Right */}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

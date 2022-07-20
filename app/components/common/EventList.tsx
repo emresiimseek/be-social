@@ -8,6 +8,7 @@ import { Event } from '../../types/strapi/models/event';
 export interface EventProps extends Props {
   isMine: boolean;
   event: Data<Event>[];
+  onChange?: () => void;
 }
 
 export const EventList = (props: EventProps) => {
@@ -31,6 +32,7 @@ export const EventList = (props: EventProps) => {
             item={event.attributes}
             eventId={event.id}
             currentUserId={userId}
+            onChange={props.onChange}
           />
         ))}
     </>
