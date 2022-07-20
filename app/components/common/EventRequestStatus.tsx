@@ -32,6 +32,16 @@ const EventRequestStatus = (props: EventRequestStatusProps) => {
     r => +r.attributes.user.data.id === props.currentUserId && r.attributes.status === 'accepted'
   );
 
+  const getStatusColor = () => {
+    if (isPending) {
+      return '#3AB4F2';
+    } else if (isRejected) {
+      return '#F47C7C';
+    } else if (isAccepted) {
+      return '#6BCB77';
+    }
+    return '#3AB4F2';
+  };
   const getTooltipMessage = () => {
     if (isPending) {
       return 'Talebiniz beklemede.';
@@ -48,16 +58,14 @@ const EventRequestStatus = (props: EventRequestStatusProps) => {
     const [open, setOpen] = useState(false);
     return (
       <TouchableOpacity
-        onBlur={() => setOpen(false)}
         onPress={() => {
-          setOpen(true);
+          setOpen(!open);
         }}
       >
         <Tooltip
           width={200}
-          backgroundColor={colors.secondColorOpacity}
-          withOverlay={true}
-          onClose={() => setOpen(false)}
+          backgroundColor={getStatusColor()}
+          onClose={() => setOpen(!open)}
           visible={open}
           popover={<Text style={{ color: 'white', fontSize: 14 }}>{getTooltipMessage()}</Text>}
         />
@@ -75,8 +83,17 @@ const EventRequestStatus = (props: EventRequestStatusProps) => {
               <Icon name="clock" type="feather" size={20} color="#3AB4F2" />
             </ToolTipInfo>
           )}
-          {isRejected && <Icon name="x-circle" type="feather" size={20} color="#F47C7C" />}
-          {isAccepted && <Icon name="check-circle" type="feather" size={20} color="#6BCB77" />}
+          {isRejected && (
+            <ToolTipInfo>
+              <Icon name="x-circle" type="feather" size={20} color="#F47C7C" />
+            </ToolTipInfo>
+          )}
+
+          {isAccepted && (
+            <ToolTipInfo>
+              <Icon name="check-circle" type="feather" size={20} color="#6BCB77" />
+            </ToolTipInfo>
+          )}
         </>
       ) : (
         <Icon onPress={() => props.onModal()} name="person-add" type="octicon" size={20} />
