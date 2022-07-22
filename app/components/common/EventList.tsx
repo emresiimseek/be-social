@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { Data } from '../../types/strapi/base/base';
 import { Event } from '../../types/strapi/models/event';
+import { Text } from '@rneui/base';
+import { colors } from '../../styles/colors';
 
 export interface EventProps extends Props {
   isMine: boolean;
@@ -25,7 +27,7 @@ export const EventList = (props: EventProps) => {
 
   return (
     <>
-      {props.event.length > 0 &&
+      {props.event.length > 0 ? (
         props.event.map(event => (
           <EventCard
             key={event.id}
@@ -34,7 +36,10 @@ export const EventList = (props: EventProps) => {
             currentUserId={userId}
             onChange={props.onChange}
           />
-        ))}
+        ))
+      ) : (
+        <Text style={{ color: colors.textGrayColor, textAlign: 'center', padding: 10 }}>Etkinlik yok</Text>
+      )}
     </>
   );
 };

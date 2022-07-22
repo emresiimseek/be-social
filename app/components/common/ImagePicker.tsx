@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, Pressable, Alert } from 'react-native';
+import { View, Text, ImageBackground, Pressable, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { BackgroundImage, Button, ButtonGroup } from '@rneui/base';
 import colors from '../../styles/colors';
@@ -28,7 +28,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       base64: true,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.1,
     });
 
     if (!result.cancelled) {
@@ -53,7 +53,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       allowsEditing: true,
       aspect: [4, 3],
       base64: true,
-      quality: 1,
+      quality: 0.1,
     });
 
     if (!result.cancelled) {
@@ -100,7 +100,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
         </View>
       </BsModal>
       {!image && props.showMessage && (
-        <Pressable
+        <TouchableOpacity
           onPress={() => {
             setModalVisible(!modalVisible);
           }}
@@ -124,7 +124,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
             style={{ width: 80, height: 80 }}
           />
           <Text style={{ color: 'gray', fontSize: 13 }}>Bir görsel seçmek için tıklayınız.</Text>
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   );

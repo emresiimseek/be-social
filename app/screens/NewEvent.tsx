@@ -16,7 +16,7 @@ import NewEventImageSection from '../components/common/NewEventImageSection';
 import { Props } from '../types/common/props';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
-import { navigate } from '../RootNavigation';
+import { directNested, navigate } from '../RootNavigation';
 import { UPLOAD } from '../logic/graphql/mutations/upload';
 import { createUploadLink, ReactNativeFile } from 'apollo-upload-client';
 
@@ -76,11 +76,7 @@ const NewEvent = (props: Props) => {
     if (result.data?.createEvent.data.id) {
       setEvent(null);
       setCurrentIndex(0);
-      navigate('MyTabs');
-      Toast.show({
-        type: 'success',
-        text1: 'Başarılı',
-      });
+      directNested('MyTabs', 'Home');
     } else Toast.show({ type: 'error', text1: result?.errors?.[0].message, position: 'bottom' });
 
     setLoading(false);
