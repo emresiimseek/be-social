@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/themed';
 import { useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Avatar } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { Props } from '../../types/common/props';
@@ -11,6 +11,7 @@ import { Variables } from '../../types/strapi/base/base';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import colors from '../../styles/colors';
 import { navigate } from '../../RootNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
@@ -122,19 +123,26 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
           )}
         </View>
       )}
-      <View style={{ position: 'absolute', zIndex: 10, right: 0, bottom: 0 }}>
-        <Button
-          icon={{
-            type: 'ionicon',
-            name: props.view === 'grid' ? 'list' : 'ios-grid',
-            size: props.view === 'grid' ? 22 : 20,
-            color: colors.secondColor,
-          }}
-          size="sm"
-          color="transparent"
-          onPress={() => props.onWiewChange(props.view === 'grid' ? 'list' : 'grid')}
-        ></Button>
-      </View>
+      <TouchableOpacity
+        onPress={() => props.onWiewChange(props.view === 'grid' ? 'list' : 'grid')}
+        style={{ position: 'absolute', zIndex: 10, right: 7, bottom: 6 }}
+      >
+        <Icon
+          type="ionicon"
+          name={props.view === 'grid' ? 'list' : 'ios-grid'}
+          size={props.view === 'grid' ? 22 : 20}
+          color={colors.secondColor}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={async () => {
+          await AsyncStorage.clear();
+          navigate('Welcome');
+        }}
+        style={{ position: 'absolute', zIndex: 10, right: 5, top: 6 }}
+      >
+        <Icon type="feather" name="log-out" size={22} color={colors.secondColor} />
+      </TouchableOpacity>
     </View>
   );
 };

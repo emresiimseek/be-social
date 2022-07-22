@@ -80,18 +80,18 @@ const EventRequestStatus = (props: EventRequestStatusProps) => {
         <>
           {isPending && (
             <ToolTipInfo>
-              <Icon name="clock" type="feather" size={20} color="#3AB4F2" />
+              <Icon name="clock" type="feather" size={20} color={colors.pendingColor} />
             </ToolTipInfo>
           )}
           {isRejected && (
             <ToolTipInfo>
-              <Icon name="x-circle" type="feather" size={20} color="#F47C7C" />
+              <Icon name="x-circle" type="feather" size={20} color={colors.errorColor} />
             </ToolTipInfo>
           )}
 
           {isAccepted && (
             <ToolTipInfo>
-              <Icon name="check-circle" type="feather" size={20} color="#6BCB77" />
+              <Icon name="check-circle" type="feather" size={20} color={colors.successColor} />
             </ToolTipInfo>
           )}
         </>

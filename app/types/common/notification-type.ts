@@ -6,4 +6,6 @@ export type NotificationType =
   | 'like_post'
   | 'request_to_join_event'
   | 'comment-reply_event'
-  | 'comment-reply_post';
+  | 'comment-reply_post'
+  | 'event_request_accepted'
+  | 'event_request_rejected';

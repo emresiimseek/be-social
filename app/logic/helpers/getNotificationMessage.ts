@@ -18,6 +18,11 @@ export const getMessageByType = (item: Notification) => {
       return `@${username} kullanıcısı ${postDescription} gönderinizi beğendi.`;
     case 'request_to_join_event':
       return `@${username} kullanıcısı ${eventTitle} etkinliğinize katılmak istiyor.`;
+    case 'event_request_accepted':
+      return `@${username} kullanıcısı ${eventTitle} etkinlinlik davetinizi kabul etti.`;
+    case 'event_request_rejected':
+      return `@${username} kullanıcısı ${eventTitle} etkinlinlik davetinizi reddetti.`;
+
     default:
       return '';
   }

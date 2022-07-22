@@ -6,13 +6,14 @@ import BsInput from './BsInput';
 import colors from '../../styles/colors';
 import { Button } from '@rneui/base';
 import { useMutation } from '@apollo/client';
-import { Variables } from '../../types/strapi/base/base';
+import { Data, Variables } from '../../types/strapi/base/base';
 import { CREATE_EVENT_REQUEST } from '../../logic/graphql/mutations/createEventRequest';
 import { CreateEventRequest } from '../../types/strapi/models/event-request';
 import { Props } from '../../types/common/props';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
+import { Item } from '../../types/strapi/base/base';
 
 interface ModalProps extends Props {
   visible: boolean;
@@ -33,9 +34,7 @@ const EventRequestModal = (props: ModalProps) => {
     setModel({ ...model, user: props.currentUserId ?? 0, event: props.eventId });
   }, [props.currentUserId]);
 
-  const [createRequest, { data, loading, error }] = useMutation<CreateEventRequest, Variables>(
-    CREATE_EVENT_REQUEST
-  );
+  const [createRequest, { data, loading, error }] = useMutation<any, Variables>(CREATE_EVENT_REQUEST);
 
   return (
     <BsModal visible={props.visible} minHeight="26%" onClose={props.onClose}>
@@ -76,12 +75,21 @@ const EventRequestModal = (props: ModalProps) => {
           size="lg"
           onPress={async () => {
             setLoading(true);
-            await createRequest({ variables: { data: model } });
+            const result = await createRequest({ variables: { data: model } });
+            console.log({
+              me: props.currentUserId ?? 0,
+              related_users: props.eventUserIds,
+              type: 'request_to_join_event',
+              event: props.eventId.toString(),
+              event_request: result?.data.createEventRequest.data.id ?? '0',
+            });
+
             await usePushNotification({
               me: props.currentUserId ?? 0,
               related_users: props.eventUserIds,
               type: 'request_to_join_event',
-              event: props.eventId,
+              event: props.eventId.toString(),
+              event_request: result?.data.createEventRequest.data.id ?? '0',
             });
             setLoading(false);
             props.onChange && props.onChange();

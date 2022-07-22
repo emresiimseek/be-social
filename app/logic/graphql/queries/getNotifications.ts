@@ -49,6 +49,14 @@ export const GET_NOTIFICATIONS = gql`
               ...EventFields
             }
           }
+          event_request {
+            data {
+              id
+              attributes {
+                status
+              }
+            }
+          }
           post {
             data {
               ...PostFields

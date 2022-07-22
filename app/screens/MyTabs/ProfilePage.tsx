@@ -15,6 +15,16 @@ import GridList from '../../components/common/GridList';
 export const ProfilePage = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
 
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      getUserId();
+      refetch();
+      eventRefetch();
+    });
+
+    return unsubscribe;
+  }, [props.navigation]);
+
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
     setUserId(userId);
@@ -30,7 +40,6 @@ export const ProfilePage = (props: Props) => {
 
   const {
     loading: eventLoading,
-    error: eventError,
     data: eventData,
     refetch: eventRefetch,
   } = useQuery<any, Variables>(GET_EVENTS_BY_USER_ID, {
@@ -41,7 +50,9 @@ export const ProfilePage = (props: Props) => {
   const [viewType, setViewType] = useState<'list' | 'grid'>('grid');
 
   return (
-    <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={() => refetch()} />}>
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={loading || eventLoading} onRefresh={() => refetch()} />}
+    >
       {data && (
         <View>
           <ProfileHeaderComponent

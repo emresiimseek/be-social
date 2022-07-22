@@ -3,13 +3,22 @@ import { useState, useEffect } from 'react';
 import { EventList } from '../../components/common/EventList';
 import { Props } from '../../types/common/props';
 import { Data, Variables } from '../../types/strapi/base/base';
-import { ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl, Alert } from 'react-native';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
 import { Event } from '../../types/strapi/models/event';
 
 export const HomePage = (props: Props) => {
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      getUserId();
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [props.navigation]);
+
   const [userId, setUserId] = useState<number | undefined>();
 
   const getUserId = async () => {

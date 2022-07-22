@@ -6,23 +6,26 @@ import { GET_NOTIFICATIONS } from '../logic/graphql/queries/getNotifications';
 import { Items, Variables } from '../types/strapi/base/base';
 import { useState } from 'react';
 import { getItem } from '../logic/helpers/useAsyncStorage';
-import { Avatar, ListItem } from '@rneui/base';
 import { Notification } from '../types/strapi/models/notification';
-import { getMessageByType } from '../logic/helpers/getNotificationMessage';
-import moment from 'moment';
-import 'moment/locale/tr';
 import { colors } from '../styles/colors';
 import { ScrollView } from 'react-native';
 import { Props } from '../types/common/props';
 import { Icon } from '@rneui/themed';
-import { navigate } from '../RootNavigation';
+import NotificationDetail from '../components/common/NotificationDetail';
+import { navigationRef } from '../RootNavigation';
 
 // create a component
-const Notofications = (props: Props) => {
-  moment.locale('tr');
+const Notifications = (props: Props) => {
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      getUserId();
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [props.navigation]);
 
   const [userId, setUserId] = useState<number | undefined>();
-
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
 
@@ -38,37 +41,7 @@ const Notofications = (props: Props) => {
     { variables: { filters: { related_users: { id: { eq: userId } } } } }
   );
 
-  const handlePress = (notification: Notification) => {
-    if (notification.type === 'follow_user') {
-      navigate('VisitedProfile', { userId: notification.me.data.id });
-    } else if (notification.type === 'like_event') {
-      navigate('EventDetail', { eventId: notification?.event?.data.id });
-    } else if (notification.type === 'like_post') {
-      navigate('PostDetail', { postId: notification?.post?.data.id });
-    } else if (notification.type === 'comment_event' || notification.type === 'comment-reply_event') {
-      navigate({
-        name: 'Comments',
-        params: {
-          eventId: notification?.event?.data.id,
-          currentUserId: userId,
-          type: 'event',
-          eventUserId: userId,
-        },
-        merge: true,
-      });
-    } else if (notification.type === 'comment_post' || notification.type === 'comment-reply_post') {
-      navigate({
-        name: 'Comments',
-        params: {
-          postId: notification?.post?.data.id,
-          currentUserId: userId,
-          type: 'post',
-          postUserId: userId,
-        },
-        merge: true,
-      });
-    }
-  };
+  console.table(data);
 
   const notificationsCount = data?.notifications.data.length ?? 0;
 
@@ -86,30 +59,13 @@ const Notofications = (props: Props) => {
       {notificationsCount > 0 ? (
         <View>
           {data?.notifications.data.map((l, i) => (
-            <ListItem key={i} bottomDivider onPress={() => handlePress(l.attributes)}>
-              <Avatar
-                containerStyle={{ marginBottom: 'auto' }}
-                source={{
-                  uri:
-                    l.attributes.me.data.attributes?.profile_photo?.data?.attributes?.url ??
-                    'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-                }}
-              />
-              <ListItem.Content>
-                <ListItem.Subtitle>{getMessageByType(l.attributes)}</ListItem.Subtitle>
-                <View style={{ position: 'absolute', right: 0, bottom: -13 }}>
-                  <Text style={{ fontSize: 10, color: colors.textGrayColor }}>
-                    {moment(l.attributes.createdAt).format('LLL')}
-                  </Text>
-                </View>
-              </ListItem.Content>
-            </ListItem>
+            <NotificationDetail key={i} notification={l} currentUserId={userId} onChange={() => refetch()} />
           ))}
         </View>
       ) : (
         !loading && (
           <View style={styles.container}>
-            <Icon name="notifications" size={50} color={colors.textGrayColor} />
+            <Icon name="bell" type="octicon" size={50} color={colors.textGrayColor} />
             <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
               Hiç bildiriminiz yok.
             </Text>
@@ -130,4 +86,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default Notofications;
+export default Notifications;

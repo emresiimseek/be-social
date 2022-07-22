@@ -7,7 +7,7 @@ import { useState } from 'react';
 import colors from '../styles/colors';
 import NewButtons from '../components/common/NewButtons';
 import NewItem from './NewItem';
-import Notofications from './Notifications';
+import Notifications from './Notifications';
 import Search from './Search';
 
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ export function MyTabs(baseProps: MyTabsProps) {
 
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
-        headerShown: true,
+        headerShown: true, 
         tabBarStyle: { backgroundColor: 'white', height: 90 },
         headerStyle: { backgroundColor: colors.secondColor },
         headerTitleStyle: { color: 'white' },
@@ -69,7 +69,7 @@ export function MyTabs(baseProps: MyTabsProps) {
 
       <Tab.Screen
         name="Notifications"
-        component={Notofications}
+        component={Notifications}
         options={{ headerTitle: 'Bildirimler' }}
         listeners={() => ({ tabPress: () => setFocus(false) })}
       />

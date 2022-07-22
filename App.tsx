@@ -35,6 +35,8 @@ const client = new ApolloClient({
       Event: { merge: true },
       Comment: { merge: true },
       Post: { merge: true },
+      Notification: { merge: true },
+      EventRequest: { merge: true },
     },
   }),
 });

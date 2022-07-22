@@ -3,13 +3,15 @@ import { Data, Item, Items } from '../base/base';
 import { User } from './user';
 import { Event, Post } from './event';
 import { UserAttributes } from './user-events';
+import { EventRequestAttributes } from './event-request';
 
 export interface CreateNotification {
   type: NotificationType;
   me: number;
   related_users: number[];
-  event?: number;
+  event?: string;
   post?: string;
+  event_request?: string;
 }
 
 export interface Notification {
@@ -19,4 +21,5 @@ export interface Notification {
   post?: Item<Post>;
   type: NotificationType;
   createdAt: string;
+  event_request?: Item<EventRequestAttributes>;
 }
