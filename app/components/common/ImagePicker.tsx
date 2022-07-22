@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, ImageBackground, Pressable, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { BackgroundImage, Button, ButtonGroup } from '@rneui/base';
-import { Icon } from '@rneui/themed';
 import colors from '../../styles/colors';
 import { BsModal } from './Modal';
+import { ReactNativeFile } from 'apollo-upload-client';
 
 interface ImagePickerProps {
   onImageChanged: (image: string) => void;
   showMessage: boolean;
+  onFileChange?: (file: ReactNativeFile) => void;
 }
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
@@ -16,7 +17,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
 
   const launchCamera = async () => {
     const permissionsResult = await ImagePicker.getCameraPermissionsAsync();
-    if ((await permissionsResult.granted) === false) {
+    if (permissionsResult.granted === false) {
       const res = await ImagePicker.requestCameraPermissionsAsync();
       // Alert.alert('No permissions!');
       return;
@@ -33,6 +34,13 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     if (!result.cancelled) {
       setModalVisible(false);
 
+      const file = new ReactNativeFile({
+        uri: result.uri,
+        name: Math.random() + '.jpg',
+        type: 'image/jpeg',
+      });
+
+      props.onFileChange && props.onFileChange(file);
       setImage(result.uri);
       props.onImageChanged(result.uri);
     }
@@ -51,6 +59,13 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     if (!result.cancelled) {
       setModalVisible(false);
       setImage(result.uri);
+      const file = new ReactNativeFile({
+        uri: result.uri,
+        name: 'a.jpg',
+        type: 'image/jpeg',
+      });
+
+      props.onFileChange && props.onFileChange(file);
       props.onImageChanged(result.uri);
     }
   };

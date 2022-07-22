@@ -1,6 +1,6 @@
 //import liraries
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Keyboard } from 'react-native';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import BsInput from './BsInput';
 import DatePicker from '../common/DatePicker';
@@ -86,8 +86,10 @@ const EventForm = (props: EventFormProps) => {
             <>
               <BsInput
                 value={values.eventDate ? moment(values.eventDate).format('LLL') : ''}
-                onTouchStart={() => setDatePickerVisibility(!isDatePickerVisible)}
-                onFocus={() => setDatePickerVisibility(!isDatePickerVisible)}
+                onFocus={() => {
+                  Keyboard.dismiss();
+                  setDatePickerVisibility(!isDatePickerVisible);
+                }}
                 onBlur={() => setFieldTouched('eventDate')}
                 errorMessage={errors.eventDate}
                 label="Etkinlik Tarihi"

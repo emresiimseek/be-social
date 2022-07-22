@@ -28,7 +28,7 @@ const GridList = (props: GridListProps) => {
             }
           >
             <ImageBackground
-              source={{ uri: item.attributes.images.data[0].attributes.url }}
+              source={{ uri: item.attributes.images?.data?.[0]?.attributes?.url }}
               style={{
                 borderRightWidth: 1,
                 borderRightColor: '#e6e6e6',

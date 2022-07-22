@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import TabStatus from '../components/common/TabStatus';
 import { TabStatusItem } from '../types/common/tab-status-item';
 import { CreateEventModel } from '../types/common/create-event-model';
-import { useMutation } from '@apollo/client';
+import { ApolloClient, InMemoryCache, useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/mutations/createEvent';
 import { Variables } from '../types/strapi/base/base';
 import { useEffect } from 'react';
@@ -16,8 +16,18 @@ import NewEventImageSection from '../components/common/NewEventImageSection';
 import { Props } from '../types/common/props';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
-import { useUploadImage } from '../logic/helpers/useImageUpload';
 import { navigate } from '../RootNavigation';
+import { UPLOAD } from '../logic/graphql/mutations/upload';
+import { createUploadLink, ReactNativeFile } from 'apollo-upload-client';
+
+const client = new ApolloClient({
+  link: createUploadLink({ uri: 'https://quiet-retreat-10533.herokuapp.com/graphql' }),
+  headers: {
+    Authorization:
+      'Bearer 24d633612d6d4ee6e9eeb1ad6b98db3311cb435be52f552d98714a4e0fcf20929c7e4d7765b5f932b67bd956d83dd70ba37cb4b229863606665fe923c0da2a7bb21f645867c8dd270860e66281bd1e59f4ed6fe44543d3302e5018c46cb30b1551730649f89de87f811f483a90059da6e2448a251380d59be9376f773cc50a7e',
+  },
+  cache: new InMemoryCache(),
+});
 
 // create a component
 const NewEvent = (props: Props) => {
@@ -36,8 +46,10 @@ const NewEvent = (props: Props) => {
   }, []);
 
   const [draftImage, setDraftImage] = useState<string | null>(null);
+  const [file, setFile] = useState<ReactNativeFile | null>(null);
 
   const [createEvent] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
+  const [upload, { error, data }] = useMutation(UPLOAD);
 
   const createNewEvent = async () => {
     if (!draftImage) {
@@ -48,8 +60,18 @@ const NewEvent = (props: Props) => {
       return;
     }
     setLoading(true);
-    const id = await useUploadImage(draftImage);
-    const result = await createEvent({ variables: { data: { ...event, images: [id] } } });
+    // const id = await useUploadImage(draftImage);
+
+    const resultUpload = await client.mutate({
+      mutation: UPLOAD,
+      variables: {
+        file: file,
+      },
+    });
+
+    const imageId = resultUpload.data.upload.data.id;
+
+    const result = await createEvent({ variables: { data: { ...event, images: [imageId] } } });
 
     if (result.data?.createEvent.data.id) {
       setEvent(null);
@@ -99,6 +121,9 @@ const NewEvent = (props: Props) => {
       {currentIndex === 1 && (
         <NewEventImageSection
           categoryLabels={categoryLabels}
+          onFileChange={file => {
+            setFile(file);
+          }}
           createLoading={createLoading}
           event={event}
           loading={createLoading}

@@ -5,7 +5,7 @@ import Loading from './Loading';
 import ImagePickerComponent from './ImagePicker';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import { PreviewEventCard } from './PreviewEventCard';
-import { ScrollView } from 'react-native';
+import { ReactNativeFile } from 'apollo-upload-client';
 
 interface NewEventImageSectionProps {
   loading: boolean;
@@ -14,6 +14,7 @@ interface NewEventImageSectionProps {
   categoryLabels: string[];
   onImageChange: (image: string) => void;
   createLoading: boolean;
+  onFileChange: (file: ReactNativeFile) => void;
 }
 
 // create a component
@@ -31,6 +32,7 @@ const NewEventImageSection = (props: NewEventImageSectionProps) => {
             />
           ) : (
             <ImagePickerComponent
+              onFileChange={props.onFileChange}
               showMessage={props.draftImage === null}
               onImageChanged={image => props.onImageChange(image)}
             />
