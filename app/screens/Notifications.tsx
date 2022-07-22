@@ -16,10 +16,14 @@ import { navigationRef } from '../RootNavigation';
 
 // create a component
 const Notifications = (props: Props) => {
+  const [componentLoading, setComponentLoading] = useState(false);
+
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      getUserId();
-      refetch();
+    const unsubscribe = props.navigation.addListener('focus', async () => {
+      setComponentLoading(true);
+      await getUserId();
+      await refetch();
+      setComponentLoading(false);
     });
 
     return unsubscribe;
@@ -28,7 +32,6 @@ const Notifications = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
-
     setUserId(userId);
   };
 
@@ -41,7 +44,7 @@ const Notifications = (props: Props) => {
     { variables: { filters: { related_users: { id: { eq: userId } } } } }
   );
 
-  console.table(data);
+  console.table(loading);
 
   const notificationsCount = data?.notifications.data.length ?? 0;
 
@@ -49,7 +52,7 @@ const Notifications = (props: Props) => {
     <ScrollView
       refreshControl={
         <RefreshControl
-          refreshing={loading}
+          refreshing={loading || componentLoading}
           onRefresh={async () => {
             const result = await refetch();
           }}

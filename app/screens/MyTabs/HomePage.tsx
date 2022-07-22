@@ -10,10 +10,14 @@ import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
 import { Event } from '../../types/strapi/models/event';
 
 export const HomePage = (props: Props) => {
+  const [componentLoading, setComponentLoading] = useState(false);
+
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      getUserId();
-      refetch();
+    const unsubscribe = props.navigation.addListener('focus', async () => {
+      setComponentLoading(true);
+      await getUserId();
+      await refetch();
+      setComponentLoading(false);
     });
 
     return unsubscribe;
@@ -46,7 +50,7 @@ export const HomePage = (props: Props) => {
     <ScrollView
       refreshControl={
         <RefreshControl
-          refreshing={loading}
+          refreshing={loading || componentLoading}
           onRefresh={async () => {
             const result = await refetch();
             setEvent(result.data.getEventsByUserId.data);
