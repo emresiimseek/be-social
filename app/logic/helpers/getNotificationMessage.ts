@@ -5,12 +5,15 @@ export const getMessageByType = (item: Notification) => {
   const eventTitle = item?.event?.data?.attributes?.title;
   const postDescription = item?.post?.data?.attributes?.description;
 
+  //TODO: add replies to the message
   switch (item.type) {
     case 'follow_user':
       return `@${username} kullanıcısı sizi takip etti.`;
     case 'like_event':
       return `@${username} kullanıcısı ${eventTitle} etkinliğinizi beğendi.`;
     case 'comment_event':
+      return `@${username} kullanıcısı ${eventTitle} etkinliğinizi yorum yaptı.`;
+    case 'comment_reply_event':
       return `@${username} kullanıcısı ${eventTitle} etkinliğinizi yorum yaptı.`;
     case 'comment_post':
       return `@${username} kullanıcısı ${postDescription} gönderinize yorum yaptı.`;

@@ -54,6 +54,11 @@ export default function App(props: Props) {
     getToken();
   }, []);
 
+  useEffect(() => {
+    getToken();
+    socket.off('notification:create').on('notification:create', listener);
+  }, [token]);
+
   ///////Socket.io///////
   const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
   const socket = io(SERVER_URL, {
@@ -69,8 +74,6 @@ export default function App(props: Props) {
     setNotification(item.data.attributes);
     // socket.removeAllListeners();
   };
-
-  socket.off('notification:create').on('notification:create', listener);
 
   const Stack = createNativeStackNavigator();
   return (
