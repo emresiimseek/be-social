@@ -42,23 +42,25 @@ const client = new ApolloClient({
 });
 
 export default function App(props: Props) {
-  ///////Socket.io///////
   const [notification, setNotification] = useState<Notification | undefined>();
-  const [token, setUserId] = useState<number | undefined>();
-  const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
+  const [token, setToken] = useState<number | undefined>();
 
   const getToken = async () => {
     const token = await getItem<number>('token');
-
-    setUserId(token);
+    setToken(token);
   };
 
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  ///////Socket.io///////
+  const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
   const socket = io(SERVER_URL, {
     auth: {
       token,
     },
   });
-
   socket.on('connect', () => {
     console.log(socket.active, 'STATUS');
   });
@@ -68,10 +70,7 @@ export default function App(props: Props) {
     // socket.removeAllListeners();
   };
 
-  useEffect(() => {
-    getToken();
-    socket.off('notification:create').on('notification:create', listener);
-  }, []);
+  socket.off('notification:create').on('notification:create', listener);
 
   const Stack = createNativeStackNavigator();
   return (
