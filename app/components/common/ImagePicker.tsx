@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, Pressable, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { BackgroundImage, Button, ButtonGroup } from '@rneui/base';
+import { BackgroundImage, Button, ButtonGroup, Icon } from '@rneui/base';
 import colors from '../../styles/colors';
 import { BsModal } from './Modal';
 import { ReactNativeFile } from 'apollo-upload-client';
@@ -114,16 +114,10 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
             marginBottom: 10,
           }}
         >
-          <ImageBackground
-            source={{
-              uri: `https://img.icons8.com/ios-glyphs/90/${colors.secondColor.replace(
-                '#',
-                ''
-              )}/add-camera.png`,
-            }}
-            style={{ width: 80, height: 80 }}
-          />
-          <Text style={{ color: 'gray', fontSize: 13 }}>Bir görsel seçmek için tıklayınız.</Text>
+          <Icon name="add-a-photo" type="material" color={colors.secondColor} size={60} />
+          <Text style={{ color: 'gray', fontSize: 13, textAlign: 'center' }}>
+            Bir görsel seçmek için tıklayınız.
+          </Text>
         </TouchableOpacity>
       )}
     </View>

@@ -11,12 +11,6 @@ export const login = async (identifier: string, password: string) => {
     await AsyncStorage.setItem('token', JSON.stringify(res.data.jwt));
     await AsyncStorage.setItem('userId', JSON.stringify(res.data.user.id));
     await AsyncStorage.setItem('user', JSON.stringify(res.data.user));
-
-    Toast.show({
-      type: 'success',
-      text1: 'Başarılı',
-      text2: 'Giriş Yapıldı.',
-    });
   }
 
   return res;

@@ -49,16 +49,28 @@ class LoginPage extends BaseComponent<Props> {
               onBlur={() => setFieldTouched('identifier')}
               label="E-Posta"
               rightIcon={{ type: 'meterial', name: 'alternate-email', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.identifier ?? this.getErrorMessage(this.state.validations, 'identifier')}
+              errorMessage={
+                errors.identifier && touched.identifier
+                  ? errors.identifier
+                  : this.getErrorMessage(this.state.validations, 'identifier')
+              }
             />
 
             <BsInput
               value={values.password}
               onChangeText={handleChange('password')}
-              onBlur={() => setFieldTouched('password')}
+              onBlur={() => {
+                console.log('selam');
+
+                setFieldTouched('password');
+              }}
               label="Parola"
               rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.password ?? this.getErrorMessage(this.state.validations, 'password')}
+              errorMessage={
+                errors.password && touched.password
+                  ? errors.password
+                  : this.getErrorMessage(this.state.validations, 'password')
+              }
               password
             />
             <Button

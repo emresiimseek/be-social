@@ -6,7 +6,6 @@ import { Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import colors from '../../styles/colors';
 import { Icon } from '@rneui/themed';
-import { Button } from '@rneui/base';
 import { navigate } from '../../RootNavigation';
 
 interface NewButtonProps extends Props {
@@ -28,7 +27,7 @@ const NewButtons = (props: NewButtonProps) => {
   }, [translateXAnimRight]);
 
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+    <View style={{ alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
       {props.focused && (
         <>
           <Pressable
@@ -43,34 +42,31 @@ const NewButtons = (props: NewButtonProps) => {
               backgroundColor: 'rgba(0,0,0,0.5)',
             }}
           ></Pressable>
+          {/* Buttons */}
           <Animated.View
             style={[
               { bottom: 120, position: 'absolute' },
               { transform: [{ translateX: translateXAnimRight }], opacity: fadeAnim },
             ]}
           >
-            <Button
-              color="rgba(255,255,255,255.5)"
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'rgba(255,255,255,255.5)',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: Dimensions.get('window').width / 2.5,
+                padding: 12,
+                borderRadius: 5,
+              }}
               onPress={() => {
                 props.setFocus(false);
                 navigate('NewPost');
               }}
-              iconPosition="right"
-              title="Gönderi Paylaş"
-              containerStyle={{ borderRadius: 5 }}
-              titleStyle={{ color: colors.secondColor, fontSize: 14 }}
-              icon={{
-                name: 'plus-box-multiple',
-                type: 'material-community',
-                color: colors.secondColor,
-                size: 20,
-              }}
-              size="lg"
-              style={{
-                width: Dimensions.get('window').width / 2.5,
-                padding: 0,
-              }}
-            />
+            >
+              <Text style={{ color: colors.secondColor }}>Gönderi Paylaş</Text>
+              <Icon name="plus-box-multiple" type="material-community" size={21} color={colors.secondColor} />
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View
             style={[
@@ -78,35 +74,30 @@ const NewButtons = (props: NewButtonProps) => {
               { bottom: 70, position: 'absolute' },
             ]}
           >
-            <Button
-              color="rgba(255,255,255,255.5)"
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'rgba(255,255,255,255.5)',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: Dimensions.get('window').width / 2.5,
+                padding: 12,
+                borderRadius: 5,
+              }}
               onPress={() => {
                 props.setFocus(false);
                 navigate('NewEvent');
               }}
-              icon={{
-                name: 'calendar',
-                type: 'material-community',
-                color: colors.secondColor,
-                size: 20,
-              }}
-              iconPosition="right"
-              title="Etkinlik Oluştur"
-              titleStyle={{ color: colors.secondColor, fontSize: 14 }}
-              containerStyle={{
-                borderRadius: 5,
-              }}
-              style={{
-                width: Dimensions.get('window').width / 2.5,
-              }}
-              size="lg"
-            />
+            >
+              <Text style={{ color: colors.secondColor }}>Etkinlik Oluştur</Text>
+              <Icon name="calendar-outline" type="ionicon" size={20} color={colors.secondColor} />
+            </TouchableOpacity>
           </Animated.View>
         </>
       )}
 
       <TouchableOpacity onPress={() => props.setFocus(!props.focused)}>
-        <Icon type="feather" name="plus-circle" size={45} color={colors.secondColor} />
+        <Icon type="material" name="add-circle-outline" size={50} color={colors.secondColor} />
       </TouchableOpacity>
     </View>
   );

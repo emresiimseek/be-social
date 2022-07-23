@@ -41,8 +41,9 @@ const BsInput = (props: InputProps) => {
           : { display: 'none' }
       }
       onBlur={() => {
-        setFocus(false);
         props.onBlur && props.onBlur();
+
+        setFocus(false);
       }}
       onFocus={() => {
         props.onFocus && props.onFocus();

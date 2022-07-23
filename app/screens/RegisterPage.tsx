@@ -94,16 +94,24 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onChangeText={handleChange('firstname')}
               onBlur={() => setFieldTouched('firstname')}
               label="Ad"
-              rightIcon={{ type: 'meterial', name: 'person', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.firstname ?? this.getErrorMessage(this.state.validations, 'firstname')}
+              rightIcon={{ type: 'octicon', name: 'person', color: colors.secondColor, size: 20 }}
+              errorMessage={
+                errors.firstname && touched.firstname
+                  ? errors.firstname
+                  : this.getErrorMessage(this.state.validations, 'firstname')
+              }
             />
             <BsInput
               value={values.lastname}
               onChangeText={handleChange('lastname')}
               onBlur={() => setFieldTouched('lastname')}
               label="Soyad"
-              rightIcon={{ type: 'meterial', name: 'person', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.lastname ?? this.getErrorMessage(this.state.validations, 'lastName')}
+              rightIcon={{ type: 'octicon', name: 'person', color: colors.secondColor, size: 20 }}
+              errorMessage={
+                errors.lastname && touched.lastname
+                  ? errors.lastname
+                  : this.getErrorMessage(this.state.validations, 'lastName')
+              }
             />
 
             <BsInput
@@ -112,7 +120,11 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onBlur={() => setFieldTouched('username')}
               label="Kullanıcı Adı"
               rightIcon={{ type: 'meterial', name: 'alternate-email', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.username ?? this.getErrorMessage(this.state.validations, 'username')}
+              errorMessage={
+                errors.username && touched.username
+                  ? errors.username
+                  : this.getErrorMessage(this.state.validations, 'username')
+              }
             />
 
             <BsInput
@@ -120,8 +132,12 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onChangeText={handleChange('email')}
               onBlur={() => setFieldTouched('email')}
               label="E-Posta"
-              rightIcon={{ type: 'meterial', name: 'email', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.email ?? this.getErrorMessage(this.state.validations, 'email')}
+              rightIcon={{ type: 'octicon', name: 'mail', color: colors.secondColor, size: 20 }}
+              errorMessage={
+                errors.email && touched.email
+                  ? errors.email
+                  : this.getErrorMessage(this.state.validations, 'email')
+              }
             />
 
             <BsInput
@@ -129,8 +145,12 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onChangeText={handleChange('password')}
               onBlur={() => setFieldTouched('password')}
               label="Parola"
-              rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.password ?? this.getErrorMessage(this.state.validations, 'email')}
+              rightIcon={{ type: 'octicon', name: 'lock', color: colors.secondColor, size: 20 }}
+              errorMessage={
+                errors.password && touched.password
+                  ? errors.password
+                  : this.getErrorMessage(this.state.validations, 'email')
+              }
               password
             />
             <BsInput
@@ -138,8 +158,12 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onChangeText={handleChange('password')}
               onBlur={() => setFieldTouched('password')}
               label="Parola Tekrar"
-              rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
-              errorMessage={errors.password ?? this.getErrorMessage(this.state.validations, 'email')}
+              rightIcon={{ type: 'octicon', name: 'lock', color: colors.secondColor, size: 20 }}
+              errorMessage={
+                errors.password && touched.password
+                  ? errors.password
+                  : this.getErrorMessage(this.state.validations, 'email')
+              }
               password
             />
 

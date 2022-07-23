@@ -79,6 +79,7 @@ export default function App(props: Props) {
               options={{
                 headerTitleStyle: { color: colors.headerTitleColor },
                 title: 'Be Social',
+                headerTintColor: 'white',
                 headerStyle: { backgroundColor: colors.secondColor },
               }}
             />
@@ -96,6 +97,7 @@ export default function App(props: Props) {
               component={RegisterPageComponent}
               options={{
                 title: 'Kayıt Ol',
+                headerTintColor: 'white',
                 headerTitleStyle: { color: colors.headerTitleColor },
                 headerStyle: { backgroundColor: colors.secondColor },
               }}

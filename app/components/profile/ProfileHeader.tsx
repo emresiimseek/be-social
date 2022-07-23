@@ -123,26 +123,29 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
           )}
         </View>
       )}
-      <TouchableOpacity
-        onPress={() => props.onWiewChange(props.view === 'grid' ? 'list' : 'grid')}
-        style={{ position: 'absolute', zIndex: 10, right: 7, bottom: 6 }}
-      >
-        <Icon
-          type="ionicon"
-          name={props.view === 'grid' ? 'list' : 'ios-grid'}
-          size={props.view === 'grid' ? 22 : 20}
-          color={colors.secondColor}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={async () => {
-          await AsyncStorage.clear();
-          navigate('Welcome');
-        }}
-        style={{ position: 'absolute', zIndex: 10, right: 5, top: 6 }}
-      >
-        <Icon type="feather" name="log-out" size={22} color={colors.secondColor} />
-      </TouchableOpacity>
+
+      <View style={{ position: 'absolute', right: 3, bottom: 2, top: 5 }}>
+        <TouchableOpacity
+          onPress={async () => {
+            await AsyncStorage.clear();
+            navigate('Welcome');
+          }}
+        >
+          <Icon type="feather" name="log-out" size={22} color={colors.secondColor} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ marginTop: 'auto' }}
+          onPress={() => props.onWiewChange(props.view === 'grid' ? 'list' : 'grid')}
+        >
+          <Icon
+            type="ionicon"
+            name={props.view === 'grid' ? 'list' : 'ios-grid'}
+            size={props.view === 'grid' ? 22 : 20}
+            color={colors.secondColor}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -28,9 +28,9 @@ const Search = () => {
     { key: 'third', title: 'Gönderiler', icon: 'albums-outline', iconName: 'ionicon' },
   ]);
 
-  const FirstRoute = () => (index === 0 ? <UserSearch term={term} /> : <View style={{ flex: 1 }} />);
-  const SecondRoute = () => (index === 1 ? <EventSearch term={term} /> : <View style={{ flex: 1 }} />);
-  const ThirdRoute = () => (index === 2 ? <PostSearch term={term} /> : <View style={{ flex: 1 }} />);
+  const FirstRoute = () => <UserSearch term={term} />;
+  const SecondRoute = () => <EventSearch term={term} />;
+  const ThirdRoute = () => <PostSearch term={term} />;
 
   const renderScene = SceneMap({
     first: FirstRoute,

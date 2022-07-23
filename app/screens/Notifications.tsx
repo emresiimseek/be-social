@@ -68,7 +68,7 @@ const Notifications = (props: Props) => {
       ) : (
         !loading && (
           <View style={styles.container}>
-            <Icon name="bell" type="octicon" size={50} color={colors.textGrayColor} />
+            <Icon name="bell" type="octicon" size={30} color={colors.textGrayColor} />
             <Text style={{ textAlign: 'center', fontSize: 12, color: colors.textGrayColor, padding: 5 }}>
               Hiç bildiriminiz yok.
             </Text>

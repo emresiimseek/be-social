@@ -1,16 +1,7 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ListItem, Avatar } from '@rneui/themed';
 import { useState, useEffect } from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Variables, Data } from '../types/strapi/base/base';
 import { CommentAttributes, EventComments } from '../types/strapi/models/event-comments';
 import { Props } from '../types/common/props';
@@ -174,7 +165,7 @@ export const CommentsComponent = (props: Props) => {
                 style={[styles.container, styles.bottom]}
               >
                 <View>
-                  <Icon type="font-awesome-5" name="comment" size={50} color={colors.secondColor} />
+                  <Icon type="font-awesome-5" name="comment" size={30} color={colors.secondColor} />
                   <Text style={{ textAlign: 'center', fontSize: 12, color: colors.secondColor, padding: 5 }}>
                     Hiç yorum yok.
                   </Text>

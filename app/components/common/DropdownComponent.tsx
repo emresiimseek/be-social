@@ -12,6 +12,7 @@ interface DropdownProps extends Props {
   dropDownLabel?: string;
   loading: boolean;
   value?: any;
+  onBlur?: () => void;
 }
 
 const DropdownComponent = (props: DropdownProps) => {
@@ -53,7 +54,10 @@ const DropdownComponent = (props: DropdownProps) => {
         searchPlaceholder="Ara"
         value={props.value ?? value}
         onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        onBlur={() => {
+          props.onBlur && props.onBlur();
+          setIsFocus(false);
+        }}
         onChange={item => {
           setValue(item.value);
           setIsFocus(false);

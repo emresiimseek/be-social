@@ -12,6 +12,7 @@ interface DropdownProps extends Props {
   placeholder?: string;
   loading: boolean;
   value?: any;
+  onBlur?: () => void;
 }
 // create a component
 const BsDropdown = (props: DropdownProps) => {
@@ -22,6 +23,7 @@ const BsDropdown = (props: DropdownProps) => {
         onChange={value => props.onChange(value)}
         dropDownLabel={props.label}
         value={props.value}
+        onBlur={props.onBlur}
         placeholder={props.placeholder}
         loading={props.loading}
       >

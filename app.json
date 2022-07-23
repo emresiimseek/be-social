@@ -22,7 +22,7 @@
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.be-social.be-social"
+      "bundleIdentifier": "y"
     },
     "android": {
       "package": "com.BeSocial.besocial"
