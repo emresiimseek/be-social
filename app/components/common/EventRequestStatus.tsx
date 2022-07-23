@@ -1,16 +1,13 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Items } from '../../types/strapi/base/base';
 import { EventRequestAttributes } from '../../types/strapi/models/event-request';
 import { Props } from '../../types/common/props';
-import BsIcon from '../icons/BsIcon';
 import { Icon, Tooltip } from '@rneui/base';
 import { colors } from '../../styles/colors';
 import { useState } from 'react';
-import { Pressable } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { color } from '@rneui/base';
 
 interface EventRequestStatusProps extends Props {
   requests: Items<EventRequestAttributes>;

@@ -25,8 +25,10 @@ interface NotificationDetailProps {
 const NotificationDetail = (props: NotificationDetailProps) => {
   moment.locale('tr');
 
-  const isAccepted = props.notification.attributes?.event_request?.data.attributes.status === 'accepted';
-  const isRejected = props.notification.attributes?.event_request?.data.attributes.status === 'rejected';
+  const status = props?.notification?.attributes?.event_request?.data?.attributes?.status;
+
+  const isAccepted = status === 'accepted';
+  const isRejected = status === 'rejected';
 
   const [updateEventRequest, { data, loading, error }] = useMutation<any, Variables>(UPDATE_EVENT_REQUEST);
 
@@ -63,7 +65,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
   };
 
   const acceptRequest = async () => {
-    const result = await updateEventRequest({
+    await updateEventRequest({
       variables: {
         id: Number(props.notification.attributes.event_request?.data.id) ?? 0,
         data: {
@@ -82,7 +84,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
   };
 
   const rejectRequest = async () => {
-    const result = await updateEventRequest({
+    await updateEventRequest({
       variables: {
         id: Number(props.notification.attributes.event_request?.data.id) ?? 0,
         data: {
@@ -168,12 +170,12 @@ const NotificationDetail = (props: NotificationDetailProps) => {
             </View>
           </ListItem.Title>
         )}
-        <View style={{ position: 'absolute', right: 0, bottom: -13 }}>
-          <Text style={{ fontSize: 10, color: colors.textGrayColor }}>
-            {moment(props.notification.attributes.createdAt).format('LLL')}
-          </Text>
-        </View>
       </ListItem.Content>
+      <View style={{ position: 'absolute', right: 5, bottom: 1 }}>
+        <Text style={{ fontSize: 10, color: colors.textGrayColor }}>
+          {moment(props.notification.attributes.createdAt).format('LLL')}
+        </Text>
+      </View>
     </ListItem>
   );
 };

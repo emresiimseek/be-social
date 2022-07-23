@@ -8,5 +8,8 @@ export const useAsyncStorage = async <T>(key: string): Promise<T | undefined> =>
 
 export const getItem = async <T>(key: string): Promise<T | undefined> => {
   const value = await AsyncStorage.getItem(key);
-  return await JSON.parse(value ?? '');
+
+  if (!value) return;
+
+  return await JSON.parse(value);
 };

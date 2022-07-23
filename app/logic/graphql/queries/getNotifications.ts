@@ -5,8 +5,8 @@ import { POST_FIELDS } from '../fragments/post-fragment';
 export const GET_NOTIFICATIONS = gql`
   ${EVENTS_FIELDS}
   ${POST_FIELDS}
-  query GetNotifications($filters: NotificationFiltersInput) {
-    notifications(filters: $filters) {
+  query GetNotifications($filters: NotificationFiltersInput, $sort: [String]) {
+    notifications(filters: $filters, sort: $sort) {
       data {
         id
         attributes {

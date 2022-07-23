@@ -59,11 +59,7 @@ class LoginPage extends BaseComponent<Props> {
             <BsInput
               value={values.password}
               onChangeText={handleChange('password')}
-              onBlur={() => {
-                console.log('selam');
-
-                setFieldTouched('password');
-              }}
+              onBlur={() => setFieldTouched('password')}
               label="Parola"
               rightIcon={{ type: 'meterial', name: 'lock', color: colors.secondColor, size: 20 }}
               errorMessage={

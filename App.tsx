@@ -18,10 +18,10 @@ import { navigationRef } from './app/RootNavigation';
 import EventDetail from './app/screens/EventDetail';
 import PostDetail from './app/components/common/PostDetail';
 import { io } from 'socket.io-client';
-import { Alert } from 'react-native';
 import { Notification } from './app/types/strapi/models/notification';
 import { Item } from './app/types/strapi/base/base';
 import { useEffect, useState } from 'react';
+import { getItem } from './app/logic/helpers/useAsyncStorage';
 
 const client = new ApolloClient({
   uri: 'https://quiet-retreat-10533.herokuapp.com/graphql',
@@ -43,14 +43,19 @@ const client = new ApolloClient({
 
 export default function App(props: Props) {
   ///////Socket.io///////
-
   const [notification, setNotification] = useState<Notification | undefined>();
-
+  const [token, setUserId] = useState<number | undefined>();
   const SERVER_URL = 'https://quiet-retreat-10533.herokuapp.com';
+
+  const getToken = async () => {
+    const token = await getItem<number>('token');
+
+    setUserId(token);
+  };
+
   const socket = io(SERVER_URL, {
     auth: {
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjU3OTkzMDYxLCJleHAiOjE2NjA1ODUwNjF9.R-yQc4joPJ6r8UPOwBM1o496VJZJDR9X1dQtKkdwT7Y',
+      token,
     },
   });
 
@@ -64,6 +69,7 @@ export default function App(props: Props) {
   };
 
   useEffect(() => {
+    getToken();
     socket.off('notification:create').on('notification:create', listener);
   }, []);
 
@@ -72,7 +78,7 @@ export default function App(props: Props) {
     <>
       <NavigationContainer ref={navigationRef}>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="WelcomePage">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}

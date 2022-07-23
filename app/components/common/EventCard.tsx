@@ -54,7 +54,7 @@ export const EventCard = (props: CardProps) => {
     if (result.data && !isLiked)
       usePushNotification({
         me: props.currentUserId ?? 0,
-        event: +props.eventId,
+        event: props.eventId,
         related_users: props.item.owners.data.map(o => +o.id),
         type: 'like_event',
       });
@@ -118,22 +118,25 @@ export const EventCard = (props: CardProps) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* Icons */}
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-              <EventRequestStatus
-                requests={props.item.event_requests}
-                currentUserId={props.currentUserId}
-                onModal={() => setIsModalVisible(true)}
-              />
+              {!props.item.owners.data.map(o => +o.id).includes(props.currentUserId ?? 0) && (
+                <View style={{ marginRight: 6 }}>
+                  <EventRequestStatus
+                    requests={props.item.event_requests}
+                    currentUserId={props.currentUserId}
+                    onModal={() => setIsModalVisible(true)}
+                  />
+                  <EventRequestModal
+                    currentUserId={props.currentUserId}
+                    eventUserIds={props.item.owners.data.map(o => +o.id)}
+                    eventId={+props.eventId}
+                    visible={isModalVisible}
+                    onClose={() => setIsModalVisible(false)}
+                    onChange={props.onChange}
+                  />
+                </View>
+              )}
 
-              <EventRequestModal
-                currentUserId={props.currentUserId}
-                eventUserIds={props.item.owners.data.map(o => +o.id)}
-                eventId={+props.eventId}
-                visible={isModalVisible}
-                onClose={() => setIsModalVisible(false)}
-                onChange={props.onChange}
-              />
-
-              <TouchableOpacity onPress={() => like()} style={{ marginLeft: 6, marginRight: 10 }}>
+              <TouchableOpacity onPress={() => like()} style={{ marginRight: 10 }}>
                 <Icon
                   type="metarial"
                   color={isLiked ? 'red' : 'black'}

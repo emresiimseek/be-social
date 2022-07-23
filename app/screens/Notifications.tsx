@@ -41,7 +41,7 @@ const Notifications = (props: Props) => {
 
   const { loading, error, data, refetch } = useQuery<{ notifications: Items<Notification> }, Variables>(
     GET_NOTIFICATIONS,
-    { variables: { filters: { related_users: { id: { eq: userId } } } } }
+    { variables: { filters: { related_users: { id: { eq: userId } } }, sort: ['publishedAt:desc'] } }
   );
 
   console.table(loading);
