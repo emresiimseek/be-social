@@ -94,7 +94,11 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
         })}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldTouched, isValid }) => (
-          <KeyboardAwareScrollView extraHeight={200} contentContainerStyle={styles.container}>
+          <KeyboardAwareScrollView
+            extraHeight={200}
+            contentContainerStyle={styles.container}
+            keyboardOpeningTime={0}
+          >
             <BsInput
               value={values.firstname}
               onChangeText={handleChange('firstname')}
@@ -139,6 +143,7 @@ export default class RegisterPageComponent extends BaseComponent<Props> {
               onBlur={() => setFieldTouched('email')}
               label="E-Posta"
               rightIcon={{ type: 'octicon', name: 'mail', color: colors.secondColor, size: 20 }}
+              email
               errorMessage={
                 errors.email && touched.email
                   ? errors.email

@@ -20,6 +20,7 @@ interface InputProps {
   onBlur?: () => void;
   onFocus?: () => void;
   multiline?: boolean;
+  email?: boolean;
 }
 
 // create a component
@@ -50,7 +51,8 @@ const BsInput = (props: InputProps) => {
         props.onFocus && props.onFocus();
         setFocus(true);
       }}
-      textContentType={'oneTimeCode'}
+      textContentType={props.password ? 'oneTimeCode' : 'none'}
+      keyboardType={props.email ? 'email-address' : 'default'}
       inputContainerStyle={{
         ...styles.inputContainer,
         borderColor: focus ? colors.secondColor : colors.focusColor,
