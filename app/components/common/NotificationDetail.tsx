@@ -122,7 +122,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 width: '100%',
-                paddingTop: 10,
+                paddingTop: 15,
               }}
             >
               <Button

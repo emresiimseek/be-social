@@ -12,7 +12,7 @@ export interface UserCommentAttributes {
 export interface CommentAttributes {
   description: string;
   event: Item<Event>;
-  user_comments: Item<UserCommentAttributes>;
+  user: Item<UserCommentAttributes>;
   replies: Items<CommentAttributes>;
 }
 

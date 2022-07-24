@@ -43,7 +43,7 @@ export const CommentsComponent = (props: Props) => {
             description: comment,
             event: props.route.params.eventId,
             post: props.route.params.postId,
-            user_comments: props.route.params.currentUserId,
+            user: props.route.params.currentUserId,
             publishedAt: new Date(),
             comments: [selectedComment.id],
           },
@@ -56,7 +56,7 @@ export const CommentsComponent = (props: Props) => {
             description: comment,
             event: props.route.params.eventId,
             post: props.route.params.postId,
-            user_comments: props.route.params.currentUserId,
+            user: props.route.params.currentUserId,
             publishedAt: new Date(),
           },
         },
@@ -66,9 +66,11 @@ export const CommentsComponent = (props: Props) => {
     if (selectedComment) {
       usePushNotification({
         me: props.route.params.currentUserId,
+        event: type === 'event' ? props.route.params.eventId : null,
+        post: type === 'post' ? props.route.params.postId : null,
         related_users: [
-          +selectedComment.attributes.user_comments.data.id,
-          type === 'post' ? +props.route.params.postUserId : +props.route.params.userEventId,
+          +selectedComment.attributes.user.data.id,
+          type === 'post' ? +props.route.params.postUserId : +props.route.params.eventUserId,
         ],
         type: type === 'event' ? 'comment-reply_event' : 'comment-reply_post',
       });
@@ -135,19 +137,21 @@ export const CommentsComponent = (props: Props) => {
                   containerStyle={{ marginBottom: 'auto' }}
                   onPress={() =>
                     navigate('VisitedProfile', {
-                      userId: comment.attributes.user_comments.data.id,
+                      userId: comment.attributes.user.data.id,
                     })
                   }
                   source={{
                     uri:
-                      comment.attributes?.user_comments?.data?.attributes?.profile_photo?.data?.attributes
-                        ?.url ?? 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
+                      comment.attributes?.user?.data?.attributes?.profile_photo?.data?.attributes?.url ??
+                      'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
                   }}
                   rounded
                   size={35}
                 />
                 <ListItem.Content>
-                  <ListItem.Title>{comment.attributes.user_comments.data.attributes.username}</ListItem.Title>
+                  <ListItem.Title>
+                    {comment.attributes.user.data.attributes.username} {comment.attributes.user.data.id}
+                  </ListItem.Title>
                   <ListItem.Subtitle>
                     <View>
                       <Text> {comment.attributes.description}</Text>

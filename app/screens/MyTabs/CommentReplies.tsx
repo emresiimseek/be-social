@@ -41,7 +41,7 @@ const CommentsReplies = (props: CommentRepliesProps) => {
               containerStyle={{ marginBottom: 'auto' }}
               onPress={() =>
                 navigate('VisitedProfile', {
-                  userId: r.attributes.user_comments.data.id,
+                  userId: r.attributes.user.data.id,
                 })
               }
               source={{ uri: 'https://randomuser.me/api/portraits/men/36.jpg' }}
@@ -49,7 +49,7 @@ const CommentsReplies = (props: CommentRepliesProps) => {
               size={35}
             />
             <View style={{ flexDirection: 'column', width: '80%' }}>
-              <ListItem.Title>{r.attributes.user_comments.data.attributes.username}</ListItem.Title>
+              <ListItem.Title>{r.attributes.user.data.attributes.username}</ListItem.Title>
               <ListItem.Subtitle>{r.attributes.description}</ListItem.Subtitle>
             </View>
           </ListItem>

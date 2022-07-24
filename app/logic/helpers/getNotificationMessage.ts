@@ -1,9 +1,11 @@
 import { Notification } from '../../types/strapi/models/notification';
 
-export const getMessageByType = (item: Notification) => {
+export const getMessageByType = (item: Notification, currentUserId?: number) => {
   const username = item.me.data.attributes.username;
   const eventTitle = item?.event?.data?.attributes?.title;
   const postDescription = item?.post?.data?.attributes?.description;
+
+  const isMe = item?.event?.data?.attributes?.owners?.data?.some(owner => +owner?.id === currentUserId);
 
   //TODO: add replies to the message
   switch (item.type) {
@@ -14,7 +16,13 @@ export const getMessageByType = (item: Notification) => {
     case 'comment_event':
       return `@${username} kullanıcısı ${eventTitle} etkinliğinizi yorum yaptı.`;
     case 'comment_reply_event':
-      return `@${username} kullanıcısı ${eventTitle} etkinliğinizi yorum yaptı.`;
+      return `@${username} kullanıcısı ${eventTitle} ${
+        isMe ? 'etkinliğinize yorum yaptı.' : 'etkinlik yorumunuzu yanıtladı.'
+      }`;
+    case 'comment_reply_post':
+      return `@${username} kullanıcısı ${postDescription}  ${
+        isMe ? 'gönderinize yorum yaptı.' : 'gönderi yorumunuzu yanıtladı.'
+      }`;
     case 'comment_post':
       return `@${username} kullanıcısı ${postDescription} gönderinize yorum yaptı.`;
     case 'like_post':

@@ -16,6 +16,7 @@ import 'moment/locale/tr';
 import { useState } from 'react';
 import { Button } from '@rneui/base';
 import BsDropdown from './BsDropdown';
+import { Pressable } from 'react-native';
 
 interface EventFormProps {
   event: CreateEventModel | null;
@@ -58,7 +59,10 @@ const EventForm = (props: EventFormProps) => {
         setFieldValue,
       }) => (
         <>
-          <View
+          <Pressable
+            onPress={() => {
+              Keyboard.dismiss();
+            }}
             style={{
               flex: 1,
               padding: 20,
@@ -112,7 +116,7 @@ const EventForm = (props: EventFormProps) => {
               label="Kategori"
               placeholder="Kategori seçiniz"
             />
-          </View>
+          </Pressable>
           <View
             style={{
               position: 'absolute',

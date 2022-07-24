@@ -5,7 +5,7 @@ export const COMMENT_FIELDS = gql`
     id
     attributes {
       description
-      user_comments {
+      user {
         data {
           id
           attributes {

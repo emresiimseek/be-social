@@ -9,6 +9,7 @@ export type NotificationType =
   | 'comment-reply_post'
   | 'event_request_accepted'
   | 'event_request_rejected'
-  | 'comment_reply_event';
+  | 'comment_reply_event'
+  | 'comment_reply_post';
 
 //TODO: add replies to the message

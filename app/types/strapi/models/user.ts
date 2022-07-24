@@ -14,3 +14,7 @@ export interface User {
   password: string;
   events?: Event[];
 }
+
+export interface RegisterUserModel extends User {
+  passwordConfirmation: string;
+}

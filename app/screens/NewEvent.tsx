@@ -19,6 +19,7 @@ import { colors } from '../styles/colors';
 import { directNested, navigate } from '../RootNavigation';
 import { UPLOAD } from '../logic/graphql/mutations/upload';
 import { createUploadLink, ReactNativeFile } from 'apollo-upload-client';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const client = new ApolloClient({
   link: createUploadLink({ uri: 'https://quiet-retreat-10533.herokuapp.com/graphql' }),

@@ -44,9 +44,12 @@ const client = new ApolloClient({
 export default function App(props: Props) {
   const [notification, setNotification] = useState<Notification | undefined>();
   const [token, setToken] = useState<number | undefined>();
+  const [userId, setUserId] = useState<number | undefined>();
 
   const getToken = async () => {
     const token = await getItem<number>('token');
+    const userId = await getItem<number>('userId');
+    setUserId(userId);
     setToken(token);
   };
 
@@ -187,7 +190,7 @@ export default function App(props: Props) {
         </ApolloProvider>
       </NavigationContainer>
       <Toast />
-      <AppNotifications notification={notification} />
+      <AppNotifications userId={userId} notification={notification} />
     </>
   );
 }

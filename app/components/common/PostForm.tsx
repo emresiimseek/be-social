@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Keyboard } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import BsInput from './BsInput';
@@ -49,7 +49,10 @@ const PostForm = (props: PostFormProps) => {
     >
       {({ handleChange, handleSubmit, values, errors, setFieldTouched, isValid, setFieldValue }) => (
         <>
-          <View
+          <Pressable
+            onPress={() => {
+              Keyboard.dismiss();
+            }}
             style={{
               flex: 1,
               padding: 20,
@@ -75,7 +78,7 @@ const PostForm = (props: PostFormProps) => {
                 setFieldValue('event', event.value);
               }}
             />
-          </View>
+          </Pressable>
 
           <View
             style={{

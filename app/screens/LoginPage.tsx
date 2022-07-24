@@ -1,6 +1,6 @@
-import { Button } from '@rneui/base';
+import { Button, Text } from '@rneui/base';
 import React from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { login } from '../logic/login';
 import { Props } from '../types/common/props';
 import BaseComponent from '../components/common/BaseComponent';
@@ -42,7 +42,10 @@ class LoginPage extends BaseComponent<Props> {
         })}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldTouched, isValid }) => (
-          <View style={styles.container}>
+          <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
             <BsInput
               value={values.identifier}
               onChangeText={handleChange('identifier')}
@@ -79,7 +82,7 @@ class LoginPage extends BaseComponent<Props> {
               size="lg"
               color={colors.secondColor}
             />
-          </View>
+          </KeyboardAvoidingView>
         )}
       </Formik>
     );

@@ -34,6 +34,7 @@ const BsInput = (props: InputProps) => {
       inputStyle={styles.input}
       style={{ height: props?.multiline ? 90 : 'auto' }}
       multiline={props.multiline}
+      autoCorrect={false}
       numberOfLines={props?.multiline ? 2 : 1}
       labelStyle={
         focus || props.value
@@ -49,6 +50,7 @@ const BsInput = (props: InputProps) => {
         props.onFocus && props.onFocus();
         setFocus(true);
       }}
+      textContentType={'oneTimeCode'}
       inputContainerStyle={{
         ...styles.inputContainer,
         borderColor: focus ? colors.secondColor : colors.focusColor,

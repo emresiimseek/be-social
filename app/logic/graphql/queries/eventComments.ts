@@ -11,7 +11,7 @@ export const EVENT_COMMENTS = gql`
               id
               attributes {
                 description
-                user_comments {
+                user {
                   data {
                     id
                     attributes {
@@ -42,7 +42,7 @@ export const EVENT_COMMENTS = gql`
             }
           }
 
-          user_comments {
+          user {
             data {
               id
               attributes {

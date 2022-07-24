@@ -9,5 +9,5 @@ export interface UserCommentsAttributes {
 
 export interface Comment {
   description: string;
-  user_comments: Items<UserCommentsAttributes>;
+  user: Items<UserCommentsAttributes>;
 }

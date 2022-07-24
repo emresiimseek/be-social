@@ -16,6 +16,7 @@ Notifications.setNotificationHandler({
 
 interface AppNotificationsProps {
   notification: Notification | undefined;
+  userId: number | undefined;
 }
 
 export default function AppNotifications(props: AppNotificationsProps) {
@@ -50,7 +51,7 @@ export default function AppNotifications(props: AppNotificationsProps) {
       to: expoPushToken,
       sound: 'default',
       title: `${user.firstname} ${user.lastname}`,
-      body: getMessageByType(props.notification),
+      body: getMessageByType(props.notification, props.userId),
       data: { someData: 'goes here' },
     };
 
