@@ -17,10 +17,12 @@ export default class BaseComponent<P> extends React.Component<P> {
     const result = await request();
 
     if (result.error && !result.validations?.length) {
+      let error = result.error;
+      if (result.error == 'Invalid identifier or password') error = 'E-posta veya şifre hatalı';
       Toast.show({
         type: 'error',
-        text1: result.error,
-        position: 'bottom',
+        text1: error,
+        position: 'top',
       });
     }
 

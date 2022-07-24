@@ -51,6 +51,7 @@ class LoginPage extends BaseComponent<Props> {
               onChangeText={handleChange('identifier')}
               onBlur={() => setFieldTouched('identifier')}
               label="E-Posta"
+              email
               rightIcon={{ type: 'meterial', name: 'alternate-email', color: colors.secondColor, size: 20 }}
               errorMessage={
                 errors.identifier && touched.identifier
