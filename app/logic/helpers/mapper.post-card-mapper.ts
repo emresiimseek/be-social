@@ -2,7 +2,7 @@ import { PostCardItem } from '../../types/common/post-card-item';
 import { Data, Items } from '../../types/strapi/base/base';
 import { Post } from '../../types/strapi/models/event';
 
-const cardMapper = (post: Data<Post>): PostCardItem<Post> => ({
+export const cardMapper = (post: Data<Post>): PostCardItem<Post> => ({
   description: post.attributes.description,
   imageUrl: post.attributes.images.data[0].attributes.url,
   detail: post.attributes,

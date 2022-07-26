@@ -15,8 +15,8 @@ import backgroundColors from '../../styles/backgroundColors';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
-  emitIndex?: any;
   currentIndex: number;
+  isSingle?: boolean;
 }
 
 // create a component
@@ -81,7 +81,7 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return props.item ? (
-    <Pressable onLongPress={() => props.emitIndex()} style={{}}>
+    <View>
       {/* Header */}
       {props.item.detail && props.currentIndex > 0 && (
         <View style={styles.header}>
@@ -108,7 +108,10 @@ const PostCard = (props: PostCardProps) => {
           <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
         </View>
       )}
-      <ImageBackground style={styles.container} source={{ uri: props.item.imageUrl }}></ImageBackground>
+      <ImageBackground
+        style={[styles.container, !props.isSingle && { marginLeft: -10 }]}
+        source={{ uri: props.item.imageUrl }}
+      ></ImageBackground>
       {/* Footer */}
       {props.item.detail && props.currentIndex > 0 && (
         <View style={styles.footer}>
@@ -141,7 +144,7 @@ const PostCard = (props: PostCardProps) => {
           )}
         </View>
       )}
-    </Pressable>
+    </View>
   ) : null;
 };
 
@@ -150,7 +153,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     aspectRatio: 1,
-    marginLeft: -10,
   },
   footer: {
     flexDirection: 'row',

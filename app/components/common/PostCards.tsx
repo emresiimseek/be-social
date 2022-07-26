@@ -39,12 +39,7 @@ const PostCards = (props: PostCardProps) => {
       sliderWidth={width}
       itemWidth={width}
       renderItem={item => (
-        <PostCard
-          item={item.item}
-          emitIndex={() => props.emitIndex(true)}
-          currentUserId={props.currentUserId}
-          currentIndex={currentIndex}
-        />
+        <PostCard item={item.item} currentUserId={props.currentUserId} currentIndex={currentIndex} />
       )}
       onSnapToItem={index => {
         setCurrentIndex(index);
