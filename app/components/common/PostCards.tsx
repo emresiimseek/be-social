@@ -27,7 +27,7 @@ const PostCards = (props: PostCardProps) => {
       data={props.posts.data}
       sliderWidth={360}
       itemWidth={
-        props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 370) : 360
+        props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 360) : 350
       }
       renderItem={item => (
         <PostCard

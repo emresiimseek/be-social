@@ -27,8 +27,8 @@ import EventRequestStatus from './EventRequestStatus';
 interface CardProps extends Props {
   item: Event;
   eventId: string;
-  isFullPage?: boolean;
   onChange?: () => void;
+  isFullScreen?: boolean;
 }
 
 export const EventCard = (props: CardProps) => {
@@ -101,7 +101,7 @@ export const EventCard = (props: CardProps) => {
             emitIndex={(value: boolean) => {
               value ? setVisible(!visible) : setVisible(value);
             }}
-            isFullScreen={props.isFullPage}
+            isFullScreen={props.isFullScreen}
             posts={props.item.posts}
             currentUserId={props.currentUserId}
           />
@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
   },
   body: {
     borderRadius: 5,
+    marginRight: 10,
   },
 
   footer: {
