@@ -1,48 +1,54 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { Component, useState } from 'react';
 import Carousel from 'react-native-snap-carousel';
 import { Props } from '../../types/common/props';
 import { Items } from '../../types/strapi/base/base';
 import { Post } from '../../types/strapi/models/event';
 import PostCard from './PostCard';
-import { Alert } from 'react-native';
-import { Pressable } from 'react-native';
 import { Dimensions } from 'react-native';
+import { useEffect } from 'react';
+import { createEventCard, postCardsMapper } from '../../logic/helpers/mapper.post-card-mapper';
+import { PostCardItem } from '../../types/common/post-card-item';
 
 interface PostCardProps extends Props {
   posts: Items<Post>;
   emitIndex: any;
   isFullScreen?: boolean;
+  eventImageUrl?: string;
 }
 
 // create a component
 const PostCards = (props: PostCardProps) => {
+  const [cardItems, setCardItems] = useState<PostCardItem<Post>[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const items = postCardsMapper(props.posts);
+    const eventCardItem = createEventCard(props.eventImageUrl ?? '');
+    items.unshift(eventCardItem);
+    setCardItems(items);
+  }, []);
   return (
     <Carousel
       loop={false}
       layout={'stack'}
-      layoutCardOffset={18}
-      apparitionDelay={0}
-      data={props.posts.data}
-      sliderWidth={360}
-      itemWidth={
-        props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 360) : 350
-      }
+      data={cardItems}
+      sliderWidth={Dimensions.get('window').width - 20}
+      itemWidth={Dimensions.get('window').width - 20}
       renderItem={item => (
         <PostCard
           item={item.item}
           emitIndex={() => props.emitIndex(true)}
           currentUserId={props.currentUserId}
+          currentIndex={currentIndex}
         />
       )}
-      onSnapToItem={index => 0}
+      onSnapToItem={index => {
+        setCurrentIndex(index);
+        props.emitIndex(index);
+      }}
     />
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({});
-
-//make this component available to the app
 export default PostCards;

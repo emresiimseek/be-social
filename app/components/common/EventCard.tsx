@@ -95,24 +95,15 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <View style={styles.body}>
-        {props.item.posts?.data.length > 0 ? (
-          <PostCards
-            emitIndex={(value: boolean) => {
-              value ? setVisible(!visible) : setVisible(value);
-            }}
-            isFullScreen={props.isFullScreen}
-            posts={props.item.posts}
-            currentUserId={props.currentUserId}
-          />
-        ) : (
-          <ImageBackground
-            style={{ width: '100%', aspectRatio: 4 / 3 }}
-            imageStyle={{ backgroundColor: 'gray' }}
-            source={{ uri: props.item?.images?.data?.[0]?.attributes?.url }}
-          />
-        )}
-      </View>
+      <PostCards
+        emitIndex={(value: number) => {
+          value > 0 ? setVisible(false) : setVisible(true);
+        }}
+        isFullScreen={props.isFullScreen}
+        posts={props.item.posts}
+        currentUserId={props.currentUserId}
+        eventImageUrl={props.item?.images?.data?.[0]?.attributes?.url}
+      />
       {/* Footer */}
 
       {visible && (
@@ -198,7 +189,7 @@ export const EventCard = (props: CardProps) => {
                 numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
               }}
             >
-              <Text style={{ marginTop: 5 }} numberOfLines={numberOfLine}>
+              <Text style={{ marginTop: 5, paddingLeft: 4 }} numberOfLines={numberOfLine}>
                 {props.item.description}
               </Text>
             </TouchableOpacity>
@@ -230,14 +221,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: backgroundColors.cardBackgroundColorOpacity,
   },
-  body: {
-    borderRadius: 5,
-    marginRight: 10,
-  },
 
   footer: {
     flexDirection: 'column',
     backgroundColor: backgroundColors.cardBackgroundColorOpacity,
-    padding: 10,
+    padding: 5,
+    paddingVertical: 10,
   },
 });
