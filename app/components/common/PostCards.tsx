@@ -19,33 +19,25 @@ interface PostCardProps extends Props {
 // create a component
 const PostCards = (props: PostCardProps) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-      }}
-    >
-      <Carousel
-        loop={false}
-        layout={'stack'}
-        layoutCardOffset={18}
-        apparitionDelay={0}
-        data={props.posts.data}
-        sliderWidth={360}
-        itemWidth={
-          props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 370) : 360
-        }
-        renderItem={item => (
-          <PostCard
-            item={item.item}
-            emitIndex={() => props.emitIndex(true)}
-            currentUserId={props.currentUserId}
-          />
-        )}
-        onSnapToItem={index => 0}
-      />
-    </View>
+    <Carousel
+      loop={false}
+      layout={'stack'}
+      layoutCardOffset={18}
+      apparitionDelay={0}
+      data={props.posts.data}
+      sliderWidth={360}
+      itemWidth={
+        props.posts.data.length == 1 ? (props.isFullScreen ? Dimensions.get('window').width : 370) : 360
+      }
+      renderItem={item => (
+        <PostCard
+          item={item.item}
+          emitIndex={() => props.emitIndex(true)}
+          currentUserId={props.currentUserId}
+        />
+      )}
+      onSnapToItem={index => 0}
+    />
   );
 };
 

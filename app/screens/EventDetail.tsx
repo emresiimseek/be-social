@@ -21,11 +21,7 @@ const EventDetail = (props: Props) => {
   });
   const event = data?.events.data[0].attributes;
 
-  return (
-    <View>
-      {data && <EventCard eventId={props.route.params.eventId} item={event} isFullPage></EventCard>}
-    </View>
-  );
+  return <View>{data && <EventCard eventId={props.route.params.eventId} item={event}></EventCard>}</View>;
 };
 
 // define your styles

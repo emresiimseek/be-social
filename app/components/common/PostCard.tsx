@@ -158,9 +158,9 @@ const PostCard = (props: PostCardProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
     width: '100%',
     marginRight: 20,
+    aspectRatio: 1,
   },
   footer: {
     flexDirection: 'row',

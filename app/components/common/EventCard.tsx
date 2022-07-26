@@ -39,6 +39,8 @@ export const EventCard = (props: CardProps) => {
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
 
+  const [numberOfLine, setNumberOfLine] = useState<number | undefined>(2);
+
   const like = async () => {
     const result = await likeEvent({
       variables: {
@@ -63,7 +65,7 @@ export const EventCard = (props: CardProps) => {
   const [visible, setVisible] = useState(true);
 
   return (
-    <View style={props.isFullPage ? styles.fullPageContainer : styles.cardContainer}>
+    <View style={styles.cardContainer}>
       {/* Header */}
       {visible && (
         <View style={styles.header}>
@@ -93,7 +95,7 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <View style={props.isFullPage ? styles.fullPageBody : styles.body}>
+      <View style={styles.body}>
         {props.item.posts?.data.length > 0 ? (
           <PostCards
             emitIndex={(value: boolean) => {
@@ -105,7 +107,7 @@ export const EventCard = (props: CardProps) => {
           />
         ) : (
           <ImageBackground
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', aspectRatio: 4 / 3 }}
             imageStyle={{ backgroundColor: 'gray' }}
             source={{ uri: props.item?.images?.data?.[0]?.attributes?.url }}
           />
@@ -114,7 +116,7 @@ export const EventCard = (props: CardProps) => {
       {/* Footer */}
 
       {visible && (
-        <View style={props.isFullPage ? styles.fullPageFooter : styles.footer}>
+        <View style={styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* Icons */}
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
@@ -178,43 +180,28 @@ export const EventCard = (props: CardProps) => {
             }}
           >
             {/* First Line */}
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-              <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text> {moment(props.item.eventDate).format('LLL')} </Text>
-                <Icon name="calendar" type="ant-design" style={{ marginLeft: 5 }} />
-              </View>
-            </View>
-
-            {/* Second Line */}
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
                 alignItems: 'center',
+                marginBottom: 5,
               }}
             >
-              <Text>{props.item.description}</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text>{props.item.categories.data.map(c => c.attributes.title)}</Text>
-                <Icon name="tagso" type="ant-design" style={{ marginLeft: 5 }} />
-              </View>
+              <Text style={{ flex: 1 }}> {moment(props.item.eventDate).format('LLL')} </Text>
+              <Text>{props.item.categories.data.map(c => c.attributes.title)}</Text>
+              <Icon name="tagso" type="ant-design" size={20} style={{ marginLeft: 5 }} />
             </View>
-          </View>
 
-          <View>
-            <Text
-              onPress={() =>
-                navigate({
-                  name: 'Comments',
-                  params: { eventId: props.eventId, currentUserId: props.currentUserId },
-                  merge: true,
-                })
-              }
-              style={{ fontSize: 10, marginLeft: 2 }}
+            {/* Second Line */}
+            <TouchableOpacity
+              onPress={() => {
+                numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
+              }}
             >
-              {props.item.comments.data.length} yorumu gör...
-            </Text>
+              <Text style={{ marginTop: 5 }} numberOfLines={numberOfLine}>
+                {props.item.description}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -226,17 +213,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     flexDirection: 'column',
-    minHeight: Dimensions.get('window').height / 1.5,
     borderRadius: 5,
     margin: 10,
   },
-  fullPageContainer: {
-    backgroundColor: 'white',
-    minHeight: '100%',
-    width: '100%',
-  },
+
   header: {
-    flex: 0.2,
+    minHeight: 50,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
@@ -249,12 +231,6 @@ const styles = StyleSheet.create({
     backgroundColor: backgroundColors.cardBackgroundColorOpacity,
   },
   body: {
-    flex: 3,
-    borderRadius: 5,
-  },
-
-  fullPageBody: {
-    flex: 2,
     borderRadius: 5,
   },
 
@@ -262,11 +238,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: backgroundColors.cardBackgroundColorOpacity,
     padding: 10,
-  },
-  fullPageFooter: {
-    flexDirection: 'column',
-    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
-    padding: 10,
-    flex: 0.4,
   },
 });
