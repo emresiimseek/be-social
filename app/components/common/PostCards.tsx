@@ -28,13 +28,16 @@ const PostCards = (props: PostCardProps) => {
     items.unshift(eventCardItem);
     setCardItems(items);
   }, []);
+
+  const width =
+    cardItems.length > 1 ? Dimensions.get('window').width - 20 : Dimensions.get('window').width - 10;
   return (
     <Carousel
       loop={false}
       layout={'stack'}
       data={cardItems}
-      sliderWidth={Dimensions.get('window').width - 20}
-      itemWidth={Dimensions.get('window').width - 20}
+      sliderWidth={width}
+      itemWidth={width}
       renderItem={item => (
         <PostCard
           item={item.item}

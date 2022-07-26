@@ -219,13 +219,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
+    backgroundColor: 'white',
+    borderRadius: 5,
   },
 
   footer: {
     flexDirection: 'column',
-    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
+    backgroundColor: 'white',
     padding: 5,
     paddingVertical: 10,
+    borderRadius: 5,
   },
 });
