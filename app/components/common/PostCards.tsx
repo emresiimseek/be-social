@@ -15,12 +15,22 @@ interface PostCardProps extends Props {
   emitIndex: any;
   isFullScreen?: boolean;
   eventImageUrl?: string;
+  triggerHack: boolean;
 }
 
 // create a component
 const PostCards = (props: PostCardProps) => {
   const [cardItems, setCardItems] = useState<PostCardItem<Post>[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [carousel, setCarousel] = useState<Carousel<PostCardItem<Post>> | null>(null);
+
+  useEffect(() => {
+    carousel?.triggerRenderingHack(40);
+
+    setTimeout(() => {
+      carousel?.triggerRenderingHack(-40);
+    }, 1000);
+  }, [props.triggerHack]);
 
   useEffect(() => {
     const items = postCardsMapper(props.posts);
@@ -29,15 +39,16 @@ const PostCards = (props: PostCardProps) => {
     setCardItems(items);
   }, []);
 
-  const width =
-    cardItems.length > 1 ? Dimensions.get('window').width - 20 : Dimensions.get('window').width - 10;
   return (
     <Carousel
+      ref={carousel => {
+        setCarousel(carousel);
+      }}
       loop={false}
       layout={'stack'}
       data={cardItems}
-      sliderWidth={width}
-      itemWidth={width}
+      sliderWidth={Dimensions.get('window').width - 10}
+      itemWidth={Dimensions.get('window').width - 10}
       renderItem={item => (
         <PostCard item={item.item} currentUserId={props.currentUserId} currentIndex={currentIndex} />
       )}

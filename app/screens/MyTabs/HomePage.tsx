@@ -11,6 +11,7 @@ import { Event } from '../../types/strapi/models/event';
 
 export const HomePage = (props: Props) => {
   const [componentLoading, setComponentLoading] = useState(false);
+  const [position, setPosition] = useState(0);
 
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', async () => {
@@ -48,6 +49,9 @@ export const HomePage = (props: Props) => {
 
   return (
     <ScrollView
+      onScroll={e => {
+        setPosition(e.nativeEvent.contentOffset.y);
+      }}
       refreshControl={
         <RefreshControl
           refreshing={loading || componentLoading}
@@ -58,7 +62,9 @@ export const HomePage = (props: Props) => {
         />
       }
     >
-      {event && <EventList event={event} isMine onChange={() => refetch()} />}
+      {event && (
+        <EventList event={event} isMine onChange={() => refetch()} currentScrollPosition={position} />
+      )}
     </ScrollView>
   );
 };

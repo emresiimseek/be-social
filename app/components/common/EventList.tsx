@@ -11,6 +11,7 @@ export interface EventProps extends Props {
   isMine: boolean;
   event: Data<Event>[];
   onChange?: () => void;
+  currentScrollPosition?: number;
 }
 
 export const EventList = (props: EventProps) => {
@@ -35,6 +36,7 @@ export const EventList = (props: EventProps) => {
             eventId={event.id}
             currentUserId={userId}
             onChange={props.onChange}
+            currentScrollPosition={props.currentScrollPosition}
           />
         ))
       ) : (

@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Dimensions,
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -29,6 +21,7 @@ interface CardProps extends Props {
   eventId: string;
   onChange?: () => void;
   isFullScreen?: boolean;
+  currentScrollPosition?: number;
 }
 
 export const EventCard = (props: CardProps) => {
@@ -40,6 +33,19 @@ export const EventCard = (props: CardProps) => {
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
 
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(2);
+
+  const [hasAlert, setHasAlert] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!props.currentScrollPosition || !position?.end || !position.start || hasAlert) return;
+
+    if (
+      position.start - Dimensions.get('screen').height / 2 < props.currentScrollPosition &&
+      props.currentScrollPosition <= position.end + Dimensions.get('screen').height / 3
+    ) {
+      setHasAlert(true);
+    }
+  }, [props.currentScrollPosition]);
 
   const like = async () => {
     const result = await likeEvent({
@@ -64,8 +70,16 @@ export const EventCard = (props: CardProps) => {
 
   const [visible, setVisible] = useState(true);
 
+  const [position, setPosition] = useState<{ start: number | undefined; end: number | undefined }>();
+
   return (
-    <View style={styles.cardContainer}>
+    <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        setPosition({ start: layout.y, end: layout.y + layout.height });
+      }}
+      style={styles.cardContainer}
+    >
       {/* Header */}
       {visible && (
         <View style={styles.header}>
@@ -103,6 +117,7 @@ export const EventCard = (props: CardProps) => {
         posts={props.item.posts}
         currentUserId={props.currentUserId}
         eventImageUrl={props.item?.images?.data?.[0]?.attributes?.url}
+        triggerHack={hasAlert}
       />
       {/* Footer */}
 

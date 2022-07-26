@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, Dimensions } from 'react-native';
 import { Post } from '../../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
 import { Avatar, Icon } from '@rneui/base';
@@ -10,8 +10,6 @@ import { UPDATE_POST } from '../../logic/graphql/mutations/updatePost';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
 import { PostCardItem } from '../../types/common/post-card-item';
-import colors from '../../styles/colors';
-import backgroundColors from '../../styles/backgroundColors';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
@@ -81,10 +79,10 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return props.item ? (
-    <View>
+    <View style={{ width: Dimensions.get('window').width - 20 }}>
       {/* Header */}
-      {props.item.detail && props.currentIndex > 0 && (
-        <View style={styles.header}>
+      {props.item.detail && props.currentIndex != 0 && (
+        <View style={[styles.header, props.currentIndex !== props.item.index && { opacity: 0 }]}>
           <Pressable
             onPress={() =>
               navigate('VisitedProfile', {
@@ -108,13 +106,15 @@ const PostCard = (props: PostCardProps) => {
           <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
         </View>
       )}
-      <ImageBackground
-        style={[styles.container, !props.isSingle && { marginLeft: -10 }]}
-        source={{ uri: props.item.imageUrl }}
-      ></ImageBackground>
+      <ImageBackground style={[styles.container]} source={{ uri: props.item.imageUrl }}></ImageBackground>
       {/* Footer */}
-      {props.item.detail && props.currentIndex > 0 && (
-        <View style={styles.footer}>
+      {props.item.detail && props.currentIndex != 0 && (
+        <View
+          style={[
+            styles.footer,
+            props.currentIndex !== props.item.index && props.currentIndex != 0 && { opacity: 0 },
+          ]}
+        >
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
             <View style={{ flexDirection: 'row' }}>
               <Icon
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
   headerContainer: {
     flex: 1,
