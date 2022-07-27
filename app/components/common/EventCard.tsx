@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 5,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 });

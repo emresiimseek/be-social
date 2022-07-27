@@ -3,5 +3,4 @@ export interface PostCardItem<T> {
   imageUrl: string;
   id: string;
   detail: T;
-  index: number;
 }

@@ -17,6 +17,7 @@ interface PostCardProps extends Props {
   item: PostCardItem<Post>;
   currentIndex: number;
   isSingle?: boolean;
+  index: number;
 }
 
 // create a component
@@ -85,7 +86,7 @@ const PostCard = (props: PostCardProps) => {
     <View style={{ width: Dimensions.get('window').width - 20 }}>
       {/* Header */}
       {props.item.detail && props.currentIndex != 0 && (
-        <View style={[styles.header, props.currentIndex !== props.item.index && { opacity: 0 }]}>
+        <View style={[styles.header]}>
           <Pressable
             onPress={() =>
               navigate('VisitedProfile', {
@@ -105,20 +106,13 @@ const PostCard = (props: PostCardProps) => {
             />
             <Text style={{ marginLeft: 5 }}>{props.item.detail.users?.data[0]?.attributes.username}</Text>
           </Pressable>
-
-          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
         </View>
       )}
       <ImageBackground style={[styles.container]} source={{ uri: props.item.imageUrl }}></ImageBackground>
       {/* Footer */}
       {props.item.detail && props.currentIndex != 0 && (
-        <View
-          style={[
-            styles.footer,
-            props.currentIndex !== props.item.index && props.currentIndex != 0 && { opacity: 0 },
-          ]}
-        >
-          <View style={{ flexDirection: 'row' }}>
+        <View style={[styles.footer]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon
               onPress={() => handleLike()}
               type="metarial"
@@ -133,9 +127,7 @@ const PostCard = (props: PostCardProps) => {
               size={20}
               style={{ marginRight: 10 }}
             />
-            <View>
-              <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
-            </View>
+            <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
           </View>
 
           {props.item.detail.comments.data.length > 0 && (
@@ -167,7 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: 5,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   header: {
     minHeight: 50,

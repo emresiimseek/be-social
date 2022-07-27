@@ -9,6 +9,7 @@ import { Dimensions } from 'react-native';
 import { useEffect } from 'react';
 import { createEventCard, postCardsMapper } from '../../logic/helpers/mapper.post-card-mapper';
 import { PostCardItem } from '../../types/common/post-card-item';
+import { Pressable } from 'react-native';
 
 interface PostCardProps extends Props {
   posts: Items<Post>;
@@ -50,7 +51,12 @@ const PostCards = (props: PostCardProps) => {
       sliderWidth={Dimensions.get('window').width - 10}
       itemWidth={Dimensions.get('window').width - 10}
       renderItem={item => (
-        <PostCard item={item.item} currentUserId={props.currentUserId} currentIndex={currentIndex} />
+        <PostCard
+          index={item.index}
+          item={item.item}
+          currentUserId={props.currentUserId}
+          currentIndex={currentIndex}
+        />
       )}
       onSnapToItem={index => {
         setCurrentIndex(index);

@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 16,
-    paddingBottom: 6,
+    padding: 10,
+    paddingTop: 15,
   },
 });
 
