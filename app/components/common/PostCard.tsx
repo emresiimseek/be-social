@@ -10,6 +10,8 @@ import { UPDATE_POST } from '../../logic/graphql/mutations/updatePost';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
 import { PostCardItem } from '../../types/common/post-card-item';
+import { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
@@ -20,6 +22,7 @@ interface PostCardProps extends Props {
 // create a component
 const PostCard = (props: PostCardProps) => {
   const [likePost, { data, loading, error }] = useMutation(UPDATE_POST);
+  const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
 
   const unLike = () => {
     if (!props.item) return;
@@ -115,26 +118,24 @@ const PostCard = (props: PostCardProps) => {
             props.currentIndex !== props.item.index && props.currentIndex != 0 && { opacity: 0 },
           ]}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Icon
-                onPress={() => handleLike()}
-                type="metarial"
-                color={
-                  props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
-                }
-                name={
-                  props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId)
-                    ? 'favorite'
-                    : 'favorite-border'
-                }
-                size={20}
-              />
-              <View style={{ marginHorizontal: 10 }}>
-                <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
-              </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Icon
+              onPress={() => handleLike()}
+              type="metarial"
+              color={
+                props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
+              }
+              name={
+                props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId)
+                  ? 'favorite'
+                  : 'favorite-border'
+              }
+              size={20}
+              style={{ marginRight: 10 }}
+            />
+            <View>
+              <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
             </View>
-            <Text style={{ fontSize: 12 }}>{props.item.description}</Text>
           </View>
 
           {props.item.detail.comments.data.length > 0 && (
@@ -142,6 +143,13 @@ const PostCard = (props: PostCardProps) => {
               <Text style={{ fontSize: 10 }}>{props.item.detail.comments.data.length} yorumun gör...</Text>
             </Pressable>
           )}
+          <TouchableOpacity
+            onPress={() => {
+              numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
+            }}
+          >
+            <Text style={{ marginTop: 5 }}>{props.item.description}</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -155,12 +163,10 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   footer: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: 'white',
     paddingHorizontal: 5,
-    paddingVertical: 15,
-    marginTop: 'auto',
+    paddingVertical: 10,
     borderRadius: 5,
   },
   header: {
@@ -168,7 +174,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
   },

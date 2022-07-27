@@ -19,7 +19,7 @@ const PostDetail = (props: Props) => {
   useEffect(() => {
     if (!data) return;
 
-    const item = cardMapper(data?.post?.data);
+    const item = cardMapper(data?.post?.data, 0);
 
     setCarItem(item);
   }, [data]);

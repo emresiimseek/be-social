@@ -32,7 +32,7 @@ export const EventCard = (props: CardProps) => {
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
 
-  const [numberOfLine, setNumberOfLine] = useState<number | undefined>(2);
+  const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
 
   const [hasAlert, setHasAlert] = useState<boolean>(false);
 
@@ -102,8 +102,7 @@ export const EventCard = (props: CardProps) => {
             />
             <Text style={{ marginLeft: 5 }}>{props.item?.owners?.data[0]?.attributes.username}</Text>
           </Pressable>
-
-          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
+          <Text style={{ marginRight: 10 }}>{moment(props.item.eventDate).format('LLL')}</Text>
         </View>
       )}
 
@@ -171,7 +170,7 @@ export const EventCard = (props: CardProps) => {
             </View>
             {/* Right */}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="groups" type="metarial" />
+              <Icon name="users" size={16} type="feather" />
               <Text style={{ fontSize: 12, marginLeft: 5 }}>
                 {props.item.attendees.data.length + props.item.owners.data.length} Kişi Katılıyor
               </Text>
@@ -182,29 +181,15 @@ export const EventCard = (props: CardProps) => {
             style={{
               flexDirection: 'column',
               justifyContent: 'space-between',
-              marginTop: 5,
             }}
           >
-            {/* First Line */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 5,
-              }}
-            >
-              <Text style={{ flex: 1 }}> {moment(props.item.eventDate).format('LLL')} </Text>
-              <Text>{props.item.categories.data.map(c => c.attributes.title)}</Text>
-              <Icon name="tagso" type="ant-design" size={20} style={{ marginLeft: 5 }} />
-            </View>
-
             {/* Second Line */}
             <TouchableOpacity
               onPress={() => {
                 numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
               }}
             >
-              <Text style={{ marginTop: 5, paddingLeft: 4 }} numberOfLines={numberOfLine}>
+              <Text style={{ marginTop: 5 }} numberOfLines={numberOfLine}>
                 {props.item.description}
               </Text>
             </TouchableOpacity>
@@ -217,7 +202,6 @@ export const EventCard = (props: CardProps) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: 'white',
     flexDirection: 'column',
     borderRadius: 5,
     margin: 10,
@@ -228,6 +212,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
   headerContainer: {
     flex: 1,

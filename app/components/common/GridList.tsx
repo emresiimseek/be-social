@@ -8,6 +8,7 @@ import { ImageBackground } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Pressable } from 'react-native';
 import { navigate } from '../../RootNavigation';
+import { colors } from '../../styles/colors';
 
 interface GridListProps extends Props {
   items: Data<Event>[];
@@ -37,9 +38,17 @@ const GridList = (props: GridListProps) => {
                 backgroundColor: 'rgba(0,0,0,0.1)',
               }}
             >
-              <View style={{ position: 'absolute', right: 2, zIndex: 1 }}>
-                <Icon type="ionicon" name="albums" size={22} />
-                <Text style={{ position: 'absolute', color: 'white', fontSize: 10, right: 9, top: 9 }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 2,
+                  zIndex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Icon type="ionicon" name="albums" size={25} color={colors.textGrayColor} />
+                <Text style={{ position: 'absolute', color: 'white', fontSize: 10, paddingTop: 5 }}>
                   {item.attributes.posts.data.length}
                 </Text>
               </View>

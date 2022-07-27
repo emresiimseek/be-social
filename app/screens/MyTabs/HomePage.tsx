@@ -49,6 +49,7 @@ export const HomePage = (props: Props) => {
 
   return (
     <ScrollView
+      scrollEventThrottle={16}
       onScroll={e => {
         setPosition(e.nativeEvent.contentOffset.y);
       }}
