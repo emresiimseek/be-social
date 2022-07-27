@@ -3560,6 +3560,15 @@
   "resolved" "https://registry.npmjs.org/expo-structured-headers/-/expo-structured-headers-2.2.1.tgz"
   "version" "2.2.1"
 
+"expo-system-ui@^1.2.0":
+  "integrity" "sha512-jynjFNz38FeY/2u4EKvLJdIk0hZAhicd9lbjSRJUDTjhGhQmYDsCQ32NKp/X3DwBkugAP5nwDwa5S3eGk5i80Q=="
+  "resolved" "https://registry.npmjs.org/expo-system-ui/-/expo-system-ui-1.2.0.tgz"
+  "version" "1.2.0"
+  dependencies:
+    "@expo/config-plugins" "^4.0.14"
+    "@react-native/normalize-color" "^2.0.0"
+    "debug" "^4.3.2"
+
 "expo-updates-interface@~0.6.0":
   "integrity" "sha512-oQcGTsE8mSkSxENPlWjZPGoJpt3RFDNPuO5d8shBDxBb4ZNH/W2ojavSFQMaLbNMoS0bYQQhzbRNEIBd306QMg=="
   "resolved" "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.6.0.tgz"

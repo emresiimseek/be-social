@@ -83,7 +83,7 @@ export default function App(props: Props) {
     <>
       <NavigationContainer ref={navigationRef}>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="WelcomePage">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}
