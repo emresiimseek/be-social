@@ -83,7 +83,7 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return props.item ? (
-    <View style={{ width: Dimensions.get('window').width - 20 }}>
+    <View>
       {/* Header */}
       {props.item.detail && props.currentIndex != 0 && (
         <View style={[styles.header]}>
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     paddingHorizontal: 5,
+
     paddingVertical: 10,
     borderBottomRightRadius: 5,
     borderBottomLeftRadius: 5,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions, Alert } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -118,6 +118,7 @@ export const EventCard = (props: CardProps) => {
         eventImageUrl={props.item?.images?.data?.[0]?.attributes?.url}
         triggerHack={hasAlert}
       />
+
       {/* Footer */}
 
       {visible && (
