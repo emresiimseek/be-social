@@ -12,7 +12,6 @@ import { ScrollView } from 'react-native';
 import { Props } from '../types/common/props';
 import { Icon } from '@rneui/themed';
 import NotificationDetail from '../components/common/NotificationDetail';
-import { navigationRef } from '../RootNavigation';
 
 // create a component
 const Notifications = (props: Props) => {

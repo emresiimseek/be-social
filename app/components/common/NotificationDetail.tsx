@@ -14,6 +14,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_EVENT_REQUEST } from '../../logic/graphql/mutations/updateEventRequest';
 import { sendPushNotification } from '../../logic/helpers/registerPushNotification';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
+import { Dimensions } from 'react-native';
 
 interface NotificationDetailProps {
   notification: Data<Notification>;
@@ -115,14 +116,14 @@ const NotificationDetail = (props: NotificationDetailProps) => {
       <ListItem.Content>
         <ListItem.Subtitle>{getMessageByType(props.notification.attributes)}</ListItem.Subtitle>
         {props.notification.attributes.type === 'request_to_join_event' && (
-          <ListItem.Title>
+          <ListItem.Title style={{ minWidth: '100%' }}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                width: '100%',
-                paddingTop: 15,
+                width: Dimensions.get('window').width * 0.8,
+                paddingVertical: 10,
               }}
             >
               <Button

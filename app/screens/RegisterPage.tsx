@@ -1,6 +1,15 @@
 import { Button } from '@rneui/base';
 import * as React from 'react';
-import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, View, ScrollView } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
 import { register } from '../logic/register';
 import { Props } from '../types/common/props';
@@ -199,6 +208,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'white',
+    minHeight: Dimensions.get('window').height,
   },
   input: { marginBottom: 5 },
   button: { marginHorizontal: 10, marginTop: 10 },

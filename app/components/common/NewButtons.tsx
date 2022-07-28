@@ -96,8 +96,8 @@ const NewButtons = (props: NewButtonProps) => {
         </>
       )}
 
-      <TouchableOpacity onPress={() => props.setFocus(!props.focused)} style={{ marginTop: 2 }}>
-        <Icon type="material" name="add-circle-outline" size={55} color={colors.secondColor} />
+      <TouchableOpacity onPress={() => props.setFocus(!props.focused)} style={{}}>
+        <Icon type="material" name="add-circle-outline" size={50} color={colors.secondColor} />
       </TouchableOpacity>
     </View>
   );

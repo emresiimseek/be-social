@@ -45,6 +45,7 @@ class LoginPage extends BaseComponent<Props> {
           <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 80}
           >
             <BsInput
               value={values.identifier}

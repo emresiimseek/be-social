@@ -41,8 +41,8 @@ export function MyTabs(baseProps: MyTabsProps) {
         headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: { backgroundColor: 'white', height: 90 },
-        headerStyle: { backgroundColor: colors.secondColor, height: 80 },
+        tabBarStyle: { backgroundColor: 'white' },
+        headerStyle: { backgroundColor: colors.secondColor },
         headerTitleStyle: { color: 'white' },
       })}
     >
