@@ -15,9 +15,6 @@ import { TouchableOpacity } from 'react-native';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
-  currentIndex: number;
-  isSingle?: boolean;
-  index: number;
 }
 
 // create a component
@@ -83,67 +80,63 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return props.item ? (
-    <View>
+    <View style={{ width: Dimensions.get('window').width - 20, margin: 10 }}>
       {/* Header */}
-      {props.item.detail && props.currentIndex != 0 && (
-        <View style={[styles.header]}>
-          <Pressable
-            onPress={() =>
-              navigate('VisitedProfile', {
-                userId: props.item.detail.users.data[0].id,
-              })
-            }
-            style={styles.headerContainer}
-          >
-            <Avatar
-              size={35}
-              rounded
-              source={{
-                uri:
-                  props.item?.detail.users?.data?.[0]?.attributes?.profile_photo?.data?.attributes?.url ??
-                  'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
-              }}
-            />
-            <Text style={{ marginLeft: 5 }}>{props.item.detail.users?.data[0]?.attributes.username}</Text>
-          </Pressable>
-        </View>
-      )}
+      <View style={[styles.header]}>
+        <Pressable
+          onPress={() =>
+            navigate('VisitedProfile', {
+              userId: props.item.detail.users.data[0].id,
+            })
+          }
+          style={styles.headerContainer}
+        >
+          <Avatar
+            size={35}
+            rounded
+            source={{
+              uri:
+                props.item?.detail.users?.data?.[0]?.attributes?.profile_photo?.data?.attributes?.url ??
+                'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png',
+            }}
+          />
+          <Text style={{ marginLeft: 5 }}>{props.item.detail.users?.data[0]?.attributes.username}</Text>
+        </Pressable>
+      </View>
       <ImageBackground style={[styles.container]} source={{ uri: props.item.imageUrl }}></ImageBackground>
       {/* Footer */}
-      {props.item.detail && props.currentIndex != 0 && (
-        <View style={[styles.footer]}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon
-              onPress={() => handleLike()}
-              type="metarial"
-              color={
-                props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
-              }
-              name={
-                props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId)
-                  ? 'favorite'
-                  : 'favorite-border'
-              }
-              size={20}
-              style={{ marginRight: 10 }}
-            />
-            <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
-          </View>
-
-          {props.item.detail.comments.data.length > 0 && (
-            <Pressable onPress={() => directToCommentPage()}>
-              <Text style={{ fontSize: 10 }}>{props.item.detail.comments.data.length} yorumun gör...</Text>
-            </Pressable>
-          )}
-          <TouchableOpacity
-            onPress={() => {
-              numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
-            }}
-          >
-            <Text style={{ marginTop: 5 }}>{props.item.description}</Text>
-          </TouchableOpacity>
+      <View style={[styles.footer]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Icon
+            onPress={() => handleLike()}
+            type="metarial"
+            color={
+              props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId) ? 'red' : 'black'
+            }
+            name={
+              props.item.detail.post_likes.data.find(l => +l.id === props.currentUserId)
+                ? 'favorite'
+                : 'favorite-border'
+            }
+            size={20}
+            style={{ marginRight: 10 }}
+          />
+          <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
         </View>
-      )}
+
+        {props.item.detail.comments.data.length > 0 && (
+          <Pressable onPress={() => directToCommentPage()}>
+            <Text style={{ fontSize: 10 }}>{props.item.detail.comments.data.length} yorumun gör...</Text>
+          </Pressable>
+        )}
+        <TouchableOpacity
+          onPress={() => {
+            numberOfLine ? setNumberOfLine(undefined) : setNumberOfLine(2);
+          }}
+        >
+          <Text style={{ marginTop: 5 }}>{props.item.description}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   ) : null;
 };

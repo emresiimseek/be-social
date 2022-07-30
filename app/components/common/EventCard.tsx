@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions, Alert } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions, Alert, Image } from 'react-native';
 import { Icon, Avatar } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
@@ -9,8 +9,6 @@ import { useMutation } from '@apollo/client';
 import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { Variables } from '../../types/strapi/base/base';
 import { LIKE_EVENT } from '../../logic/graphql/mutations/likeEvent';
-import PostCards from './PostCards';
-import backgroundColors from '../../styles/backgroundColors';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
 import EventRequestModal from './EventRequestModal';
@@ -30,7 +28,7 @@ export const EventCard = (props: CardProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
-  const [likeEvent, { data, loading, error }] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
+  const [likeEvent] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
 
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
 
@@ -78,7 +76,7 @@ export const EventCard = (props: CardProps) => {
         const layout = event.nativeEvent.layout;
         setPosition({ start: layout.y, end: layout.y + layout.height });
       }}
-      style={styles.cardContainer}
+      style={[styles.cardContainer, { width: Dimensions.get('screen').width - 20 }]}
     >
       {/* Header */}
       {visible && (
@@ -108,16 +106,7 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <PostCards
-        emitIndex={(value: number) => {
-          value > 0 ? setVisible(false) : setVisible(true);
-        }}
-        isFullScreen={props.isFullScreen}
-        posts={props.item.posts}
-        currentUserId={props.currentUserId}
-        eventImageUrl={props.item?.images?.data?.[0]?.attributes?.url}
-        triggerHack={hasAlert}
-      />
+      <Image source={{ uri: props.item.images.data[0].attributes.url }} style={{ aspectRatio: 1 }} />
 
       {/* Footer */}
 
