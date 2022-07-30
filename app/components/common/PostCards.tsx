@@ -24,7 +24,7 @@ const PostCards = (props: PostCardProps) => {
   return (
     <>
       {cardItems.map((item, index) => (
-        <PostCard key={index} item={item} currentUserId={props.currentUserId} />
+        <PostCard children={props.children} key={index} item={item} currentUserId={props.currentUserId} />
       ))}
     </>
   );

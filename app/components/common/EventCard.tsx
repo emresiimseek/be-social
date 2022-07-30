@@ -19,7 +19,6 @@ interface CardProps extends Props {
   eventId: string;
   onChange?: () => void;
   isFullScreen?: boolean;
-  currentScrollPosition?: number;
 }
 
 export const EventCard = (props: CardProps) => {
@@ -33,17 +32,6 @@ export const EventCard = (props: CardProps) => {
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
 
   const [hasAlert, setHasAlert] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!props.currentScrollPosition || !position?.end || !position.start || hasAlert) return;
-
-    if (
-      position.start - Dimensions.get('screen').height / 2 < props.currentScrollPosition &&
-      props.currentScrollPosition <= position.end + Dimensions.get('screen').height / 3
-    ) {
-      setHasAlert(true);
-    }
-  }, [props.currentScrollPosition]);
 
   const like = async () => {
     const result = await likeEvent({
@@ -113,59 +101,64 @@ export const EventCard = (props: CardProps) => {
       {visible && (
         <View style={styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* Icons */}
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-              {!props.item.owners.data.map(o => +o.id).includes(props.currentUserId ?? 0) && (
-                <View style={{ marginRight: 6 }}>
-                  <EventRequestStatus
-                    requests={props.item.event_requests}
-                    currentUserId={props.currentUserId}
-                    onModal={() => setIsModalVisible(true)}
-                  />
-                  <EventRequestModal
-                    currentUserId={props.currentUserId}
-                    eventUserIds={props.item.owners.data.map(o => +o.id)}
-                    eventId={+props.eventId}
-                    visible={isModalVisible}
-                    onClose={() => setIsModalVisible(false)}
-                    onChange={props.onChange}
-                  />
-                </View>
-              )}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                {!props.item.owners.data.map(o => +o.id).includes(props.currentUserId ?? 0) && (
+                  <View style={{ marginRight: 6 }}>
+                    <EventRequestStatus
+                      requests={props.item.event_requests}
+                      currentUserId={props.currentUserId}
+                      onModal={() => setIsModalVisible(true)}
+                    />
+                    <EventRequestModal
+                      currentUserId={props.currentUserId}
+                      eventUserIds={props.item.owners.data.map(o => +o.id)}
+                      eventId={+props.eventId}
+                      visible={isModalVisible}
+                      onClose={() => setIsModalVisible(false)}
+                      onChange={props.onChange}
+                    />
+                  </View>
+                )}
 
-              <TouchableOpacity onPress={() => like()} style={{ marginRight: 10 }}>
-                <Icon
-                  type="metarial"
-                  color={isLiked ? 'red' : 'black'}
-                  name={isLiked ? 'favorite' : 'favorite-border'}
-                  size={20}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  navigate({
-                    name: 'Comments',
-                    params: {
-                      eventId: props.eventId,
-                      currentUserId: props.currentUserId,
-                      type: 'event',
-                      eventUserId: props.item.owners.data[0].id,
-                    },
-                    merge: true,
-                  })
-                }
-              >
-                <Icon type="font-awesome-5" name="comment" size={18} />
-              </TouchableOpacity>
-            </View>
-            {/* Right */}
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="users" size={16} type="feather" />
-              <Text style={{ fontSize: 12, marginLeft: 5 }}>
-                {props.item.attendees.data.length + props.item.owners.data.length} Kişi Katılıyor
-              </Text>
+                <TouchableOpacity onPress={() => like()} style={{ marginRight: 10 }}>
+                  <Icon
+                    type="metarial"
+                    color={isLiked ? 'red' : 'black'}
+                    name={isLiked ? 'favorite' : 'favorite-border'}
+                    size={20}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigate({
+                      name: 'Comments',
+                      params: {
+                        eventId: props.eventId,
+                        currentUserId: props.currentUserId,
+                        type: 'event',
+                        eventUserId: props.item.owners.data[0].id,
+                      },
+                      merge: true,
+                    })
+                  }
+                >
+                  <Icon type="font-awesome-5" name="comment" size={18} />
+                </TouchableOpacity>
+              </View>
+
+              {props.children}
+
+              {/* Right */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="users" size={16} type="feather" />
+                <Text style={{ fontSize: 12, marginLeft: 5 }}>
+                  {props.item.attendees.data.length + props.item.owners.data.length} Kişi Katılıyor
+                </Text>
+              </View>
             </View>
           </View>
+          {/* Icons */}
 
           <View
             style={{

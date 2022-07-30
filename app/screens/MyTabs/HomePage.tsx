@@ -37,7 +37,7 @@ export const HomePage = (props: Props) => {
     getUserId();
   }, []);
 
-  const [event, setEvent] = useState<Data<Event>[] | undefined>();
+  const [events, setEvent] = useState<Data<Event>[] | undefined>();
 
   const { loading, error, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
     variables: { userId: userId },
@@ -63,8 +63,8 @@ export const HomePage = (props: Props) => {
         />
       }
     >
-      {event && (
-        <EventList event={event} isMine onChange={() => refetch()} currentScrollPosition={position} />
+      {events && (
+        <EventList events={events} isMine onChange={() => refetch()} currentScrollPosition={position} />
       )}
     </ScrollView>
   );

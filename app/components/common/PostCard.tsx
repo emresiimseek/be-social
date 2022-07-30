@@ -122,6 +122,7 @@ const PostCard = (props: PostCardProps) => {
             style={{ marginRight: 10 }}
           />
           <Icon onPress={() => directToCommentPage()} type="font-awesome-5" name="comment" size={18} />
+          {props.children}
         </View>
 
         {props.item.detail.comments.data.length > 0 && (
