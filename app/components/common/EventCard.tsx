@@ -31,8 +31,6 @@ export const EventCard = (props: CardProps) => {
 
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
 
-  const [hasAlert, setHasAlert] = useState<boolean>(false);
-
   const like = async () => {
     const result = await likeEvent({
       variables: {
@@ -56,16 +54,8 @@ export const EventCard = (props: CardProps) => {
 
   const [visible, setVisible] = useState(true);
 
-  const [position, setPosition] = useState<{ start: number | undefined; end: number | undefined }>();
-
   return (
-    <View
-      onLayout={event => {
-        const layout = event.nativeEvent.layout;
-        setPosition({ start: layout.y, end: layout.y + layout.height });
-      }}
-      style={[styles.cardContainer, { width: Dimensions.get('screen').width - 20 }]}
-    >
+    <View style={[styles.cardContainer, { width: Dimensions.get('screen').width - 20 }]}>
       {/* Header */}
       {visible && (
         <View style={styles.header}>

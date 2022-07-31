@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import React, { Component, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Alert } from 'react-native';
 import colors from '../../styles/colors';
 import { Props } from '../../types/common/props';
 import { Data } from '../../types/strapi/base/base';
@@ -12,11 +12,34 @@ interface EventCardHomeProps extends Props {
   event: Data<Event>;
   onChange?: () => void;
   isCarousel?: boolean;
+  currentScrollPosition: number;
 }
-// create a component
 const EventCardHome = (props: EventCardHomeProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { width } = Dimensions.get('screen');
+  const [position, setPosition] = useState<{ start: number; end: number }>({
+    start: 0,
+    end: 0,
+  });
+  const [hasEmitted, setHasEmitted] = useState<boolean>(false);
+  const [carousel, setCarousel] = useState<ScrollView | null>();
+
+  useEffect(() => {
+    if ((!position.start && !position.end) || hasEmitted) return;
+
+    if (
+      (props.currentScrollPosition >= position.start - 200 &&
+        position.end + 200 >= props.currentScrollPosition) ||
+      position.start === 0
+    ) {
+      carousel?.scrollTo({ x: 100 });
+      setTimeout(() => {
+        carousel?.scrollTo({ x: 0 });
+      }, 1000);
+
+      setHasEmitted(true);
+    }
+  }, [props.currentScrollPosition]);
 
   const getPositionArray = () => {
     const firstPosition = 0;
@@ -28,31 +51,9 @@ const EventCardHome = (props: EventCardHomeProps) => {
   const dots = () => {
     if (getPositionArray().length <= 1) return null;
     return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-          position: 'absolute',
-          right: 0,
-          left: 0,
-          zIndex: -2,
-        }}
-      >
+      <View style={styles.dotsContainer}>
         {getPositionArray().map((position, index) => (
-          <View
-            key={index}
-            style={{
-              height: 8,
-              width: 8,
-              borderRadius: 100,
-              backgroundColor: colors.secondColor,
-              marginRight: 5,
-              opacity: position === currentIndex ? 1 : 0.5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          />
+          <View key={index} style={{ ...styles.dots, opacity: position === currentIndex ? 1 : 0.5 }} />
         ))}
       </View>
     );
@@ -76,8 +77,16 @@ const EventCardHome = (props: EventCardHomeProps) => {
   };
 
   return (
-    <>
+    <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        setPosition({ start: layout.y, end: layout.y + layout.height });
+      }}
+    >
       <ScrollView
+        ref={ref => {
+          setCarousel(ref);
+        }}
         automaticallyAdjustContentInsets={false}
         horizontal
         onScroll={({ nativeEvent }) => {
@@ -97,7 +106,7 @@ const EventCardHome = (props: EventCardHomeProps) => {
         />
         {Posts()}
       </ScrollView>
-    </>
+    </View>
   );
 };
 
@@ -107,6 +116,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2c3e50',
+  },
+
+  dots: {
+    height: 8,
+    width: 8,
+    borderRadius: 100,
+    backgroundColor: colors.secondColor,
+    marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dotsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    zIndex: -2,
   },
 });
 

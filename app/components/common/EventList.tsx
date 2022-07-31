@@ -11,7 +11,7 @@ export interface EventProps extends Props {
   isMine: boolean;
   events: Data<Event>[];
   onChange?: () => void;
-  currentScrollPosition?: number;
+  currentScrollPosition: number;
 }
 
 export const EventList = (props: EventProps) => {
@@ -31,7 +31,13 @@ export const EventList = (props: EventProps) => {
     <>
       {isVisible ? (
         props.events.map((event, index) => (
-          <EventCardHome isCarousel key={index} event={event} currentUserId={userId} />
+          <EventCardHome
+            isCarousel
+            key={index}
+            event={event}
+            currentUserId={userId}
+            currentScrollPosition={props.currentScrollPosition}
+          />
         ))
       ) : (
         <Text style={{ color: colors.textGrayColor, textAlign: 'center', padding: 10 }}>Etkinlik yok</Text>
