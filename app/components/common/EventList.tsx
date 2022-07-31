@@ -30,7 +30,9 @@ export const EventList = (props: EventProps) => {
   return (
     <>
       {isVisible ? (
-        props.events.map((event, index) => <EventCardHome key={index} event={event} userId={userId} />)
+        props.events.map((event, index) => (
+          <EventCardHome isCarousel key={index} event={event} currentUserId={userId} />
+        ))
       ) : (
         <Text style={{ color: colors.textGrayColor, textAlign: 'center', padding: 10 }}>Etkinlik yok</Text>
       )}

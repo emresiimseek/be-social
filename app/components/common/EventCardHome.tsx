@@ -5,13 +5,13 @@ import { Props } from '../../types/common/props';
 import { Data } from '../../types/strapi/base/base';
 import { Event } from '../../types/strapi/models/event';
 import { EventCard } from './EventCard';
-import PostCards from './PostCards';
-import { Icon } from '@rneui/themed';
+import { postCardsMapper } from '../../logic/helpers/mapper.post-card-mapper';
+import PostCard from './PostCard';
 
 interface EventCardHomeProps extends Props {
   event: Data<Event>;
-  userId?: number;
   onChange?: () => void;
+  isCarousel?: boolean;
 }
 // create a component
 const EventCardHome = (props: EventCardHomeProps) => {
@@ -35,6 +35,7 @@ const EventCardHome = (props: EventCardHomeProps) => {
           position: 'absolute',
           right: 0,
           left: 0,
+          zIndex: -2,
         }}
       >
         {getPositionArray().map((position, index) => (
@@ -56,6 +57,23 @@ const EventCardHome = (props: EventCardHomeProps) => {
     );
   };
 
+  const Posts = () => {
+    const items = postCardsMapper(props.event.attributes.posts);
+    return (
+      <>
+        {items.map((item, index) => (
+          <PostCard
+            isCarousel={props.isCarousel}
+            children={dots()}
+            key={index}
+            item={item}
+            currentUserId={props.currentUserId}
+          />
+        ))}
+      </>
+    );
+  };
+
   return (
     <>
       <ScrollView
@@ -72,11 +90,11 @@ const EventCardHome = (props: EventCardHomeProps) => {
           key={props.event.id}
           item={props.event.attributes}
           eventId={props.event.id}
-          currentUserId={props.userId}
+          currentUserId={props.currentUserId}
           onChange={props.onChange}
           children={dots()}
         />
-        <PostCards children={dots()} posts={props.event.attributes.posts}></PostCards>
+        {Posts()}
       </ScrollView>
     </>
   );

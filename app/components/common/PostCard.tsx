@@ -14,6 +14,7 @@ import { TouchableOpacity } from 'react-native';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
+  isCarousel?: boolean;
 }
 
 // create a component
@@ -79,7 +80,7 @@ const PostCard = (props: PostCardProps) => {
   };
 
   return props.item ? (
-    <View style={{ width: Dimensions.get('window').width - 20, margin: 10 }}>
+    <View style={props.isCarousel && { width: Dimensions.get('window').width - 20, margin: 10 }}>
       {/* Header */}
       <View style={[styles.header]}>
         <Pressable

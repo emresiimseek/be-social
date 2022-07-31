@@ -6,13 +6,21 @@ import { useQuery } from '@apollo/client';
 import { GET_EVENTS_BY_USER_ID } from '../logic/graphql/queries/getEventsById';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import EventCardHome from '../components/common/EventCardHome';
+import { getItem } from '../logic/helpers/useAsyncStorage';
 
 // create a component
 const EventDetail = (props: Props) => {
   const [eventId, setEventId] = useState<number | undefined>();
+  const [userId, setUserId] = useState<number | undefined>();
 
   useEffect(() => {
     props.route.params.eventId && setEventId(props.route.params.eventId);
+    getItem<string>('userId').then(userId => {
+      if (!userId) return;
+
+      setUserId(+userId);
+    });
   }, []);
 
   const { data, refetch, loading } = useQuery(GET_EVENTS_BY_USER_ID, {
@@ -20,11 +28,7 @@ const EventDetail = (props: Props) => {
   });
   const event = data?.events.data[0].attributes;
 
-  return (
-    <View>
-      {data && <EventCard isFullScreen eventId={props.route.params.eventId} item={event}></EventCard>}
-    </View>
-  );
+  return <View>{data && <EventCardHome event={data?.events.data[0]} currentUserId={userId} />}</View>;
 };
 
 const styles = StyleSheet.create({});

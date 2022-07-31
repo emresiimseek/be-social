@@ -8,6 +8,7 @@ import Loading from './Loading';
 import { useEffect } from 'react';
 import { cardMapper } from '../../logic/helpers/mapper.post-card-mapper';
 import { useState } from 'react';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
 
 // create a component
 const PostDetail = (props: Props) => {
@@ -15,21 +16,22 @@ const PostDetail = (props: Props) => {
 
   const [carItem, setCarItem] = useState<any>();
 
+  const [userId, setUserId] = useState<number | undefined>();
+
   useEffect(() => {
+    getItem<string>('userId').then(userId => {
+      if (!userId) return;
+      setUserId(+userId);
+    });
+
     if (!data) return;
-
-    const item = cardMapper(data?.post?.data, 0);
-
+    const item = cardMapper(data?.post?.data);
     setCarItem(item);
   }, [data]);
 
   return (
     <View style={styles.container}>
-      {carItem ? (
-        <PostCard currentIndex={1} isSingle item={carItem} currentUserId={props.currentUserId} />
-      ) : (
-        <Loading />
-      )}
+      {carItem ? <PostCard item={carItem} currentUserId={userId} /> : <Loading />}
     </View>
   );
 };
@@ -37,7 +39,7 @@ const PostDetail = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 15,
+    margin: 10,
   },
 });
 
