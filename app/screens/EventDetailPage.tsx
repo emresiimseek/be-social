@@ -28,7 +28,9 @@ const EventDetail = (props: Props) => {
   });
   const event = data?.events.data[0].attributes;
 
-  return <View>{data && <EventCardHome event={data?.events.data[0]} currentUserId={userId} />}</View>;
+  return (
+    <View>{data && <EventCardHome event={data?.events.data[0]} currentUserId={userId} isCarousel />}</View>
+  );
 };
 
 const styles = StyleSheet.create({});
