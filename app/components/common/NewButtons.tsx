@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { Props } from '../../types/common/props';

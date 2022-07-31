@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import TabStatus from '../components/common/TabStatus';
@@ -137,8 +136,6 @@ const NewPost = (props: Props) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
-//make this component available to the app
 export default NewPost;

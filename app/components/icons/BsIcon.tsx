@@ -1,4 +1,3 @@
-//import liraries
 import { TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import React, { Component } from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
@@ -22,7 +21,6 @@ const BsIcon = (props: IconProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
 export default BsIcon;

@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Alert, Pressable, Dimensions } from 'react-native';
 import { Post } from '../../types/strapi/models/event';
@@ -142,7 +141,6 @@ const PostCard = (props: PostCardProps) => {
   ) : null;
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -175,5 +173,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default PostCard;

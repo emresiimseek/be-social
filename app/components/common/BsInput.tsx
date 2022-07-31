@@ -1,4 +1,3 @@
-//import liraries
 import { IconNode, Input } from '@rneui/base';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -70,7 +69,6 @@ const BsInput = (props: InputProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   input: { fontSize: 14 },
   inputContainer: {
@@ -89,5 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default BsInput;

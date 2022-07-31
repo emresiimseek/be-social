@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/client';
@@ -78,7 +77,6 @@ const Notifications = (props: Props) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -87,5 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default Notifications;

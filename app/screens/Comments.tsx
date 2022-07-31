@@ -243,7 +243,6 @@ export const CommentsComponent = (props: Props) => {
   );
 };
 
-// define your stylesr
 const styles = StyleSheet.create({
   bottom: {
     backgroundColor: 'white',

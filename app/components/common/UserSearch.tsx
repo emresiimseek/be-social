@@ -1,4 +1,3 @@
-//import liraries
 import { useQuery } from '@apollo/client';
 import { ListItem } from '@rneui/base';
 import React, { Component } from 'react';
@@ -80,7 +79,6 @@ const UserSearch = (props: UserSearchProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,5 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default UserSearch;

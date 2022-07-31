@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Props } from '../../types/common/props';
@@ -44,8 +43,6 @@ const PostGridList = (props: GridListProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
-//make this component available to the app
 export default PostGridList;

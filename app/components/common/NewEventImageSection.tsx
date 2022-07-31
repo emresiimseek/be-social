@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Loading from './Loading';
@@ -45,5 +44,4 @@ const NewEventImageSection = (props: NewEventImageSectionProps) => {
 
 const styles = StyleSheet.create({});
 
-//make this component available to the app
 export default NewEventImageSection;

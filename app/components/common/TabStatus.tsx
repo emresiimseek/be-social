@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useState } from 'react';
@@ -85,7 +84,6 @@ const TabStatus = (props: TabStatusProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.fourthColor,
@@ -102,5 +100,4 @@ const styles = StyleSheet.create({
   pressableItem: { flexDirection: 'row', alignItems: 'center', flex: 1, position: 'relative' },
 });
 
-//make this component available to the app
 export default TabStatus;

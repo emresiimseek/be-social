@@ -1,4 +1,3 @@
-//import liraries
 import { SearchBar } from '@rneui/themed';
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Platform, useWindowDimensions } from 'react-native';
@@ -119,7 +118,6 @@ const Search = () => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {},
   activeTab: { backgroundColor: colors.secondColor, color: 'red' },
@@ -134,5 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default Search;

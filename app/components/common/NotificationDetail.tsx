@@ -1,4 +1,3 @@
-//import liraries
 import { Button, ListItem } from '@rneui/base';
 import { Avatar } from '@rneui/themed';
 import React, { Component } from 'react';
@@ -181,8 +180,6 @@ const NotificationDetail = (props: NotificationDetailProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
-//make this component available to the app
 export default NotificationDetail;

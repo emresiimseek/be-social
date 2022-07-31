@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import colors from '../../styles/colors';
@@ -17,7 +16,6 @@ interface EventCardHomeProps extends Props {
 // create a component
 const EventCardHome = (props: EventCardHomeProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const { width } = Dimensions.get('screen');
 
   const getPositionArray = () => {
@@ -43,8 +41,8 @@ const EventCardHome = (props: EventCardHomeProps) => {
           <View
             key={index}
             style={{
-              height: index == 0 ? 18 : 8,
-              width: index == 0 ? 18 : 8,
+              height: 8,
+              width: 8,
               borderRadius: 100,
               backgroundColor: colors.secondColor,
               marginRight: 5,
@@ -52,13 +50,7 @@ const EventCardHome = (props: EventCardHomeProps) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-          >
-            {index == 0 && (
-              <>
-                <Icon name="calendar-outline" type="ionicon" size={10} color="white" />
-              </>
-            )}
-          </View>
+          />
         ))}
       </View>
     );
@@ -74,6 +66,7 @@ const EventCardHome = (props: EventCardHomeProps) => {
         }}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
       >
         <EventCard
           key={props.event.id}
@@ -89,7 +82,6 @@ const EventCardHome = (props: EventCardHomeProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -99,5 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default EventCardHome;

@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { BsModal } from './Modal';
@@ -101,7 +100,6 @@ const EventRequestModal = (props: ModalProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -111,5 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default EventRequestModal;

@@ -1,4 +1,3 @@
-//import liraries
 import React, { useState } from 'react';
 import { Props } from '../../types/common/props';
 import { Items } from '../../types/strapi/base/base';

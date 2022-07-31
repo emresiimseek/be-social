@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { EventCard } from '../components/common/EventCard';
@@ -28,8 +27,6 @@ const EventDetail = (props: Props) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
-//make this component available to the app
 export default EventDetail;

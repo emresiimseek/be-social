@@ -1,4 +1,3 @@
-//import liraries
 import React from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
 import { CreateEventModel } from '../../types/common/create-event-model';
@@ -151,7 +150,6 @@ const EventForm = (props: EventFormProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -161,5 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default EventForm;

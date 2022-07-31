@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Items } from '../../types/strapi/base/base';
@@ -99,9 +98,8 @@ const EventRequestStatus = (props: EventRequestStatusProps) => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({});
 
 interface EventRequestStatus {}
-//make this component available to the app
+
 export default EventRequestStatus;

@@ -1,4 +1,3 @@
-//import liraries
 import { Query } from '@apollo/client/react/components';
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
@@ -85,7 +84,6 @@ class UserList extends Component<Props> {
   }
 }
 
-// define your stylesr
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,5 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default UserList;
