@@ -8,7 +8,7 @@ import { Props } from '../types/common/props';
 import { Button, Icon, Input, Text } from '@rneui/base';
 import { EVENT_COMMENTS } from '../logic/graphql/queries/eventComments';
 import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
-import CommentsReplies from './MyTabs/CommentReplies';
+import CommentsReplies from '../components/common/CommentReplies';
 import { colors } from '../styles/colors';
 import { usePushNotification } from '../logic/helpers/usePushNotification';
 import { navigate } from '../RootNavigation';

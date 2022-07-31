@@ -55,7 +55,7 @@ export const VisitedProfile = (props: Props) => {
             refecth={() => refetch()}
           />
           {viewType === 'list' && event?.length > 0 && (
-            <EventList event={event} isMine={false} currentUserId={currentUserId} />
+            <EventList events={event} isMine={false} currentUserId={currentUserId} />
           )}
 
           {viewType === 'grid' && event?.length > 0 && <GridList items={event} />}

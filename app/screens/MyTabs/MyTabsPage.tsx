@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from '@rneui/themed';
-import { Props } from '../types/common/props';
-import { HomePage } from './MyTabs/HomePage';
-import { ProfilePage } from './MyTabs/ProfilePage';
+import { Props } from '../../types/common/props';
+import { HomePage } from './HomePage';
+import { ProfilePage } from './ProfilePage';
 import { useState } from 'react';
-import colors from '../styles/colors';
-import NewButtons from '../components/common/NewButtons';
-import NewItem from './NewItem';
-import Notifications from './Notifications';
-import Search from './Search';
+import colors from '../../styles/colors';
+import NewButtons from '../../components/common/NewButtons';
+import NewItem from './NewItemPage';
+import Notifications from './NotificationsPage';
+import Search from './SearchPage';
 
 const Tab = createBottomTabNavigator();
 interface MyTabsProps extends Props {}

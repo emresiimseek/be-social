@@ -1,16 +1,16 @@
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/client';
-import { GET_NOTIFICATIONS } from '../logic/graphql/queries/getNotifications';
-import { Items, Variables } from '../types/strapi/base/base';
+import { GET_NOTIFICATIONS } from '../../logic/graphql/queries/getNotifications';
+import { Items, Variables } from '../../types/strapi/base/base';
 import { useState } from 'react';
-import { getItem } from '../logic/helpers/useAsyncStorage';
-import { Notification } from '../types/strapi/models/notification';
-import { colors } from '../styles/colors';
+import { getItem } from '../../logic/helpers/useAsyncStorage';
+import { Notification } from '../../types/strapi/models/notification';
+import { colors } from '../../styles/colors';
 import { ScrollView } from 'react-native';
-import { Props } from '../types/common/props';
+import { Props } from '../../types/common/props';
 import { Icon } from '@rneui/themed';
-import NotificationDetail from '../components/common/NotificationDetail';
+import NotificationDetail from '../../components/common/NotificationDetail';
 
 // create a component
 const Notifications = (props: Props) => {

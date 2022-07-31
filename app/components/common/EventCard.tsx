@@ -101,7 +101,9 @@ export const EventCard = (props: CardProps) => {
       {visible && (
         <View style={styles.footer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {props.children}
+
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                 {!props.item.owners.data.map(o => +o.id).includes(props.currentUserId ?? 0) && (
                   <View style={{ marginRight: 6 }}>
@@ -146,8 +148,6 @@ export const EventCard = (props: CardProps) => {
                   <Icon type="font-awesome-5" name="comment" size={18} />
                 </TouchableOpacity>
               </View>
-
-              {props.children}
 
               {/* Right */}
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>

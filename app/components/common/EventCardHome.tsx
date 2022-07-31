@@ -26,6 +26,7 @@ const EventCardHome = (props: EventCardHomeProps) => {
   };
 
   const dots = () => {
+    if (getPositionArray().length <= 1) return null;
     return (
       <View
         style={{
