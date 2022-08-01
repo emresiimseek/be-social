@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
-  Vibration,
 } from 'react-native';
 import { Icon, Avatar, Image } from '@rneui/themed';
 import moment from 'moment';
@@ -23,6 +22,7 @@ import { navigate } from '../../RootNavigation';
 import EventRequestModal from './EventRequestModal';
 import EventRequestStatus from './EventRequestStatus';
 import LottieLikeAnimation from './LottieLikeAnimation';
+import * as Haptics from 'expo-haptics';
 
 interface CardProps extends Props {
   item: Event;
@@ -42,7 +42,7 @@ export const EventCard = (props: CardProps) => {
   const [clickCount, setClickCount] = useState(0);
 
   const like = async () => {
-    if (isLiked) Vibration.vibrate();
+    if (!isLiked) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
     const result = await likeEvent({
       variables: {

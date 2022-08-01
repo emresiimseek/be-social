@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  Pressable,
-  Dimensions,
-  ActivityIndicator,
-  Vibration,
-} from 'react-native';
+import { View, Text, StyleSheet, Alert, Pressable, Dimensions, ActivityIndicator } from 'react-native';
 import { Post } from '../../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
 import { Avatar, Icon } from '@rneui/base';
@@ -22,6 +13,7 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import LottieLikeAnimation from './LottieLikeAnimation';
 import { Image } from '@rneui/themed';
+import * as Haptics from 'expo-haptics';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
@@ -52,7 +44,7 @@ const PostCard = (props: PostCardProps) => {
   const like = () => {
     if (!props.item) return;
 
-    Vibration.vibrate();
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     return likePost({
       variables: {
         id: props.item.id,
