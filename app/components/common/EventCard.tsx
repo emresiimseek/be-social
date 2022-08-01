@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
-  Platform,
   Vibration,
 } from 'react-native';
 import { Icon, Avatar, Image } from '@rneui/themed';
@@ -23,6 +22,7 @@ import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
 import EventRequestModal from './EventRequestModal';
 import EventRequestStatus from './EventRequestStatus';
+import LottieLikeAnimation from './LottieLikeAnimation';
 
 interface CardProps extends Props {
   item: Event;
@@ -42,6 +42,8 @@ export const EventCard = (props: CardProps) => {
   const [clickCount, setClickCount] = useState(0);
 
   const like = async () => {
+    if (isLiked) Vibration.vibrate();
+
     const result = await likeEvent({
       variables: {
         id: +props.eventId,
@@ -92,18 +94,23 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <Image
-        source={{ uri: props.item.images.data[0].attributes.url }}
-        style={{ aspectRatio: 1 }}
-        PlaceholderContent={<ActivityIndicator />}
-        onPress={() => {
-          setClickCount(clickCount + 1);
-          if (clickCount % 2 === 0) {
-            Vibration.vibrate();
-            like();
-          }
-        }}
-      />
+      <View style={{}}>
+        <Image
+          style={{ width: '100%', aspectRatio: 1 }}
+          source={{ uri: props.item.images.data[0].attributes.url }}
+          PlaceholderContent={<ActivityIndicator />}
+        ></Image>
+        <LottieLikeAnimation
+          isLiked={isLiked}
+          clickCount={clickCount}
+          onPress={() => {
+            setClickCount(clickCount + 1);
+            if (clickCount % 2 === 0) {
+              like();
+            }
+          }}
+        />
+      </View>
 
       {/* Footer */}
 

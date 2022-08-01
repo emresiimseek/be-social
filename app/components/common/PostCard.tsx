@@ -20,6 +20,7 @@ import { navigate } from '../../RootNavigation';
 import { PostCardItem } from '../../types/common/post-card-item';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import LottieLikeAnimation from './LottieLikeAnimation';
 import { Image } from '@rneui/themed';
 
 interface PostCardProps extends Props {
@@ -31,6 +32,7 @@ const PostCard = (props: PostCardProps) => {
   const [likePost, { data, loading, error }] = useMutation(UPDATE_POST);
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
   const [clickCount, setClickCount] = useState(0);
+  const isLiked = !!props.item.detail.post_likes.data.find(pl => +pl.id === props.currentUserId);
 
   const unLike = () => {
     if (!props.item) return;
@@ -50,6 +52,7 @@ const PostCard = (props: PostCardProps) => {
   const like = () => {
     if (!props.item) return;
 
+    Vibration.vibrate();
     return likePost({
       variables: {
         id: props.item.id,
@@ -62,7 +65,6 @@ const PostCard = (props: PostCardProps) => {
 
   const handleLike = () => {
     props.item.detail.post_likes.data.find(pl => +pl.id === props.currentUserId);
-    const isLiked = !!props.item.detail.post_likes.data.find(pl => +pl.id === props.currentUserId);
 
     const result = isLiked ? unLike() : like();
 
@@ -113,18 +115,25 @@ const PostCard = (props: PostCardProps) => {
           <Text style={{ marginLeft: 5 }}>{props.item.detail.users?.data[0]?.attributes.username}</Text>
         </Pressable>
       </View>
-      <Image
-        style={[styles.container]}
-        source={{ uri: props.item.imageUrl }}
-        PlaceholderContent={<ActivityIndicator />}
-        onPress={() => {
-          setClickCount(clickCount + 1);
-          if (clickCount % 2 === 0) {
-            Vibration.vibrate();
-            handleLike();
-          }
-        }}
-      />
+
+      <View style={[styles.container]}>
+        <Image
+          style={[styles.container]}
+          source={{ uri: props.item.imageUrl }}
+          PlaceholderContent={<ActivityIndicator />}
+        ></Image>
+        <LottieLikeAnimation
+          isLiked={isLiked}
+          clickCount={clickCount}
+          onPress={() => {
+            setClickCount(clickCount + 1);
+            if (clickCount % 2 === 0) {
+              handleLike();
+            }
+          }}
+        />
+      </View>
+
       {/* Footer */}
       <View style={[styles.footer]}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
