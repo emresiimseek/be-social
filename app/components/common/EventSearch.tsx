@@ -12,7 +12,7 @@ import { RefreshControl } from 'react-native';
 interface EventSearchProps {
   term: string;
 }
-// create a component
+
 const EventSearch = (props: EventSearchProps) => {
   const {
     data: eventData,

@@ -13,7 +13,7 @@ import { navigate } from '../../RootNavigation';
 interface UserSearchProps {
   term: string;
 }
-// create a component
+
 const UserSearch = (props: UserSearchProps) => {
   const { data, refetch, error, loading } = useQuery<
     { usersPermissionsUsers: Items<UserAttributes> },

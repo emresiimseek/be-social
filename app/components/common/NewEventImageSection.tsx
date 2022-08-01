@@ -16,7 +16,6 @@ interface NewEventImageSectionProps {
   onFileChange: (file: ReactNativeFile) => void;
 }
 
-// create a component
 const NewEventImageSection = (props: NewEventImageSectionProps) => {
   return (
     <View style={{ flex: 1 }}>

@@ -10,7 +10,6 @@ import { cardMapper } from '../../logic/helpers/mapper.post-card-mapper';
 import { useState } from 'react';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 
-// create a component
 const PostDetail = (props: Props) => {
   const { data, refetch } = useQuery(GET_POST_BY_ID, { variables: { id: props.route.params.postId } });
 

@@ -10,7 +10,6 @@ import { USERS_QUERY } from '../logic/graphql/queries/getUser';
 import colors from '../styles/colors';
 import { navigate } from '../RootNavigation';
 
-// create a component
 class UserList extends Component<Props> {
   render() {
     return (

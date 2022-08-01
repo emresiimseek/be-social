@@ -20,7 +20,6 @@ import { Props } from '../types/common/props';
 import Loading from '../components/common/Loading';
 import { navigate } from '../RootNavigation';
 
-// create a component
 const NewPost = (props: Props) => {
   // Tab Status
   const items: TabStatusItem[] = [

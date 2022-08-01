@@ -28,7 +28,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// create a component
 const NewEvent = (props: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [createLoading, setLoading] = useState(false);

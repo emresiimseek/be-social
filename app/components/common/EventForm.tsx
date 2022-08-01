@@ -22,7 +22,7 @@ interface EventFormProps {
   onModelChange: (event: CreateEventModel) => void;
   categoryLabelsChanged: (categoryLabels: string[]) => void;
 }
-// create a component
+
 const EventForm = (props: EventFormProps) => {
   const {
     data: queryData,

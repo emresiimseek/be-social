@@ -8,7 +8,7 @@ interface IconProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 }
-// create a component
+
 const BsIcon = (props: IconProps) => {
   const source = require(`../../assets/icons/${props.iconName}.png`);
 

@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, Dimensions, Alert, Image } from 'react-native';
-import { Icon, Avatar } from '@rneui/themed';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  ActivityIndicator,
+  Platform,
+  Vibration,
+} from 'react-native';
+import { Icon, Avatar, Image } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { Props } from '../../types/common/props';
@@ -23,13 +33,13 @@ interface CardProps extends Props {
 
 export const EventCard = (props: CardProps) => {
   moment.locale('tr');
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const isLiked = !!props.item.event_likes?.data.find(l => +l.id === props.currentUserId);
   const [likeEvent] = useMutation<FlowEventData, Variables>(LIKE_EVENT);
-
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
+  const [visible, setVisible] = useState(true);
+
+  const [clickCount, setClickCount] = useState(0);
 
   const like = async () => {
     const result = await likeEvent({
@@ -51,8 +61,6 @@ export const EventCard = (props: CardProps) => {
         type: 'like_event',
       });
   };
-
-  const [visible, setVisible] = useState(true);
 
   return (
     <View style={[styles.cardContainer, { width: Dimensions.get('screen').width - 20 }]}>
@@ -84,7 +92,18 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <Image source={{ uri: props.item.images.data[0].attributes.url }} style={{ aspectRatio: 1 }} />
+      <Image
+        source={{ uri: props.item.images.data[0].attributes.url }}
+        style={{ aspectRatio: 1 }}
+        PlaceholderContent={<ActivityIndicator />}
+        onPress={() => {
+          setClickCount(clickCount + 1);
+          if (clickCount % 2 === 0) {
+            Vibration.vibrate();
+            like();
+          }
+        }}
+      />
 
       {/* Footer */}
 

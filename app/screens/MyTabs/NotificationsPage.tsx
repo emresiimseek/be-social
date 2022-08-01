@@ -12,7 +12,6 @@ import { Props } from '../../types/common/props';
 import { Icon } from '@rneui/themed';
 import NotificationDetail from '../../components/common/NotificationDetail';
 
-// create a component
 const Notifications = (props: Props) => {
   const [componentLoading, setComponentLoading] = useState(false);
 

@@ -12,7 +12,7 @@ interface EventRequestStatusProps extends Props {
   requests: Items<EventRequestAttributes>;
   onModal: () => void;
 }
-// create a component
+
 const EventRequestStatus = (props: EventRequestStatusProps) => {
   const hasRequested = !!props?.requests.data.find(r => +r.attributes.user.data.id === props.currentUserId);
 

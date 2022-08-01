@@ -21,7 +21,6 @@ interface NotificationDetailProps {
   onChange?: () => void;
 }
 
-// create a component
 const NotificationDetail = (props: NotificationDetailProps) => {
   moment.locale('tr');
 

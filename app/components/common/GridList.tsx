@@ -8,12 +8,14 @@ import { Icon } from '@rneui/base';
 import { Pressable } from 'react-native';
 import { navigate } from '../../RootNavigation';
 import { colors } from '../../styles/colors';
+import { FlatList } from 'react-native';
+import { Image } from '@rneui/themed';
+import { ActivityIndicator } from 'react-native';
 
 interface GridListProps extends Props {
   items: Data<Event>[];
 }
 
-// create a component
 const GridList = (props: GridListProps) => {
   return (
     <View style={{ flexDirection: 'row' }}>
@@ -27,16 +29,18 @@ const GridList = (props: GridListProps) => {
               })
             }
           >
-            <ImageBackground
-              source={{ uri: item.attributes.images?.data?.[0]?.attributes?.url }}
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: '#e6e6e6',
-                minHeight: Dimensions.get('window').width / 3,
-                minWidth: Dimensions.get('window').width / 3,
-                backgroundColor: 'rgba(0,0,0,0.1)',
-              }}
-            >
+            <>
+              <Image
+                source={{ uri: item.attributes.images?.data?.[0]?.attributes?.url }}
+                PlaceholderContent={<ActivityIndicator />}
+                style={{
+                  borderWidth: 0.5,
+                  borderColor: 'white',
+                  minHeight: Dimensions.get('window').width / 3,
+                  minWidth: Dimensions.get('window').width / 3,
+                  backgroundColor: 'rgba(0,0,0,0.1)',
+                }}
+              />
               <View
                 style={{
                   position: 'absolute',
@@ -46,12 +50,12 @@ const GridList = (props: GridListProps) => {
                   justifyContent: 'center',
                 }}
               >
-                <Icon type="ionicon" name="albums" size={25} color={colors.textGrayColor} />
+                <Icon type="ionicon" name="albums" size={25} color={colors.secondColor} />
                 <Text style={{ position: 'absolute', color: 'white', fontSize: 10, paddingTop: 5 }}>
                   {item.attributes.posts.data.length}
                 </Text>
               </View>
-            </ImageBackground>
+            </>
           </Pressable>
         ))}
     </View>

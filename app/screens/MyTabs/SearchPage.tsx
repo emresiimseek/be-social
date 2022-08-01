@@ -11,7 +11,6 @@ import EventSearch from '../../components/common/EventSearch';
 import PostSearch from '../../components/common/PostSearch';
 import { Icon } from '@rneui/themed';
 
-// create a component
 const Search = () => {
   const [term, setTerm] = useState('');
 

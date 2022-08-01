@@ -6,10 +6,10 @@ import { EventList } from '../../components/common/EventList';
 import { useQuery } from '@apollo/client';
 import { USERS_QUERY } from '../../logic/graphql/queries/getUser';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
-import { Variables } from '../../types/strapi/base/base';
+import { Items, Variables } from '../../types/strapi/base/base';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { GET_EVENTS_BY_USER_ID } from '../../logic/graphql/queries/getEventsById';
-import { EventData } from '../../types/strapi/models/event';
+import { Event, EventData } from '../../types/strapi/models/event';
 import GridList from '../../components/common/GridList';
 
 export const ProfilePage = (props: Props) => {
@@ -42,11 +42,12 @@ export const ProfilePage = (props: Props) => {
     loading: eventLoading,
     data: eventData,
     refetch: eventRefetch,
-  } = useQuery<any, Variables>(GET_EVENTS_BY_USER_ID, {
+  } = useQuery<{ events: Items<Event> }, Variables>(GET_EVENTS_BY_USER_ID, {
     variables: { filters: { owners: { id: { eq: userId } } }, sort: ['publishedAt:desc'] },
   });
 
-  const event = eventData?.events.data;
+  const events = eventData?.events.data;
+
   const [viewType, setViewType] = useState<'list' | 'grid'>('grid');
 
   return (
@@ -62,11 +63,11 @@ export const ProfilePage = (props: Props) => {
             onWiewChange={type => setViewType(type)}
             view={viewType}
           />
-          {viewType === 'list' && event?.length > 0 && (
-            <EventList event={event} isMine currentUserId={userId} />
+          {viewType === 'list' && !!events?.length && (
+            <EventList events={events} isMine currentUserId={userId} />
           )}
 
-          {viewType === 'grid' && event?.length > 0 && <GridList items={event} />}
+          {viewType === 'grid' && !!events?.length && <GridList items={events} />}
         </View>
       )}
     </ScrollView>

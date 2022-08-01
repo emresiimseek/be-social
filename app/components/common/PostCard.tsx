@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, Pressable, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Pressable,
+  Dimensions,
+  ActivityIndicator,
+  Vibration,
+} from 'react-native';
 import { Post } from '../../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
 import { Avatar, Icon } from '@rneui/base';
@@ -11,16 +20,17 @@ import { navigate } from '../../RootNavigation';
 import { PostCardItem } from '../../types/common/post-card-item';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { Image } from '@rneui/themed';
 
 interface PostCardProps extends Props {
   item: PostCardItem<Post>;
   isCarousel?: boolean;
 }
 
-// create a component
 const PostCard = (props: PostCardProps) => {
   const [likePost, { data, loading, error }] = useMutation(UPDATE_POST);
   const [numberOfLine, setNumberOfLine] = useState<number | undefined>(1);
+  const [clickCount, setClickCount] = useState(0);
 
   const unLike = () => {
     if (!props.item) return;
@@ -103,7 +113,18 @@ const PostCard = (props: PostCardProps) => {
           <Text style={{ marginLeft: 5 }}>{props.item.detail.users?.data[0]?.attributes.username}</Text>
         </Pressable>
       </View>
-      <ImageBackground style={[styles.container]} source={{ uri: props.item.imageUrl }}></ImageBackground>
+      <Image
+        style={[styles.container]}
+        source={{ uri: props.item.imageUrl }}
+        PlaceholderContent={<ActivityIndicator />}
+        onPress={() => {
+          setClickCount(clickCount + 1);
+          if (clickCount % 2 === 0) {
+            Vibration.vibrate();
+            handleLike();
+          }
+        }}
+      />
       {/* Footer */}
       <View style={[styles.footer]}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

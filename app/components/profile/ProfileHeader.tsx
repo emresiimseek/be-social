@@ -12,6 +12,7 @@ import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import colors from '../../styles/colors';
 import { navigate } from '../../RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useApolloClient } from '@apollo/client';
 
 interface ProfileHeaderProps extends Props {
   user: UsersPermissionsUser;
@@ -31,6 +32,8 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
     any,
     Variables
   >(FOLLOW_USER);
+
+  const client = useApolloClient();
 
   useEffect(() => {
     if (mutationData) {
@@ -127,6 +130,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
       <View style={{ position: 'absolute', right: 3, bottom: 2, top: 5 }}>
         <TouchableOpacity
           onPress={async () => {
+            client.clearStore();
             await AsyncStorage.clear();
             navigate('Welcome');
           }}

@@ -21,7 +21,7 @@ interface ModalProps extends Props {
   onChange?: () => void;
   eventUserIds: number[];
 }
-// create a component
+
 const EventRequestModal = (props: ModalProps) => {
   const [loadingBase, setLoading] = useState(false);
   const [model, setModel] = useState<CreateEventRequest>({

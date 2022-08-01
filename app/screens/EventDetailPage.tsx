@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 import EventCardHome from '../components/common/EventCardHome';
 import { getItem } from '../logic/helpers/useAsyncStorage';
 
-// create a component
 const EventDetail = (props: Props) => {
   const [eventId, setEventId] = useState<number | undefined>();
   const [userId, setUserId] = useState<number | undefined>();

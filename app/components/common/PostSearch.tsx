@@ -11,7 +11,7 @@ import { RefreshControl } from 'react-native';
 interface PostSearchProps {
   term: string;
 }
-// create a component
+
 const PostSearch = (props: PostSearchProps) => {
   const { data, refetch, error, loading } = useQuery<{ posts: Items<Post> }, Variables>(SEARCH_POSTS, {
     variables: {

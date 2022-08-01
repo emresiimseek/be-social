@@ -15,7 +15,6 @@ interface TabStatusProps {
   loading: boolean;
 }
 
-// create a component
 const TabStatus = (props: TabStatusProps) => {
   const [items, setItems] = useState<TabStatusItem[]>([]);
 

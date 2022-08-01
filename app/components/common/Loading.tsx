@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { colors } from '../../styles/colors';
 
-// create a component
 class Loading extends Component {
   render() {
     return (

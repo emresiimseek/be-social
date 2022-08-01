@@ -12,7 +12,6 @@ interface NewButtonProps extends Props {
   setFocus: (focus: boolean) => void;
 }
 
-// create a component
 const NewButtons = (props: NewButtonProps) => {
   const translateXAnimRight = new Animated.Value(500);
   const translateXAnimLeft = new Animated.Value(-500);

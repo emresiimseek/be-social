@@ -22,7 +22,6 @@ interface InputProps {
   email?: boolean;
 }
 
-// create a component
 const BsInput = (props: InputProps) => {
   const [focus, setFocus] = useState(false);
 

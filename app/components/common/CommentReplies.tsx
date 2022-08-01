@@ -13,7 +13,6 @@ interface CommentRepliesProps extends Props {
   replies: Items<CommentAttributes>;
 }
 
-// create a component
 const CommentsReplies = (props: CommentRepliesProps) => {
   const [isVisible, setVisible] = useState(false);
 

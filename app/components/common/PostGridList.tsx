@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { Props } from '../../types/common/props';
 import { Data } from '../../types/strapi/base/base';
-import { Event } from '../../types/strapi/models/event';
-import { ImageBackground } from 'react-native';
-import { Icon } from '@rneui/base';
 import { Pressable } from 'react-native';
 import { navigate } from '../../RootNavigation';
 import { Post } from '../../types/strapi/models/event';
+import { Image } from '@rneui/themed';
 
 interface GridListProps extends Props {
   items: Data<Post>[];
 }
 
-// create a component
 const PostGridList = (props: GridListProps) => {
   return (
     <View style={{ flexDirection: 'row' }}>
@@ -27,11 +24,12 @@ const PostGridList = (props: GridListProps) => {
               })
             }
           >
-            <ImageBackground
+            <Image
               source={{ uri: item.attributes.images.data[0].attributes.url }}
+              PlaceholderContent={<ActivityIndicator />}
               style={{
-                borderRightWidth: 1,
-                borderRightColor: '#e6e6e6',
+                borderWidth: 0.5,
+                borderColor: 'white',
                 minHeight: Dimensions.get('window').width / 3,
                 minWidth: Dimensions.get('window').width / 3,
                 backgroundColor: 'rgba(0,0,0,0.1)',

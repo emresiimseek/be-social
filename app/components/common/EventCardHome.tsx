@@ -12,7 +12,7 @@ interface EventCardHomeProps extends Props {
   event: Data<Event>;
   onChange?: () => void;
   isCarousel?: boolean;
-  currentScrollPosition: number;
+  currentScrollPosition?: number;
 }
 const EventCardHome = (props: EventCardHomeProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,18 +25,23 @@ const EventCardHome = (props: EventCardHomeProps) => {
   const [carousel, setCarousel] = useState<ScrollView | null>();
 
   useEffect(() => {
-    if ((!position.start && !position.end) || hasEmitted) return;
+    if ((!position.start && !position.end) || hasEmitted || !props.currentScrollPosition) return;
 
-    if (
-      (props.currentScrollPosition >= position.start - 200 &&
-        position.end + 200 >= props.currentScrollPosition) ||
-      position.start === 0
-    ) {
-      carousel?.scrollTo({ x: 100 });
-      setTimeout(() => {
+    const isHover =
+      props.currentScrollPosition >= position.start - 200 &&
+      position.end + 200 >= props.currentScrollPosition;
+
+    const renderHack = () => {
+      carousel?.scrollTo({ x: 50 });
+      const interval = setInterval(() => {
         carousel?.scrollTo({ x: 0 });
-      }, 1000);
+      }, 500);
 
+      setTimeout(() => clearInterval(interval), 501);
+    };
+
+    if (isHover || position.start === 0) {
+      renderHack();
       setHasEmitted(true);
     }
   }, [props.currentScrollPosition]);

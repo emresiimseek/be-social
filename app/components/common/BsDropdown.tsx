@@ -13,7 +13,7 @@ interface DropdownProps extends Props {
   value?: any;
   onBlur?: () => void;
 }
-// create a component
+
 const BsDropdown = (props: DropdownProps) => {
   return (
     <>

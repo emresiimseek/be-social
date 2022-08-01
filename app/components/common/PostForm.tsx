@@ -17,7 +17,6 @@ interface PostFormProps {
   onIncraseIndex: () => void;
 }
 
-// create a component
 const PostForm = (props: PostFormProps) => {
   const now = new Date().setHours(0, 0, 0, 0);
 

@@ -16,7 +16,6 @@ interface PostCardProps extends Props {
   image: string;
 }
 
-// create a component
 const PostCardPreview = (props: PostCardProps) => {
   const { data } = useQuery<UsersPermissionsUser>(GET_USER_ONLY, { variables: { id: props.userId } });
 
