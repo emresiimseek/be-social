@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import TabStatus from '../components/common/TabStatus';
 import { TabStatusItem } from '../types/common/tab-status-item';
 import { CreateEventModel } from '../types/common/create-event-model';
-import { ApolloClient, InMemoryCache, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CREATE_EVENT } from '../logic/graphql/mutations/createEvent';
 import { Variables } from '../types/strapi/base/base';
 import { useEffect } from 'react';
@@ -12,24 +12,15 @@ import { getItem } from '../logic/helpers/useAsyncStorage';
 import EventForm from '../components/common/EventForm';
 import Toast from 'react-native-toast-message';
 import NewEventImageSection from '../components/common/NewEventImageSection';
-import { Props } from '../types/common/props';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
 import { directNested } from '../RootNavigation';
-import { UPLOAD } from '../logic/graphql/mutations/upload';
-import { createUploadLink, ReactNativeFile } from 'apollo-upload-client';
-import { STRAPI_API_URL, STRAPI_TOKEN } from '@env';
+import { ReactNativeFile } from 'apollo-upload-client';
+import { ImageInfo } from 'expo-image-picker';
+import { useGraphqlUpload } from '../logic/helpers/useGraphqlUploadImage';
 
-const client = new ApolloClient({
-  link: createUploadLink({ uri: `${STRAPI_API_URL}/graphql` }),
-  headers: {
-    Authorization: `Bearer ${STRAPI_TOKEN}`,
-  },
-  cache: new InMemoryCache(),
-});
-
-const NewEvent = (props: Props) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const NewEvent = () => {
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [createLoading, setLoading] = useState(false);
   const [categoryLabels, setCategoryLabels] = useState<string[]>([]);
   const [isEventFormValid, setEventFormValid] = useState(false);
@@ -43,11 +34,9 @@ const NewEvent = (props: Props) => {
     getUser();
   }, []);
 
-  const [draftImage, setDraftImage] = useState<string | null>(null);
+  const [draftImage, setDraftImage] = useState<ImageInfo | null>(null);
   const [file, setFile] = useState<ReactNativeFile | null>(null);
-
   const [createEvent] = useMutation<{ createEvent: any }, Variables>(CREATE_EVENT);
-  const [upload, { error, data }] = useMutation(UPLOAD);
 
   const createNewEvent = async () => {
     if (!draftImage) {
@@ -58,15 +47,8 @@ const NewEvent = (props: Props) => {
       return;
     }
     setLoading(true);
-    // const id = await useUploadImage(draftImage);
 
-    const resultUpload = await client.mutate({
-      mutation: UPLOAD,
-      variables: {
-        file: file,
-      },
-    });
-
+    const resultUpload = await useGraphqlUpload(file);
     const imageId = resultUpload.data.upload.data.id;
 
     const result = await createEvent({ variables: { data: { ...event, images: [imageId] } } });

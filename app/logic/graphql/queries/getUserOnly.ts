@@ -14,6 +14,8 @@ export const GET_USER_ONLY = gql`
             data {
               attributes {
                 url
+                height
+                width
               }
             }
           }

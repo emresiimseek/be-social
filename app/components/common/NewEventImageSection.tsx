@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Loading from './Loading';
 import ImagePickerComponent from './ImagePicker';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import { PreviewEventCard } from './PreviewEventCard';
 import { ReactNativeFile } from 'apollo-upload-client';
+import { ImageInfo } from 'expo-image-picker';
 
 interface NewEventImageSectionProps {
   loading: boolean;
-  draftImage: string | null;
+  draftImage: ImageInfo | null;
   event: CreateEventModel | null;
   categoryLabels: string[];
-  onImageChange: (image: string) => void;
+  onImageChange: (image: ImageInfo) => void;
   createLoading: boolean;
   onFileChange: (file: ReactNativeFile) => void;
 }
@@ -26,7 +27,8 @@ const NewEventImageSection = (props: NewEventImageSectionProps) => {
           {props.draftImage && props.event ? (
             <PreviewEventCard
               categoryLabels={props.categoryLabels}
-              item={{ ...props.event, images: [props.draftImage] }}
+              item={{ ...props.event, images: [props.draftImage.uri] }}
+              image={props.draftImage}
             />
           ) : (
             <ImagePickerComponent

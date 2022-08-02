@@ -42,6 +42,8 @@ export const EVENTS_FIELDS = gql`
               data {
                 attributes {
                   url
+                  height
+                  width
                 }
               }
             }
@@ -110,6 +112,8 @@ export const EVENTS_FIELDS = gql`
           id
           attributes {
             url
+            height
+            width
           }
         }
       }

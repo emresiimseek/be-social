@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Icon, Avatar } from '@rneui/themed';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Icon, Avatar, Image } from '@rneui/themed';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { Props } from '../../types/common/props';
@@ -9,10 +17,12 @@ import { useQuery } from '@apollo/client';
 import { GET_USER_ONLY } from '../../logic/graphql/queries/getUserOnly';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
+import { ImageInfo } from 'expo-image-picker';
 
 interface CardProps extends Props {
   item: CreateEventModel;
   categoryLabels: string[];
+  image: ImageInfo;
 }
 
 export const PreviewEventCard = (props: CardProps) => {
@@ -34,11 +44,11 @@ export const PreviewEventCard = (props: CardProps) => {
   }, []);
 
   return (
-    <View style={styles.cardContainer}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Pressable style={styles.headerContainer}>
-          {data?.usersPermissionsUser && (
+    <ScrollView>
+      <View style={[styles.cardContainer]}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable style={styles.headerContainer}>
             <Avatar
               size={35}
               rounded
@@ -46,105 +56,83 @@ export const PreviewEventCard = (props: CardProps) => {
                 uri,
               }}
             />
-          )}
-
-          <Text style={{ marginLeft: 5 }}>emresimsek</Text>
-        </Pressable>
-
-        <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
-      </View>
-
-      {/* Body */}
-      <View style={styles.body}>
-        <ImageBackground
-          style={{ width: '100%', height: '100%' }}
-          imageStyle={{ backgroundColor: 'gray' }}
-          source={{ uri: props.item.images?.[0] ?? '' }}
-        />
-      </View>
-      {/* Footer */}
-      <View style={styles.footer}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {/* Icons */}
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Icon type="metarial" name="favorite-border" size={20} />
-            <View style={{ marginHorizontal: 10 }}>
-              <Icon type="font-awesome-5" name="comment" size={18} />
-            </View>
-
-            {/* <Icon name="paper-plane-o" type="font-awesome" size={20} /> */}
-          </View>
-          {/* Right */}
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Icon name="groups" type="metarial" size={25} />
-            <Text style={{ fontSize: 12, marginLeft: 5 }}>{1} Kişi Katılıyor</Text>
-          </View>
+            <Text style={{ marginLeft: 5 }}>{data?.usersPermissionsUser.data.attributes.username}</Text>
+          </Pressable>
+          <Text style={{ marginRight: 10 }}>{moment(props.item.eventDate).format('LLL')}</Text>
         </View>
 
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            marginTop: 5,
-          }}
-        >
-          {/* First Line */}
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <Text style={{ fontWeight: 'bold', flex: 1 }}>{props.item.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text> {moment(props.item.eventDate).format('LLL')} </Text>
-              <Icon name="calendar" type="ant-design" style={{ marginLeft: 5 }} />
-            </View>
-          </View>
+        {/* Body */}
 
-          {/* Second Line */}
-          <View
+        <View>
+          <Image
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              width: '100%',
+              aspectRatio: props.image.width / props.image.height,
             }}
-          >
-            <Text>{props.item.description}</Text>
+            source={{ uri: props.image.uri }}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+        </View>
+
+        {/* Footer */}
+
+        <View style={styles.footer}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>{props.categoryLabels?.map(c => c)}</Text>
-              <Icon name="tagso" type="ant-design" style={{ marginLeft: 5 }} />
+              {props.children}
+
+              <TouchableOpacity style={{ marginRight: 10 }}>
+                <Icon type="metarial" color={'black'} name={'favorite-border'} size={20} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Icon type="font-awesome-5" name="comment" size={18} />
+              </TouchableOpacity>
+            </View>
+
+            {/* Right */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+              <Icon name="users" size={16} type="feather" />
+              <Text style={{ fontSize: 12, marginLeft: 5 }}>0 Kişi Katılıyor</Text>
             </View>
           </View>
+          <Text style={{ marginTop: 5 }}>{props.item.description}</Text>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: 'white',
     flexDirection: 'column',
-    margin: 10,
     borderRadius: 5,
-    flex: 2.5,
+    margin: 10,
   },
+
   header: {
-    flex: 0.25,
+    minHeight: 50,
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
   headerContainer: {
     flex: 1,
     marginHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  body: {
-    flex: 1.8,
+    backgroundColor: 'white',
     borderRadius: 5,
   },
+
   footer: {
     flexDirection: 'column',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    flex: 0.4,
+    backgroundColor: 'white',
+    padding: 5,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 });

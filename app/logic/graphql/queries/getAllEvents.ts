@@ -60,6 +60,8 @@ export const ALL_EVENTS = gql`
               id
               attributes {
                 url
+                height
+                width
               }
             }
           }

@@ -94,12 +94,16 @@ export const EventCard = (props: CardProps) => {
 
       {/* Body */}
 
-      <View style={{}}>
+      <View>
         <Image
-          style={{ width: '100%', aspectRatio: 1 }}
+          style={{
+            width: '100%',
+            aspectRatio:
+              props.item.images.data[0].attributes.width / props.item.images.data[0].attributes.height,
+          }}
           source={{ uri: props.item.images.data[0].attributes.url }}
           PlaceholderContent={<ActivityIndicator />}
-        ></Image>
+        />
         <LottieLikeAnimation
           isLiked={isLiked}
           clickCount={clickCount}

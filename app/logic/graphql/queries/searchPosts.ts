@@ -12,6 +12,8 @@ export const SEARCH_POSTS = gql`
               id
               attributes {
                 url
+                height
+                width
               }
             }
           }

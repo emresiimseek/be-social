@@ -108,12 +108,17 @@ const PostCard = (props: PostCardProps) => {
         </Pressable>
       </View>
 
-      <View style={[styles.container]}>
+      <View>
         <Image
-          style={[styles.container]}
+          style={{
+            width: '100%',
+            aspectRatio:
+              props.item.detail.images.data[0].attributes.width /
+              props.item.detail.images.data[0].attributes.height,
+          }}
           source={{ uri: props.item.imageUrl }}
           PlaceholderContent={<ActivityIndicator />}
-        ></Image>
+        />
         <LottieLikeAnimation
           isLiked={isLiked}
           clickCount={clickCount}
@@ -165,10 +170,7 @@ const PostCard = (props: PostCardProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    aspectRatio: 1,
-  },
+  container: {},
   footer: {
     flexDirection: 'column',
     backgroundColor: 'white',

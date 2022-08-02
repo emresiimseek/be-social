@@ -24,6 +24,8 @@ export const POST_FIELDS = gql`
         data {
           attributes {
             url
+            height
+            width
           }
         }
       }

@@ -23,6 +23,8 @@ export const USERS_QUERY = gql`
               id
               attributes {
                 url
+                height
+                width
               }
             }
           }

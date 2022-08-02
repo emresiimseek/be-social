@@ -51,6 +51,8 @@ export const FLOW_EVENTS = gql`
               id
               attributes {
                 url
+                height
+                width
               }
             }
           }

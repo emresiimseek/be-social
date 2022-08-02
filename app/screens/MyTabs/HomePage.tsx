@@ -49,6 +49,7 @@ export const HomePage = (props: Props) => {
 
   return (
     <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
       scrollEventThrottle={16}
       onScroll={e => {
         setPosition(e.nativeEvent.contentOffset.y);

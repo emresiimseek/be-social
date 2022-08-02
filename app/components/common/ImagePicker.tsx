@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, Pressable, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { BackgroundImage, Button, ButtonGroup, Icon } from '@rneui/base';
+import { Button } from '@rneui/base';
 import colors from '../../styles/colors';
 import { BsModal } from './Modal';
 import { ReactNativeFile } from 'apollo-upload-client';
 import LottieView from 'lottie-react-native';
+import { ImageInfo } from 'expo-image-picker';
 
 interface ImagePickerProps {
-  onImageChanged: (image: string) => void;
+  onImageChanged: (image: ImageInfo) => void;
   showMessage: boolean;
   onFileChange?: (file: ReactNativeFile) => void;
 }
+
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,8 +30,6 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       base64: true,
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.1,
     });
 
     if (!result.cancelled) {
@@ -43,7 +43,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
 
       props.onFileChange && props.onFileChange(file);
       setImage(result.uri);
-      props.onImageChanged(result.uri);
+      props.onImageChanged(result);
     }
   };
 
@@ -51,10 +51,8 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
       base64: true,
-      quality: 0.1,
+      allowsEditing: true,
     });
 
     if (!result.cancelled) {
@@ -67,7 +65,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       });
 
       props.onFileChange && props.onFileChange(file);
-      props.onImageChanged(result.uri);
+      props.onImageChanged(result);
     }
   };
 

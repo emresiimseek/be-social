@@ -9,6 +9,8 @@ import BsDropdown from './BsDropdown';
 import { useQuery } from '@apollo/client';
 import { Variables } from '../../types/strapi/base/base';
 import { GET_EVENTS } from '../../logic/graphql/queries/getEvents';
+import moment from 'moment';
+import 'moment/locale/tr';
 
 interface PostFormProps {
   post: any;
@@ -18,6 +20,8 @@ interface PostFormProps {
 }
 
 const PostForm = (props: PostFormProps) => {
+  moment.locale('tr');
+
   const now = new Date().setHours(0, 0, 0, 0);
 
   const { loading, error, data, refetch } = useQuery<any, Variables>(GET_EVENTS, {
@@ -30,7 +34,9 @@ const PostForm = (props: PostFormProps) => {
   });
 
   const events = data?.events.data.map((event: any) => ({
-    label: event.attributes.title + '-' + event.attributes.description,
+    label: `${event.attributes.description.substring(0, 19)}... / ${moment(event.attributes.eventDate).format(
+      'LL'
+    )}`,
     value: event.id,
   }));
 

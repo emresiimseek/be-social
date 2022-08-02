@@ -11,14 +11,16 @@ import ImagePickerComponent from '../components/common/ImagePicker';
 import { Button } from '@rneui/base';
 import colors from '../styles/colors';
 import Toast from 'react-native-toast-message';
-import { useUploadImage } from '../logic/helpers/useImageUpload';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../logic/graphql/mutations/createPost';
 import { Variables } from '../types/strapi/base/base';
 import PostCardPreview from '../components/common/PostCardPreview';
 import { Props } from '../types/common/props';
 import Loading from '../components/common/Loading';
-import { navigate } from '../RootNavigation';
+import { directNested } from '../RootNavigation';
+import { ImageInfo } from 'expo-image-picker';
+import { useGraphqlUpload } from '../logic/helpers/useGraphqlUploadImage';
+import { ReactNativeFile } from 'apollo-upload-client';
 
 const NewPost = (props: Props) => {
   // Tab Status
@@ -32,7 +34,8 @@ const NewPost = (props: Props) => {
   const [userId, setUserId] = useState<number | undefined>();
   const isLastStep = currentIndex === items.length - 1;
   const [post, setPost] = useState<CreatePostModel | null>(null);
-  const [draftImage, setImage] = useState<string | null>(null);
+  const [draftImage, setImage] = useState<ImageInfo | null>(null);
+  const [file, setFile] = useState<ReactNativeFile | null>(null);
   const [createPost] = useMutation<{ createPost: any }, Variables>(CREATE_POST);
 
   const createNewPost = async () => {
@@ -45,14 +48,16 @@ const NewPost = (props: Props) => {
     }
     setLoading(true);
 
-    const id = await useUploadImage(draftImage);
+    const resultUpload = await useGraphqlUpload(file);
+    const imageId = resultUpload.data.upload.data.id;
+
     const result = await createPost({
-      variables: { data: { ...post, images: [id], users: [userId ?? 0], publishedAt: new Date() } },
+      variables: { data: { ...post, images: [imageId], users: [userId ?? 0], publishedAt: new Date() } },
     });
     if (result.data?.createPost.data.id) {
       setPost(null);
       setImage(null);
-      navigate('Home');
+      directNested('MyTabs', 'Home');
     }
     setLoading(false);
   };
@@ -96,6 +101,9 @@ const NewPost = (props: Props) => {
             ) : (
               <ImagePickerComponent
                 showMessage={!draftImage}
+                onFileChange={file => {
+                  setFile(file);
+                }}
                 onImageChanged={image => {
                   setImage(image);
                 }}

@@ -18,6 +18,8 @@ export const SEARCH_EVENT_RESULT = gql`
               id
               attributes {
                 url
+                height
+                width
               }
             }
           }

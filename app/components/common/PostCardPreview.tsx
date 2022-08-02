@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { Avatar, Icon } from '@rneui/base';
 import { Props } from '../../types/common/props';
-import { useState } from 'react';
-import backgroundColors from '../../styles/backgroundColors';
-import { CreatePostModel } from '../../types/common/create-post-model';
 import { useQuery } from '@apollo/client';
 import { GET_USER_ONLY } from '../../logic/graphql/queries/getUserOnly';
 import { UsersPermissionsUser } from '../../types/strapi/models/user-events';
+import { ImageInfo } from 'expo-image-picker';
+import { Image } from '@rneui/themed';
+import { CreatePostModel } from '../../types/common/create-post-model';
 
 interface PostCardProps extends Props {
   item: CreatePostModel | null;
   userId: number;
-  image: string;
+  image: ImageInfo;
 }
 
 const PostCardPreview = (props: PostCardProps) => {
@@ -24,57 +23,76 @@ const PostCardPreview = (props: PostCardProps) => {
   const defaultAvatarImage = 'https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png';
   const uri = url ? url : defaultAvatarImage;
 
-  return props.item ? (
-    <View style={{ marginBottom: 10, marginHorizontal: 10, flex: 1, justifyContent: 'center' }}>
-      <ImageBackground borderRadius={5} style={styles.container} source={{ uri: props.image }}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-            <Avatar
-              size={30}
-              rounded
-              source={{
-                uri: uri,
-              }}
-            />
-            <Text style={{ marginLeft: 5 }}> {user?.username}</Text>
-          </View>
-          <Icon name="ellipsis-v" style={{ marginRight: 10 }} type="font-awesome-5" color="gray" size={15} />
+  return (
+    <ScrollView style={{ margin: 10 }}>
+      {/* Header */}
+      <View style={[styles.header]}>
+        <View style={styles.headerContainer}>
+          <Avatar
+            size={35}
+            rounded
+            source={{
+              uri,
+            }}
+          />
+          <Text style={{ marginLeft: 5 }}>{user?.username}</Text>
+        </View>
+      </View>
+
+      <Image
+        style={{
+          width: '100%',
+          aspectRatio: props.image.width / props.image.height,
+        }}
+        source={{ uri: props.image.uri }}
+        PlaceholderContent={<ActivityIndicator />}
+      />
+
+      {/* Footer */}
+      <View style={[styles.footer]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Icon
+            type="metarial"
+            color={'black'}
+            name={'favorite-border'}
+            size={20}
+            style={{ marginRight: 10 }}
+          />
+          <Icon type="font-awesome-5" name="comment" size={18} />
+          {props.children}
         </View>
 
-        {/* Footer */}
-        <View style={styles.footer}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Icon type="metarial" color="black" name="favorite-border" size={20} />
-              <View style={{ marginHorizontal: 10 }}>
-                <Icon type="font-awesome-5" name="comment" size={18} />
-              </View>
-            </View>
-            <Text style={{ fontSize: 12 }}>{props.item.description}</Text>
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
-  ) : null;
+        <Text style={{ marginTop: 5 }}>{props.item?.description}</Text>
+      </View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   footer: {
-    flexDirection: 'row',
-    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
-    alignItems: 'center',
-    marginTop: 'auto',
-    padding: 15,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    paddingHorizontal: 5,
+
+    paddingVertical: 10,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   header: {
+    minHeight: 50,
+    justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: backgroundColors.cardBackgroundColorOpacity,
-    padding: 10,
     alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+  },
+  headerContainer: {
+    flex: 1,
+    marginHorizontal: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
 });
 

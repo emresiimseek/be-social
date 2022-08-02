@@ -7,6 +7,7 @@ export const GET_EVENTS = gql`
         attributes {
           title
           description
+          eventDate
         }
       }
     }
