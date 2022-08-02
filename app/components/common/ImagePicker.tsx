@@ -5,6 +5,7 @@ import { BackgroundImage, Button, ButtonGroup, Icon } from '@rneui/base';
 import colors from '../../styles/colors';
 import { BsModal } from './Modal';
 import { ReactNativeFile } from 'apollo-upload-client';
+import LottieView from 'lottie-react-native';
 
 interface ImagePickerProps {
   onImageChanged: (image: string) => void;
@@ -75,23 +76,31 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       <BsModal visible={modalVisible} onClose={() => setModalVisible(false)}>
         <View style={{ padding: 10, minWidth: '100%' }}>
           <Button
-            color={colors.secondColor}
             onPress={() => {
               launchCamera();
             }}
+            titleStyle={{ color: colors.secondColor }}
+            buttonStyle={{
+              borderColor: colors.secondColor,
+            }}
             style={{ paddingBottom: 10 }}
-            icon={{ type: 'ionicon', name: 'camera-outline', color: 'white' }}
+            type="outline"
+            icon={{ type: 'ionicon', name: 'camera-outline', color: colors.secondColor }}
             title="Kamera"
             iconPosition="right"
             size="sm"
           />
 
           <Button
-            color={colors.secondColor}
             onPress={() => {
               pickImage();
             }}
-            icon={{ type: 'ionicon', name: 'image-outline', color: 'white' }}
+            titleStyle={{ color: colors.secondColor }}
+            buttonStyle={{
+              borderColor: colors.secondColor,
+            }}
+            type="outline"
+            icon={{ type: 'ionicon', name: 'image-outline', color: colors.secondColor }}
             title="Galeri"
             iconContainerStyle={{ marginLeft: 20 }}
             iconPosition="right"
@@ -100,10 +109,7 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
         </View>
       </BsModal>
       {!image && props.showMessage && (
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
+        <View
           style={{
             width: '100%',
             flex: 1,
@@ -114,11 +120,31 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
             marginBottom: 10,
           }}
         >
-          <Icon name="add-a-photo" type="material" color={colors.secondColor} size={60} />
-          <Text style={{ color: 'gray', fontSize: 13, textAlign: 'center' }}>
-            Bir görsel seçmek için tıklayınız.
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <LottieView
+              style={{ width: 200, height: 200 }}
+              source={require('../../../local/assets/lottie/image-upload.json')}
+              autoPlay={true}
+              loop={true}
+            />
+            <Text
+              style={{
+                color: 'gray',
+                fontSize: 13,
+                textAlign: 'center',
+                position: 'absolute',
+                bottom: 15,
+                left: 5,
+              }}
+            >
+              Bir görsel seçmek için tıklayınız.
+            </Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
