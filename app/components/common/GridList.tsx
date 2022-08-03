@@ -18,7 +18,7 @@ interface GridListProps extends Props {
 
 const GridList = (props: GridListProps) => {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {props.items?.length > 0 &&
         props.items.map((item, index) => (
           <Pressable

@@ -8,6 +8,7 @@ import { FlowEventData } from '../../types/strapi/models/flow-event';
 import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
 import { Event } from '../../types/strapi/models/event';
+import { navigate } from '../../RootNavigation';
 
 export const HomePage = (props: Props) => {
   const [componentLoading, setComponentLoading] = useState(false);
@@ -28,7 +29,7 @@ export const HomePage = (props: Props) => {
 
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
-    const token = await getItem<number>('token');
+    if (!userId) navigate('Welcome');
 
     setUserId(userId);
   };
