@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, ActionSheetIOS, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Button } from '@rneui/base';
-import colors from '../../styles/colors';
-import { BsModal } from './Modal';
+import { BottomSheet, Button } from '@rneui/base';
 import { ReactNativeFile } from 'apollo-upload-client';
 import LottieView from 'lottie-react-native';
 import { ImageInfo } from 'expo-image-picker';
+import { Icon, ListItem } from '@rneui/themed';
+import colors from '../../styles/colors';
 
 interface ImagePickerProps {
   onImageChanged: (image: ImageInfo) => void;
@@ -16,8 +16,26 @@ interface ImagePickerProps {
 
 export default function ImagePickerComponent(props: ImagePickerProps) {
   const [image, setImage] = useState<string | null>(null);
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const list = [
+    {
+      title: 'Kamera',
+      containerStyle: {},
+      icon: { type: 'ionicon', name: 'camera-outline' },
+      onPress: () => launchCamera(),
+    },
+    {
+      title: 'Galeri',
+      containerStyle: {},
+      icon: { type: 'ionicon', name: 'image-outline' },
+      onPress: () => pickImage(),
+    },
+    {
+      title: 'İptal',
+      icon: { name: 'close', type: 'material-community' },
+      onPress: () => setBottomSheetVisible(false),
+    },
+  ];
   const launchCamera = async () => {
     const permissionsResult = await ImagePicker.getCameraPermissionsAsync();
     if (permissionsResult.granted === false) {
@@ -30,10 +48,11 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       base64: true,
       allowsEditing: true,
+      aspect: [4, 3],
     });
 
     if (!result.cancelled) {
-      setModalVisible(false);
+      setBottomSheetVisible(false);
 
       const file = new ReactNativeFile({
         uri: result.uri,
@@ -53,10 +72,11 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       base64: true,
       allowsEditing: true,
+      aspect: [4, 3],
     });
 
     if (!result.cancelled) {
-      setModalVisible(false);
+      setBottomSheetVisible(false);
       setImage(result.uri);
       const file = new ReactNativeFile({
         uri: result.uri,
@@ -70,42 +90,28 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
   };
 
   return (
-    <View style={{ marginHorizontal: 10, flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-      <BsModal visible={modalVisible} onClose={() => setModalVisible(false)}>
-        <View style={{ padding: 10, minWidth: '100%' }}>
-          <Button
-            onPress={() => {
-              launchCamera();
-            }}
-            titleStyle={{ color: colors.secondColor }}
-            buttonStyle={{
-              borderColor: colors.secondColor,
-            }}
-            style={{ paddingBottom: 10 }}
-            type="outline"
-            icon={{ type: 'ionicon', name: 'camera-outline', color: colors.secondColor }}
-            title="Kamera"
-            iconPosition="right"
-            size="sm"
-          />
+    <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
+      <BottomSheet onBackdropPress={() => setBottomSheetVisible(false)} isVisible={bottomSheetVisible}>
+        {list.map((l, i) => (
+          <ListItem
+            bottomDivider={i === list.length - 2}
+            key={i}
+            onPress={l.onPress}
+            containerStyle={l.containerStyle}
+          >
+            <ListItem.Content selectable>
+              <ListItem.Title>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon type={l.icon.type} name={l.icon.name} color={colors.secondColor} />
 
-          <Button
-            onPress={() => {
-              pickImage();
-            }}
-            titleStyle={{ color: colors.secondColor }}
-            buttonStyle={{
-              borderColor: colors.secondColor,
-            }}
-            type="outline"
-            icon={{ type: 'ionicon', name: 'image-outline', color: colors.secondColor }}
-            title="Galeri"
-            iconContainerStyle={{ marginLeft: 20 }}
-            iconPosition="right"
-            size="sm"
-          />
-        </View>
-      </BsModal>
+                  <Text style={{ marginLeft: 5 }}>{l.title}</Text>
+                </View>
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </BottomSheet>
+
       {!image && props.showMessage && (
         <View
           style={{
@@ -114,13 +120,27 @@ export default function ImagePickerComponent(props: ImagePickerProps) {
             alignItems: 'center',
             backgroundColor: 'white',
             justifyContent: 'center',
-            borderRadius: 10,
-            marginBottom: 10,
           }}
         >
           <TouchableOpacity
             onPress={() => {
-              setModalVisible(!modalVisible);
+              if (Platform.OS === 'ios') {
+                ActionSheetIOS.showActionSheetWithOptions(
+                  {
+                    options: ['Kamera', 'Galeri', 'İptal'],
+                    cancelButtonIndex: 2,
+                  },
+                  buttonIndex => {
+                    if (buttonIndex === 0) {
+                      launchCamera();
+                    } else if (buttonIndex === 1) {
+                      pickImage();
+                    }
+                  }
+                );
+              } else {
+                setBottomSheetVisible(!bottomSheetVisible);
+              }
             }}
           >
             <LottieView

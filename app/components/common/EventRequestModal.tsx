@@ -10,9 +10,7 @@ import { CREATE_EVENT_REQUEST } from '../../logic/graphql/mutations/createEventR
 import { CreateEventRequest } from '../../types/strapi/models/event-request';
 import { Props } from '../../types/common/props';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
-import { Platform } from 'react-native';
 import { useEffect } from 'react';
-import { Item } from '../../types/strapi/base/base';
 
 interface ModalProps extends Props {
   visible: boolean;
