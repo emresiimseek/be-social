@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import TabStatus from '../components/common/TabStatus';
+import { View, StyleSheet } from 'react-native';
 import { TabStatusItem } from '../types/common/tab-status-item';
 import { CreateEventModel } from '../types/common/create-event-model';
 import { useMutation } from '@apollo/client';
@@ -9,15 +8,16 @@ import { Variables } from '../types/strapi/base/base';
 import { useEffect } from 'react';
 import { User } from '../types/strapi/models/user';
 import { getItem } from '../logic/helpers/useAsyncStorage';
-import EventForm from '../components/common/EventForm';
 import Toast from 'react-native-toast-message';
-import NewEventImageSection from '../components/common/NewEventImageSection';
+import NewEventImageSection from '../components/event/NewEventImageSection';
 import { Button } from '@rneui/base';
 import { colors } from '../styles/colors';
 import { directNested } from '../RootNavigation';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { ImageInfo } from 'expo-image-picker';
 import { useGraphqlUpload } from '../logic/helpers/useGraphqlUploadImage';
+import EventForm from '../components/event/EventForm';
+import CreatePageHeaderStatus from '../components/CreatePageHeaderStatus';
 
 const NewEvent = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -27,7 +27,7 @@ const NewEvent = () => {
 
   const getUser = async () => {
     const user = await getItem<User>('user');
-    setEvent({ ...event, owners: [user?.id ?? 0] });
+    setEvent({ ...event, owners: user?.id ? [user?.id] : [] });
   };
 
   useEffect(() => {
@@ -50,7 +50,6 @@ const NewEvent = () => {
 
     const resultUpload = await useGraphqlUpload(file);
     const imageId = resultUpload.data.upload.data.id;
-
     const result = await createEvent({ variables: { data: { ...event, images: [imageId] } } });
 
     if (result.data?.createEvent.data.id) {
@@ -74,7 +73,7 @@ const NewEvent = () => {
 
   return (
     <View style={styles.container}>
-      <TabStatus
+      <CreatePageHeaderStatus
         items={items}
         currentIndex={currentIndex}
         onIndexChange={index => setCurrentIndex(index)}

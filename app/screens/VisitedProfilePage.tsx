@@ -2,14 +2,14 @@ import { useQuery } from '@apollo/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
-import { EventList } from '../components/common/EventList';
-import GridList from '../components/common/GridList';
-import { ProfileHeaderComponent } from '../components/profile/ProfileHeader';
+import { EventList } from '../components/event/EventList';
+import { ProfileHeaderComponent } from '../components/user/ProfileHeader';
 import { GET_EVENTS_BY_USER_ID } from '../logic/graphql/queries/getEventsById';
 import { USERS_QUERY } from '../logic/graphql/queries/getUser';
 import { Props } from '../types/common/props';
 import { Variables } from '../types/strapi/base/base';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
+import EventGridList from '../components/EventGridList';
 
 export const VisitedProfile = (props: Props) => {
   const [visitedUserId, setVisitedUserId] = useState<number | undefined>();
@@ -17,7 +17,9 @@ export const VisitedProfile = (props: Props) => {
 
   useEffect(() => {
     const currentUserId = async () => {
-      const userId = (await AsyncStorage.getItem('userId')) ?? 0;
+      const userId = await AsyncStorage.getItem('userId');
+      if (!userId) return;
+
       setCurrentUserId(+userId);
     };
 
@@ -25,16 +27,11 @@ export const VisitedProfile = (props: Props) => {
     setVisitedUserId(props.route.params.userId);
   });
 
-  const { loading, error, data, refetch } = useQuery<UsersPermissionsUser, Variables>(USERS_QUERY, {
+  const { loading, data, refetch } = useQuery<UsersPermissionsUser, Variables>(USERS_QUERY, {
     variables: { id: visitedUserId },
   });
 
-  const {
-    loading: eventLoading,
-    error: eventError,
-    data: eventData,
-    refetch: eventRefetch,
-  } = useQuery<any, Variables>(GET_EVENTS_BY_USER_ID, {
+  const { data: eventData, refetch: eventRefetch } = useQuery<any, Variables>(GET_EVENTS_BY_USER_ID, {
     variables: { filters: { owners: { id: { eq: visitedUserId } } }, sort: ['publishedAt:desc'] },
   });
 
@@ -58,7 +55,7 @@ export const VisitedProfile = (props: Props) => {
             <EventList events={event} isMine={false} currentUserId={currentUserId} />
           )}
 
-          {viewType === 'grid' && event?.length > 0 && <GridList items={event} />}
+          {viewType === 'grid' && event?.length > 0 && <EventGridList items={event} />}
         </View>
       )}
     </ScrollView>

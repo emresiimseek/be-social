@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import TabStatus from '../components/common/TabStatus';
+import React from 'react';
+import { View } from 'react-native';
 import { useState } from 'react';
 import { TabStatusItem } from '../types/common/tab-status-item';
-import PostForm from '../components/common/PostForm';
 import { useEffect } from 'react';
 import { getItem } from '../logic/helpers/useAsyncStorage';
 import { CreatePostModel } from '../types/common/create-post-model';
@@ -14,13 +12,15 @@ import Toast from 'react-native-toast-message';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../logic/graphql/mutations/createPost';
 import { Variables } from '../types/strapi/base/base';
-import PostCardPreview from '../components/common/PostCardPreview';
 import { Props } from '../types/common/props';
 import Loading from '../components/common/Loading';
 import { directNested } from '../RootNavigation';
 import { ImageInfo } from 'expo-image-picker';
 import { useGraphqlUpload } from '../logic/helpers/useGraphqlUploadImage';
 import { ReactNativeFile } from 'apollo-upload-client';
+import PostForm from '../components/post/PostForm';
+import PostCardPreview from '../components/post/PostCardPreview';
+import CreatePageHeaderStatus from '../components/CreatePageHeaderStatus';
 
 const NewPost = (props: Props) => {
   // Tab Status
@@ -46,13 +46,13 @@ const NewPost = (props: Props) => {
       });
       return;
     }
-    setLoading(true);
 
+    setLoading(true);
     const resultUpload = await useGraphqlUpload(file);
     const imageId = resultUpload.data.upload.data.id;
 
     const result = await createPost({
-      variables: { data: { ...post, images: [imageId], users: [userId ?? 0], publishedAt: new Date() } },
+      variables: { data: { ...post, images: [imageId], users: [userId], publishedAt: new Date() } },
     });
     if (result.data?.createPost.data.id) {
       setPost(null);
@@ -73,7 +73,7 @@ const NewPost = (props: Props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <TabStatus
+      <CreatePageHeaderStatus
         loading={loading}
         items={items}
         currentIndex={currentIndex}
@@ -142,7 +142,5 @@ const NewPost = (props: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default NewPost;

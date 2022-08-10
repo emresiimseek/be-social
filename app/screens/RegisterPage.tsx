@@ -1,15 +1,6 @@
 import { Button } from '@rneui/base';
 import * as React from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import BaseComponent from '../components/common/BaseComponent';
 import { register } from '../logic/register';
 import { Props } from '../types/common/props';
@@ -28,10 +19,6 @@ export interface RegisterPageStates extends BaseState {
 }
 
 export default class RegisterPageComponent extends BaseComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   state: RegisterPageStates = { user: null, ...this.baseState };
 
   registerSubmit = async () => {

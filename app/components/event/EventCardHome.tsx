@@ -6,7 +6,7 @@ import { Data } from '../../types/strapi/base/base';
 import { Event } from '../../types/strapi/models/event';
 import { EventCard } from './EventCard';
 import { postCardsMapper } from '../../logic/helpers/mapper.post-card-mapper';
-import PostCard from './PostCard';
+import PostCard from '../post/PostCard';
 
 interface EventCardHomeProps extends Props {
   event: Data<Event>;

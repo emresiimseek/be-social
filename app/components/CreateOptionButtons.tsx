@@ -1,11 +1,11 @@
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
-import { Props } from '../../types/common/props';
+import { Props } from '../types/common/props';
 import { Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import colors from '../../styles/colors';
+import colors from '../styles/colors';
 import { Icon } from '@rneui/themed';
-import { navigate } from '../../RootNavigation';
+import { navigate } from '../RootNavigation';
 
 interface NewButtonProps extends Props {
   focused: boolean;

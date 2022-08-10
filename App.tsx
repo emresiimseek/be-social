@@ -16,13 +16,13 @@ import AppNotifications from './app/components/AppNotifications';
 import { Props } from './app/types/common/props';
 import { navigationRef } from './app/RootNavigation';
 import EventDetail from './app/screens/EventDetailPage';
-import PostDetail from './app/components/common/PostDetail';
 import { io } from 'socket.io-client';
 import { Notification } from './app/types/strapi/models/notification';
 import { Item } from './app/types/strapi/base/base';
 import { useEffect, useState } from 'react';
 import { getItem } from './app/logic/helpers/useAsyncStorage';
 import { STRAPI_API_URL, STRAPI_TOKEN } from '@env';
+import PostDetail from './app/components/post/PostDetail';
 
 const client = new ApolloClient({
   uri: `${STRAPI_API_URL}/graphql`,
@@ -83,7 +83,7 @@ export default function App(props: Props) {
     <>
       <NavigationContainer ref={navigationRef}>
         <ApolloProvider client={client}>
-          <Stack.Navigator initialRouteName="MyTabs">
+          <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen
               name="Welcome"
               component={WelcomePage}

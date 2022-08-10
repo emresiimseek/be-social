@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Loading from './Loading';
-import ImagePickerComponent from './ImagePicker';
+import Loading from '../common/Loading';
+import ImagePickerComponent from '../common/ImagePicker';
 import { CreateEventModel } from '../../types/common/create-event-model';
 import { PreviewEventCard } from './PreviewEventCard';
 import { ReactNativeFile } from 'apollo-upload-client';

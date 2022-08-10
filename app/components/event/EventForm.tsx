@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
 import { CreateEventModel } from '../../types/common/create-event-model';
-import BsInput from './BsInput';
 import DatePicker from '../common/DatePicker';
 import { GET_CATEGORIES } from '../../logic/graphql/queries/getCategories';
 import { Category } from '../../types/strapi/models/category';
@@ -14,8 +13,9 @@ import moment from 'moment';
 import 'moment/locale/tr';
 import { useState } from 'react';
 import { Button } from '@rneui/base';
-import BsDropdown from './BsDropdown';
 import { Pressable } from 'react-native';
+import BsInput from '../common/BsInput';
+import BsDropdown from '../common/BsDropdown';
 
 interface EventFormProps {
   event: CreateEventModel | null;

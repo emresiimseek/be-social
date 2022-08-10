@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Props } from '../../types/common/props';
-import { Data } from '../../types/strapi/base/base';
-import { Event } from '../../types/strapi/models/event';
+import { Props } from '../types/common/props';
+import { Data } from '../types/strapi/base/base';
+import { Event } from '../types/strapi/models/event';
 import { ImageBackground } from 'react-native';
 import { Icon } from '@rneui/base';
 import { Pressable } from 'react-native';
-import { navigate } from '../../RootNavigation';
-import { colors } from '../../styles/colors';
+import { navigate } from '../RootNavigation';
+import { colors } from '../styles/colors';
 import { FlatList } from 'react-native';
 import { Image } from '@rneui/themed';
 import { ActivityIndicator } from 'react-native';
@@ -16,7 +16,7 @@ interface GridListProps extends Props {
   items: Data<Event>[];
 }
 
-const GridList = (props: GridListProps) => {
+const EventGridList = (props: GridListProps) => {
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {props.items?.length > 0 &&
@@ -64,4 +64,4 @@ const GridList = (props: GridListProps) => {
 
 const styles = StyleSheet.create({});
 
-export default GridList;
+export default EventGridList;

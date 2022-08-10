@@ -47,6 +47,8 @@ export default function AppNotifications(props: AppNotificationsProps) {
 
     const user = props.notification.me.data.attributes;
 
+    if (!props.notification.related_users.data.find(data => data.attributes.id === props.userId)) return;
+
     const message = {
       to: expoPushToken,
       sound: 'default',

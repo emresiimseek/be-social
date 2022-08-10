@@ -2,17 +2,16 @@ import { Button, ListItem } from '@rneui/base';
 import { Avatar } from '@rneui/themed';
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { getMessageByType } from '../../logic/helpers/getNotificationMessage';
-import { navigate } from '../../RootNavigation';
-import colors from '../../styles/colors';
-import { Data, Variables } from '../../types/strapi/base/base';
-import { Notification } from '../../types/strapi/models/notification';
+import { getMessageByType } from '../logic/helpers/getNotificationMessage';
+import { navigate } from '../RootNavigation';
+import colors from '../styles/colors';
+import { Data, Variables } from '../types/strapi/base/base';
+import { Notification } from '../types/strapi/models/notification';
 import moment from 'moment';
 import 'moment/locale/tr';
 import { useMutation } from '@apollo/client';
-import { UPDATE_EVENT_REQUEST } from '../../logic/graphql/mutations/updateEventRequest';
-import { sendPushNotification } from '../../logic/helpers/registerPushNotification';
-import { usePushNotification } from '../../logic/helpers/usePushNotification';
+import { UPDATE_EVENT_REQUEST } from '../logic/graphql/mutations/updateEventRequest';
+import { usePushNotification } from '../logic/helpers/usePushNotification';
 import { Dimensions } from 'react-native';
 
 interface NotificationDetailProps {
@@ -66,7 +65,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
   const acceptRequest = async () => {
     await updateEventRequest({
       variables: {
-        id: Number(props.notification.attributes.event_request?.data.id) ?? 0,
+        id: Number(props.notification.attributes.event_request?.data.id),
         data: {
           status: 'accepted',
         },
@@ -74,8 +73,8 @@ const NotificationDetail = (props: NotificationDetailProps) => {
     });
 
     await usePushNotification({
-      me: props.currentUserId ?? 0,
-      related_users: [+props.notification.attributes.me.data.id ?? 0],
+      me: props.currentUserId,
+      related_users: [+props.notification.attributes.me.data.id],
       type: 'event_request_accepted',
       event: props.notification?.attributes?.event?.data.id ?? '0',
       event_request: props.notification.attributes?.event_request?.data.id ?? '0',
@@ -85,7 +84,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
   const rejectRequest = async () => {
     await updateEventRequest({
       variables: {
-        id: Number(props.notification.attributes.event_request?.data.id) ?? 0,
+        id: Number(props.notification.attributes.event_request?.data.id),
         data: {
           status: 'rejected',
         },
@@ -93,8 +92,8 @@ const NotificationDetail = (props: NotificationDetailProps) => {
     });
 
     await usePushNotification({
-      me: props.currentUserId ?? 0,
-      related_users: [+props.notification.attributes.me.data.id ?? 0],
+      me: props.currentUserId,
+      related_users: [+props.notification.attributes.me.data.id],
       type: 'event_request_rejected',
       event: props.notification?.attributes?.event?.data.id ?? '0',
       event_request: props.notification.attributes?.event_request?.data.id ?? '0',

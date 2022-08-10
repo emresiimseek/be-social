@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import GridList from './GridList';
 import { useQuery } from '@apollo/client';
 import { SEARCH_EVENT_RESULT } from '../../logic/graphql/queries/searchEventResult';
 import { EventData } from '../../types/strapi/models/event';
@@ -8,6 +7,7 @@ import { Variables } from '../../types/strapi/base/base';
 import colors from '../../styles/colors';
 import { ScrollView } from 'react-native';
 import { RefreshControl } from 'react-native';
+import EventGridList from '../EventGridList';
 
 interface EventSearchProps {
   term: string;
@@ -35,7 +35,7 @@ const EventSearch = (props: EventSearchProps) => {
     >
       <View style={{ flex: 1 }}>
         {isVisible ? (
-          <GridList items={events?.data} />
+          <EventGridList items={events?.data} />
         ) : (
           !eventLoading && (
             <Text style={{ textAlign: 'center', color: colors.textGrayColor, padding: 10, fontSize: 12 }}>

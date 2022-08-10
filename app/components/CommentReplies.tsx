@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Items } from '../../types/strapi/base/base';
-import { CommentAttributes } from '../../types/strapi/models/event-comments';
+import { Items } from '../types/strapi/base/base';
+import { CommentAttributes } from '../types/strapi/models/event-comments';
 import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
-import { Props } from '../../types/common/props';
+import { Props } from '../types/common/props';
 import { useState } from 'react';
-import colors from '../../styles/colors';
-import { navigate } from '../../RootNavigation';
+import colors from '../styles/colors';
+import { navigate } from '../RootNavigation';
 
 interface CommentRepliesProps extends Props {
   replies: Items<CommentAttributes>;

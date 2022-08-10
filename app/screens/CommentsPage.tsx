@@ -8,7 +8,7 @@ import { Props } from '../types/common/props';
 import { Button, Icon, Input, Text } from '@rneui/base';
 import { EVENT_COMMENTS } from '../logic/graphql/queries/eventComments';
 import { CREATE_COMMENT } from '../logic/graphql/mutations/createComment';
-import CommentsReplies from '../components/common/CommentReplies';
+import CommentsReplies from '../components/CommentReplies';
 import { colors } from '../styles/colors';
 import { usePushNotification } from '../logic/helpers/usePushNotification';
 import { navigate } from '../RootNavigation';
@@ -36,6 +36,7 @@ export const CommentsComponent = (props: Props) => {
 
   const sendComment = async () => {
     let result;
+
     if (selectedComment) {
       result = await createComment({
         variables: {
@@ -90,11 +91,7 @@ export const CommentsComponent = (props: Props) => {
     setSelectedComment(null);
   };
 
-  const {
-    data: postData,
-    refetch: refectPost,
-    loading: queryPostLoading,
-  } = useQuery<EventComments, Variables>(EVENT_COMMENTS, {
+  const { data: postData, refetch: refectPost } = useQuery<EventComments, Variables>(EVENT_COMMENTS, {
     variables: {
       filters: { post: { id: { eq: props.route.params.postId } }, comments: { id: { eq: null } } },
     },
@@ -109,15 +106,10 @@ export const CommentsComponent = (props: Props) => {
     <>
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={loading || queryLoading}
-            onRefresh={async () => {
-              const result = await refetch();
-            }}
-          />
+          <RefreshControl refreshing={loading || queryLoading} onRefresh={async () => refetch()} />
         }
       >
-        {comments?.comments.data.length ?? 0 > 0
+        {!!comments?.comments?.data?.length
           ? comments?.comments.data.flatMap((comment, i) => (
               <ListItem.Swipeable
                 key={i}

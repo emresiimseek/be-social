@@ -1,6 +1,6 @@
-import { Button, Text } from '@rneui/base';
+import { Button } from '@rneui/base';
 import React from 'react';
-import { View, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { login } from '../logic/login';
 import { Props } from '../types/common/props';
 import BaseComponent from '../components/common/BaseComponent';

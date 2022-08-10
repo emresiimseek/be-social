@@ -2,36 +2,17 @@ import { Button, Input } from '@rneui/base';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { Props } from '../types/common/props';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { WelcomePageModel } from '../types/strapi/models/welcome-page';
 import Loading from '../components/common/Loading';
 import Toast from 'react-native-toast-message';
 import colors from '../styles/colors';
 import backgroundColors from '../styles/backgroundColors';
 import { navigate } from '../RootNavigation';
-
-const welcome = gql`
-  query GetWelcomePage {
-    welcomePage {
-      data {
-        attributes {
-          title
-          description
-          bg_image {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { GET_WELCOME } from '../logic/graphql/queries/getWelcomePage';
 
 function WelcomePage(props: Props) {
-  const { loading, error, data } = useQuery<WelcomePageModel>(welcome);
+  const { loading, error, data } = useQuery<WelcomePageModel>(GET_WELCOME);
 
   useEffect(() => {
     if (error?.message)
@@ -63,7 +44,6 @@ function WelcomePage(props: Props) {
             title="Giriş"
             color={colors.secondColor}
           />
-          {/* <Input value={errorMessage} onChangeText={value => setError(value)}></Input> */}
           <Button
             onPress={() => navigate('Register')}
             buttonStyle={styles.bottomButton}
