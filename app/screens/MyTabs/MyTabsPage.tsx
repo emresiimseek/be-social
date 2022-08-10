@@ -5,7 +5,7 @@ import { HomePage } from './HomePage';
 import { ProfilePage } from './ProfilePage';
 import { useState } from 'react';
 import colors from '../../styles/colors';
-import NewButtons from '../../components/common/NewButtons';
+import NewButtons from '../../components/CreateOptionButtons';
 import NewItem from './NewItemPage';
 import Notifications from './NotificationsPage';
 import Search from './SearchPage';

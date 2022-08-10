@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Pressable, Keyboard } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import BsInput from './BsInput';
 import { colors } from '../../styles/colors';
 import { Button } from '@rneui/base';
-import BsDropdown from './BsDropdown';
 import { useQuery } from '@apollo/client';
 import { Variables } from '../../types/strapi/base/base';
 import { GET_EVENTS } from '../../logic/graphql/queries/getEvents';
 import moment from 'moment';
 import 'moment/locale/tr';
+import BsDropdown from '../common/BsDropdown';
+import BsInput from '../common/BsInput';
 
 interface PostFormProps {
   post: any;

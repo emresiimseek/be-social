@@ -1,13 +1,12 @@
 import { Query } from '@apollo/client/react/components';
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Variables } from '../types/strapi/base/base';
 import { Props } from '../types/common/props';
 import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/themed';
 import { UsersPermissionsUser } from '../types/strapi/models/user-events';
 import { USERS_QUERY } from '../logic/graphql/queries/getUser';
-import colors from '../styles/colors';
 import { navigate } from '../RootNavigation';
 
 class UserList extends Component<Props> {
@@ -82,14 +81,5 @@ class UserList extends Component<Props> {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.thirdColor,
-  },
-});
 
 export default UserList;

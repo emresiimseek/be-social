@@ -11,7 +11,7 @@ import { navigate } from '../../RootNavigation';
 import { PostCardItem } from '../../types/common/post-card-item';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import LottieLikeAnimation from './LottieLikeAnimation';
+import LottieLikeAnimation from '../common/LottieLikeAnimation';
 import { Image } from '@rneui/themed';
 import * as Haptics from 'expo-haptics';
 
@@ -62,7 +62,7 @@ const PostCard = (props: PostCardProps) => {
 
     if (result && !isLiked) {
       usePushNotification({
-        me: props.currentUserId ?? 0,
+        me: props.currentUserId,
         related_users: [+props.item.detail.users.data[0].id],
         post: props.item.id,
         type: 'like_post',

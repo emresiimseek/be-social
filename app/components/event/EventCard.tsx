@@ -21,7 +21,7 @@ import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { navigate } from '../../RootNavigation';
 import EventRequestModal from './EventRequestModal';
 import EventRequestStatus from './EventRequestStatus';
-import LottieLikeAnimation from './LottieLikeAnimation';
+import LottieLikeAnimation from '../common/LottieLikeAnimation';
 import * as Haptics from 'expo-haptics';
 
 interface CardProps extends Props {
@@ -57,7 +57,7 @@ export const EventCard = (props: CardProps) => {
 
     if (result.data && !isLiked)
       usePushNotification({
-        me: props.currentUserId ?? 0,
+        me: props.currentUserId,
         event: props.eventId,
         related_users: props.item.owners.data.map(o => +o.id),
         type: 'like_event',

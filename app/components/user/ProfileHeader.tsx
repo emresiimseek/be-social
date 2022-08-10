@@ -46,7 +46,7 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
       variables: { userId: props.currentUserId, userIds: [+userId], follow: !followed },
     });
     if (result.data && !followed) {
-      usePushNotification({ me: props.currentUserId ?? 0, related_users: [+userId], type: 'follow_user' });
+      usePushNotification({ me: props.currentUserId, related_users: [+userId], type: 'follow_user' });
     }
   };
 

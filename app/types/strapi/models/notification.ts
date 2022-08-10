@@ -7,7 +7,7 @@ import { EventRequestAttributes } from './event-request';
 
 export interface CreateNotification {
   type: NotificationType;
-  me: number;
+  me?: number;
   related_users: number[];
   event?: string;
   post?: string;

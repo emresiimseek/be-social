@@ -6,10 +6,10 @@ import { colors } from '../../styles/colors';
 import { TabView, SceneMap, SceneRendererProps, NavigationState } from 'react-native-tab-view';
 import { TouchableOpacity } from 'react-native';
 import { Animated } from 'react-native';
-import UserSearch from '../../components/common/UserSearch';
-import EventSearch from '../../components/common/EventSearch';
-import PostSearch from '../../components/common/PostSearch';
+import UserSearch from '../../components/user/UserSearch';
 import { Icon } from '@rneui/themed';
+import EventSearch from '../../components/event/EventSearch';
+import PostSearch from '../../components/post/PostSearch';
 
 const Search = () => {
   const [term, setTerm] = useState('');

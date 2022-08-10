@@ -1,16 +1,16 @@
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { BsModal } from './Modal';
-import BsInput from './BsInput';
+import { View, Text, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import { Button } from '@rneui/base';
 import { useMutation } from '@apollo/client';
-import { Data, Variables } from '../../types/strapi/base/base';
+import { Variables } from '../../types/strapi/base/base';
 import { CREATE_EVENT_REQUEST } from '../../logic/graphql/mutations/createEventRequest';
 import { CreateEventRequest } from '../../types/strapi/models/event-request';
 import { Props } from '../../types/common/props';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { useEffect } from 'react';
+import BsModal from '../common/BsModal';
+import BsInput from '../common/BsInput';
 
 interface ModalProps extends Props {
   visible: boolean;
@@ -28,7 +28,7 @@ const EventRequestModal = (props: ModalProps) => {
   });
 
   useEffect(() => {
-    setModel({ ...model, user: props.currentUserId ?? 0, event: props.eventId });
+    setModel({ ...model, user: props.currentUserId, event: props.eventId });
   }, [props.currentUserId]);
 
   const [createRequest, { data, loading, error }] = useMutation<any, Variables>(CREATE_EVENT_REQUEST);
@@ -74,7 +74,7 @@ const EventRequestModal = (props: ModalProps) => {
             setLoading(true);
             const result = await createRequest({ variables: { data: model } });
             console.log({
-              me: props.currentUserId ?? 0,
+              me: props.currentUserId,
               related_users: props.eventUserIds,
               type: 'request_to_join_event',
               event: props.eventId.toString(),
@@ -82,7 +82,7 @@ const EventRequestModal = (props: ModalProps) => {
             });
 
             await usePushNotification({
-              me: props.currentUserId ?? 0,
+              me: props.currentUserId,
               related_users: props.eventUserIds,
               type: 'request_to_join_event',
               event: props.eventId.toString(),

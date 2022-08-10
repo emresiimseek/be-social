@@ -10,7 +10,7 @@ import { colors } from '../../styles/colors';
 import { ScrollView } from 'react-native';
 import { Props } from '../../types/common/props';
 import { Icon } from '@rneui/themed';
-import NotificationDetail from '../../components/common/NotificationDetail';
+import NotificationDetail from '../../components/NotificationDetail';
 
 const Notifications = (props: Props) => {
   const [componentLoading, setComponentLoading] = useState(false);
@@ -43,8 +43,6 @@ const Notifications = (props: Props) => {
 
   console.table(loading);
 
-  const notificationsCount = data?.notifications.data.length ?? 0;
-
   return (
     <ScrollView
       refreshControl={
@@ -56,7 +54,7 @@ const Notifications = (props: Props) => {
         />
       }
     >
-      {notificationsCount > 0 ? (
+      {!!data?.notifications.data.length ? (
         <View>
           {data?.notifications.data.map((l, i) => (
             <NotificationDetail key={i} notification={l} currentUserId={userId} onChange={() => refetch()} />

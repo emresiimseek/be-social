@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useState } from 'react';
 import { Icon } from '@rneui/themed';
-import { TabStatusItem } from '../../types/common/tab-status-item';
+import { TabStatusItem } from '../types/common/tab-status-item';
 import { useEffect } from 'react';
-import colors from '../../styles/colors';
+import colors from '../styles/colors';
 import { color } from '@rneui/base';
 import { Pressable } from 'react-native';
 
@@ -15,7 +15,7 @@ interface TabStatusProps {
   loading: boolean;
 }
 
-const TabStatus = (props: TabStatusProps) => {
+const CreatePageHeaderStatus = (props: TabStatusProps) => {
   const [items, setItems] = useState<TabStatusItem[]>([]);
 
   const [progressWidth, setProgressWidth] = useState<string>('');
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   pressableItem: { flexDirection: 'row', alignItems: 'center', flex: 1, position: 'relative' },
 });
 
-export default TabStatus;
+export default CreatePageHeaderStatus;

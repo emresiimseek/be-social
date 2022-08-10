@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import { EventList } from '../../components/common/EventList';
 import { Props } from '../../types/common/props';
 import { Data, Variables } from '../../types/strapi/base/base';
 import { ScrollView, RefreshControl, Alert } from 'react-native';
@@ -9,6 +8,7 @@ import { getItem } from '../../logic/helpers/useAsyncStorage';
 import { FLOW_EVENTS } from '../../logic/graphql/queries/getFlowEventsByUserId';
 import { Event } from '../../types/strapi/models/event';
 import { navigate } from '../../RootNavigation';
+import { EventList } from '../../components/event/EventList';
 
 export const HomePage = (props: Props) => {
   const [componentLoading, setComponentLoading] = useState(false);
@@ -27,6 +27,11 @@ export const HomePage = (props: Props) => {
 
   const [userId, setUserId] = useState<number | undefined>();
 
+  const [events, setEvent] = useState<Data<Event>[] | undefined>();
+  const { loading, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
+    variables: { userId: userId },
+  });
+
   const getUserId = async () => {
     const userId = await getItem<number>('userId');
     if (!userId) navigate('Welcome');
@@ -37,12 +42,6 @@ export const HomePage = (props: Props) => {
   useEffect(() => {
     getUserId();
   }, []);
-
-  const [events, setEvent] = useState<Data<Event>[] | undefined>();
-
-  const { loading, error, data, refetch } = useQuery<FlowEventData, Variables>(FLOW_EVENTS, {
-    variables: { userId: userId },
-  });
 
   useEffect(() => {
     setEvent(data?.getEventsByUserId.data);
