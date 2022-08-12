@@ -50,7 +50,7 @@ const EventGridList = (props: GridListProps) => {
                   justifyContent: 'center',
                 }}
               >
-                <Icon type="ionicon" name="albums" size={25} color={colors.secondColor} />
+                <Icon type="ionicon" name="albums" size={25} color={colors.textGrayColor} />
                 <Text style={{ position: 'absolute', color: 'white', fontSize: 10, paddingTop: 5 }}>
                   {item.attributes.posts.data.length}
                 </Text>
