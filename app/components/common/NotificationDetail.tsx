@@ -11,7 +11,6 @@ import moment from 'moment';
 import 'moment/locale/tr';
 import { useMutation } from '@apollo/client';
 import { UPDATE_EVENT_REQUEST } from '../../logic/graphql/mutations/updateEventRequest';
-import { sendPushNotification } from '../../logic/helpers/registerPushNotification';
 import { usePushNotification } from '../../logic/helpers/usePushNotification';
 import { Dimensions } from 'react-native';
 
@@ -128,6 +127,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
                 title="Kabul"
                 containerStyle={{ width: '45%' }}
                 onPress={acceptRequest}
+                loadingProps={{ color: colors.successColor, size: 'small' }}
                 loading={loading}
                 type={isAccepted ? 'solid' : 'outline'}
                 icon={{
@@ -148,6 +148,7 @@ const NotificationDetail = (props: NotificationDetailProps) => {
               <Button
                 onPress={rejectRequest}
                 loading={loading}
+                loadingProps={{ color: colors.errorColor, size: 'small' }}
                 title="Reddet"
                 type={isRejected ? 'solid' : 'outline'}
                 containerStyle={{ width: '45%' }}
