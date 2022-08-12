@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/themed';
 import { useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Avatar } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import { Props } from '../../types/common/props';
@@ -156,7 +156,8 @@ export const ProfileHeaderComponent = (props: ProfileHeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    padding: 20,
+    minHeight: Dimensions.get('window').height * 0.2,
+    padding: 10,
     backgroundColor: 'white',
   },
   info: {
